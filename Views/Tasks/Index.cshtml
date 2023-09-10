@@ -63,8 +63,8 @@
                             </div>
 
                             <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                <input type="date" class="form-control">
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
                             </div>
 
                             <div class="row">
@@ -125,15 +125,32 @@
                     @foreach (var item in Model)
                     {
                         <div class="card mb-4 box-shadow">
-                            <div class="card-body">
-                                <p class="card-title">@item.Title</p>
-                                <p class="card-text"> @item.Description</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
+                            <div style="height: 10px; background-color:aqua">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1" style="width: 10px; height: 100px; background-color:deeppink">
+
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p class="card-title">@item.Title</p>
+                                                <p class="card-text"> @item.Description</p>
+                                                <!--<div class="d-flex justify-content-between align-items-center">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
+                                                    </div>
+                                                </div>-->
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="card-title">@item.DueDate</p>
+                                                <p class="card-title">Aktualizacja:</p>
+                                                <p class="card-title">@item.CreateDate</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!--<small class="text-muted">9 mins</small>-->
                                 </div>
                             </div>
                         </div>

@@ -16,6 +16,7 @@ namespace MVCSimpleCRM.Controllers
         public IActionResult Index()
         {
             List<Tasks> tasks = _context.tasks.ToList();
+            List<Users> users = _context.users.ToList();
             return View(tasks);
         }
     }
