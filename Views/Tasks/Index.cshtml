@@ -1,8 +1,145 @@
-﻿@*
+﻿@model IEnumerable<Tasks>
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Zadania</h1>
+    </div>
+</section>
 
-<h1>Tasks</h1>
+<section>
+    <div class="album py-5 bg-light">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <center>
+                                <h3>Filtracja</h3>
+                            </center>
+
+                            <br />
+                            <div class="form-group" style="margin-bottom: 20px">
+                                <input type="text" class="form-control" ID="TBSearch" placeholder="Wyszukaj pracownika">
+                            </div>
+
+                            <ul class="list-group">
+                                @foreach (var item in Model)
+                                {
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="@item.Title">
+                                        Name Surname placeholder
+                                    </li>    
+                                }
+                                
+                            </ul>
+
+                            <div class="row">
+                                <div class="col">
+                                    <center>
+                                        <hr />
+                                    </center>
+                                </div>
+                            </div>
+
+                            <div class="input-group col-md-3" style="margin-bottom: 20px">
+                                <input type="text" class="form-control" placeholder="Rodzaj daty">
+                                <div class="dropdown m-1 mt-0 mb-0">
+                                    <a class="btn btn-secondary dropdown-toggle" style="width: 100px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Wybierz
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
+                                        <li><a class="dropdown-item" OnClick="ToProduct('Candles')">Utworzenia</a></li>
+                                        <li><a class="dropdown-item" OnClick="ToProduct('Scents')">Przypomnienia</a></li>
+                                        <li><a class="dropdown-item" OnClick="ToProduct('Other')">Aktualizacji</a></li>
+                                        <li><a class="dropdown-item" OnClick="ToProduct('Other')">Zakończenia</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="input-group col-md-3" style="margin-bottom: 20px">
+                                <input type="date" class="form-control">
+                                <input type="date" class="form-control">
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <center>
+                                        <hr />
+                                    </center>
+                                </div>
+                            </div>
+
+                            <label>Sort by:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioNameAsc" checked runat="server">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Najbliższy termin
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioNameDesc" runat="server">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Najdalszy termin
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioPriceAsc" runat="server">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Najnowsze
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioPriceDesc" runat="server">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Najstarsze
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioProductType" runat="server">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Najbliższe przypomnienie
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioProductType" runat="server">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Najdalsze przypomnienie
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    @foreach (var item in Model)
+                    {
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <p class="card-title">@item.Title</p>
+                                <p class="card-text"> @item.Description</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
+                                    </div>
+                                    <!--<small class="text-muted">9 mins</small>-->
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
