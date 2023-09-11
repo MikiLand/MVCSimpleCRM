@@ -18,5 +18,11 @@ namespace MVCSimpleCRM.Controllers
             List<Users> users = _context.users.ToList();
             return View(users);
         }
+
+        public IActionResult Detail(int id)
+        {
+            Users users = _context.users.FirstOrDefault(u => u.Id == id);
+            return View(users);
+        }
     }
 }
