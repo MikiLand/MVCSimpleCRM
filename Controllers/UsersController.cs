@@ -36,5 +36,16 @@ namespace MVCSimpleCRM.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Users user)
+        {
+            if(ModelState.IsValid) 
+            {
+                return View(user);
+            }
+            _userRepository.Add(user);
+            return RedirectToAction("Index");
+        }
     }
 }
