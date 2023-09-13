@@ -31,5 +31,10 @@ namespace MVCSimpleCRM.Controllers
             Users users = await _userRepository.GetByIdAsync(id);
             return View(users);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
