@@ -40,7 +40,7 @@ namespace MVCSimpleCRM.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Users user)
         {
-            if(ModelState.IsValid) 
+            if(!ModelState.IsValid) 
             {
                 return View(user);
             }

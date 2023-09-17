@@ -6,117 +6,116 @@
 @{
 }
 
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <!--<div class="row">
-                        <div-- class="col">
-                            <center>
-                                <img width="150px" src="imgs/candles.png">
-                            </center>
+<form method="post" asp-action="Create">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <!--<div class="row">
+                            <div-- class="col">
+                                <center>
+                                    <img width="150px" src="imgs/candles.png">
+                                </center>
+                            </div>
+                        </div>-->
+    
+                        <div class="row">
+                            <div class="col">
+                                <center>
+                                    <h3 class="card-title">Nowy użytkownika</h3>
+                                </center>
+                            </div>
                         </div>
-                    </div>-->
-
-                    <div class="row">
-                        <div class="col">
-                            <center>
-                                <h3 class="card-title">Nowy użytkownika</h3>
-                            </center>
+    
+                        <div class="row">
+                            <div class="col">
+                                <center>
+                                    <hr />
+                                </center>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <center>
-                                <hr />
-                            </center>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group mb-3">
-                                <center>
-                                    <label asp-for="Login">Login</label>
-                                </center>
-                                <input asp-for="Login" class="form-control" placeholder="Twój login">
-                                <span asp-validation-for="Login" class="text-danger"></span>
-
-                                <!--<input type="text" class="form-control" ID="TBLogin" placeholder="Twój login">-->
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <center>
-                                    <label asp-for="Name">Imię</label>
-                                </center>
-                                <input asp-for="Name" class="form-control" placeholder="Twoje imię">
-                                <span asp-validation-for="Name" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <center>
-                                    <label asp-for="Surname">Nazwisko</label>
-                                </center>
-                                <input asp-for="Surname" class="form-control" placeholder="Twoje nazwisko">
-                                <span asp-validation-for="Surname" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <center>
-                                    <label asp-for="Email">Adres email</label>
-                                </center>
-                                <input asp-for="Email" class="form-control" placeholder="Twój email">
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <center>
-                                    <label asp-for="Password">Hasło</label>
-                                </center>
-                                <input asp-for="Password" class="form-control" placeholder="Podaj hasło">
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <center>
-                                    <label asp-for="Password">Powtórz asło</label>
-                                </center>
-                                <input asp-for="Password" class="form-control" placeholder="Powtórz hasło">
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-
-                            <!--<div class="form-group mb-3">
-                                <center>
-                                    <label asp-for="Position">Stanowisko</label>
-                                </center>
-                                <select asp-for="Position" asp-items=" ADD "AT SIGN" Html.GetEnumSelectList<Positions>"
-                                    <option>Wybierz</option>
-                                <span asp-validation-for="Position" class="text-danger"></span>
-                            </div>-->
-
-                            <div class="mb-3 form-check">
-                                <input asp-for="IsTACConfirmed" class="form-check-input me-1" type="checkbox" value="" aria-label="HYPERLINK PLACEHOLDER">
-                                <input asp-for="IsTACConfirmed" type="checkbox" class="form-check-input" id="CBTaC">
-                                <span asp-validation-for="IsTACConfirmed" class="text-danger"></span>
-                                <!--<a href="TermsAndConditions.aspx">Akceptacja regulaminu</a>-->
-                            </div>
-
-                            <center>
-                                <div class="form-group">
-                                    <a type="btn" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Utwórz</a>
-                                    <!--<asp:Button Class="btn d-grid gap-2 btn-primary btn-block btn-lg" style="width: 150px" ID="BtnRegister" runat="server" Text="Utwórz" OnClick="BtnLogin_Click" />-->
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Login">Login</label>
+                                    </center>
+                                    <input asp-for="Login" class="form-control" placeholder="Twój login">
+                                    <span asp-validation-for="Login" class="text-danger"></span>
+    
+                                    <!--<input type="text" class="form-control" ID="TBLogin" placeholder="Twój login">-->
                                 </div>
-                            </center>
+    
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Name">Imię</label>
+                                    </center>
+                                    <input asp-for="Name" class="form-control" placeholder="Twoje imię">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+    
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Surname">Nazwisko</label>
+                                    </center>
+                                    <input asp-for="Surname" class="form-control" placeholder="Twoje nazwisko">
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                </div>
+    
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Email">Adres email</label>
+                                    </center>
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="Twój email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+    
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Password">Hasło</label>
+                                    </center>
+                                    <input asp-for="Password" type="password" class="form-control" placeholder="Podaj hasło">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+    
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Password">Powtórz hasło</label>
+                                    </center>
+                                    <input asp-for="Password" type="password" class="form-control" placeholder="Powtórz hasło">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+    
+                                <!--<div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Position">Stanowisko</label>
+                                    </center>
+                                    <select asp-for="Position" asp-items=" ADD "AT SIGN" Html.GetEnumSelectList<Positions>"
+                                        <option>Wybierz</option>
+                                    <span asp-validation-for="Position" class="text-danger"></span>
+                                </div>-->
+    
+                                <div class="mb-3 form-check">
+                                    <input asp-for="IsTACConfirmed" class="form-check-input me-1" type="checkbox" value="" aria-label="HYPERLINK PLACEHOLDER">
+                                    <input asp-for="IsTACConfirmed" type="checkbox" class="form-check-input" id="CBTaC">
+                                    <span asp-validation-for="IsTACConfirmed" class="text-danger"></span>
+                                    <!--<a href="TermsAndConditions.aspx">Akceptacja regulaminu</a>-->
+                                </div>
+    
+                                <center>
+                                    <div class="form-group">
+                                        <button type="submit" class="btm btn-outline-primary">Utwórz</button>
+                                        <!--<a type="btn" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Utwórz</a>-->
+                                        <!--<asp:Button Class="btn d-grid gap-2 btn-primary btn-block btn-lg" style="width: 150px" ID="BtnRegister" runat="server" Text="Utwórz" OnClick="BtnLogin_Click" />-->
+                                    </div>
+                                </center>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div style="height: 50px;">
-
-    </div>
-</div>
+</form>
