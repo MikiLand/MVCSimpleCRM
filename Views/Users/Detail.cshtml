@@ -8,3 +8,77 @@
 
 
 <p>@Model.Name @Model.Surname</p>
+
+
+
+<section>
+    <div class="album py-5 bg-light">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
+                            <center>
+                                <h3>@Model.Name @Model.Surname</h3>
+                            </center>
+                            <p><span>&#64;</span>@Model.Login</p>
+                            <p>@Model.Email</p>
+                            <p>Utworzono<br /> @Model.CreateDate</p>
+
+                            <a type="btn" style="float: right;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Edytuj</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="album py-5 bg-light">
+                        <div class="container">
+                            <h2><center>Zadania niezrealizowane</center></h2>
+                            <div class="row">
+                                @for (var i = 0; i < 3; i++)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="card mb-3 box-shadow">
+                                            <!--<img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">-->
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
+                                                <p class="card-title">TASK TITLE PLACEHOLDER</p>
+                                                <p class="card-text">TASK DESCRIPTION PLACEHOLDER</p>
+                                                <a type="btn" style="float: right;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Podgląd</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <a type="btn" style="float: right; margin-right: 10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
+                        </div>
+                    </div>
+
+                    <div class="album py-5 bg-light">
+                        <div class="container">
+                            <h2><center>Zadania niezrealizowane</center></h2>
+                            <div class="row">
+                                @for (var i = 0; i < 3; i++)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="card mb-3 box-shadow">
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
+                                                <p class="card-title">TASK TITLE PLACEHOLDER</p>
+                                                <p class="card-text">TASK DESCRIPTION PLACEHOLDER</p>
+                                                <a type="btn" style="float: right;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Podgląd</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <a type="btn" style="float: right; margin-right: 10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
