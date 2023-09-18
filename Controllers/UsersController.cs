@@ -66,10 +66,22 @@ namespace MVCSimpleCRM.Controllers
             return View(userVM);
         }
 
-        /*public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null) return View("Error");
-        }*/
+            var userVM = new EditUserViewModel
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                Login = user.Login,
+                Email = user.Email,
+                Password = user.Password,
+                IsTACConfirmed = user.IsTACConfirmed,
+                IsAdmin = user.IsAdmin,
+                CreateDate = user.CreateDate
+            };
+            return View(userVM);
+        }
     }
 }
