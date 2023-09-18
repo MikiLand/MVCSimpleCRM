@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using MVCSimpleCRM.ViewModels;
+using System.Reflection;
 
 namespace MVCSimpleCRM.Controllers
 {
@@ -38,14 +40,36 @@ namespace MVCSimpleCRM.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Users user)
+        public async Task<IActionResult> Create(CreateUserViewModel userVM)
         {
-            if(!ModelState.IsValid) 
+            if(ModelState.IsValid) 
             {
-                return View(user);
+                var user = new Users
+                {
+                    Name = userVM.Name,
+                    Surname = userVM.Surname,
+                    Login = userVM.Login,
+                    Email = userVM.Email,
+                    Password = userVM.Password,
+                    IsTACConfirmed = true,
+                    IsAdmin = 0,
+                    CreateDate = DateTime.Now
+                };
+                _userRepository.Add(user);
+                return RedirectToAction("Index");
             }
-            _userRepository.Add(user);
-            return RedirectToAction("Index");
+            else
+            {
+                ModelState.AddModelError("", "Error");
+            }
+
+            return View(userVM);
         }
+
+        /*public async Task<IActionResult> Edit(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null) return View("Error");
+        }*/
     }
 }
