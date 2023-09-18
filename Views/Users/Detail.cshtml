@@ -26,7 +26,7 @@
                             <p>@Model.Email</p>
                             <p>Utworzono<br /> @Model.CreateDate</p>
 
-                            <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Edytuj</a>
+                            <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
 
                         </div>
                     </div>
