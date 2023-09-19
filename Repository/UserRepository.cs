@@ -34,6 +34,11 @@ namespace MVCSimpleCRM.Repository
             return await _context.users.FirstOrDefaultAsync(i => i.Id == id);
         }
 
+        public async Task<Users> GetByIdAsyncNoTracking(int id)
+        {
+            return await _context.users.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+        }
+
         public async Task<IEnumerable<Users>> GetUserByLogin(string login)
         {
             //return await _context.users.Where(u => u.Login == login).ToListAsync();
