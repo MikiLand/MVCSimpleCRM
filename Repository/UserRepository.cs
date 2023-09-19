@@ -49,7 +49,8 @@ namespace MVCSimpleCRM.Repository
 
         public bool Update(Users user)
         {
-            throw new NotImplementedException();
+            _context.Update(user);
+            return Save();
         }
     }
 }

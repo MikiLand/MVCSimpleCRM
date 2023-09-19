@@ -83,5 +83,32 @@ namespace MVCSimpleCRM.Controllers
             };
             return View(userVM);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditUserViewModel userVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Edycja nieudana!");
+                return View("Edit", userVM);
+            }
+
+            var user = new Users
+            {
+                Id = id,
+                Name = userVM.Name,
+                Surname = userVM.Surname,
+                Login = userVM.Login,
+                Email = userVM.Email,
+                Password = userVM.Password,
+                IsTACConfirmed = userVM.IsTACConfirmed,
+                IsAdmin = userVM.IsAdmin,
+                CreateDate = userVM.CreateDate
+            };
+
+            _userRepository.Update(user);
+
+            return RedirectToAction("Index");
+        }
     }
 }
