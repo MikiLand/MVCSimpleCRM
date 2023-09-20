@@ -1,0 +1,13 @@
+﻿@model Users
+
+<h1>Czy na pewno chcesz usunąć tego użytkownika?</h1>
+
+<form method="post" asp-action="Delete" enctype="multipart/form-data">
+    <h3>@Model.Name @Model.Surname</h3>
+</form>
+<div class="form-group">
+    <form action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
+    </form>
+</div>

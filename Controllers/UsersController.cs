@@ -110,5 +110,22 @@ namespace MVCSimpleCRM.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userDetails = await _userRepository.GetByIdAsync(id);
+            if (userDetails == null) return View("Error");
+            return View(userDetails);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var userDetails = await _userRepository.GetByIdAsync(id);
+            if (userDetails == null) return View("Error");
+
+            _userRepository.Delete(userDetails);
+            return RedirectToAction("Index");
+        }
     }
 }
