@@ -6,84 +6,139 @@
 @{
 }
 
+<script type="text/javascript">
+    function openModal(ModalType) {
 
-<p>@Model.Name @Model.Surname</p>
+        if (ModalType == 1) {
+            $('#ModalDelete').modal('show');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('show');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('show');
+        }
+    }
+</script>
 
-
-
-<section>
-    <div class="album py-5 bg-light">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card mb-4 box-shadow">
-                        <div class="card-body">
-                            <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
-                            <center>
-                                <h3>@Model.Name @Model.Surname</h3>
-                            </center>
-                            <p><span>&#64;</span>@Model.Login</p>
-                            <p>@Model.Email</p>
-                            <p>Utworzono<br /> @Model.CreateDate</p>
-
-                            <div class="d-flex" style="float: right;">
-                                <div class="btn-group">
-                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
-                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id">Usuń</a>
+<form method="post" asp-action="Delete" enctype="multipart/form-data">
+    <section>
+        <div class="album py-5 bg-light">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
+                                <center>
+                                    <h3>@Model.Name @Model.Surname</h3>
+                                </center>
+                                <p><span>&#64;</span>@Model.Login</p>
+                                <p>@Model.Email</p>
+                                <p>Utworzono<br /> @Model.CreateDate</p>
+    
+                                <div class="d-flex" style="float: right;">
+                                    <div class="btn-group">
+                                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
+                                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)" >Usuń</a>
+                                        <!--<a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id">Usuń</a>-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-9">
-                    <div class="album py-5 bg-light">
-                        <div class="container">
-                            <h2><center>Zadania niezrealizowane</center></h2>
-                            <div class="row">
-                                @for (var i = 0; i < 3; i++)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="card mb-3 box-shadow">
-                                            <!--<img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">-->
-                                            <div class="card-body">
-                                                <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
-                                                <p class="card-title">TASK TITLE PLACEHOLDER</p>
-                                                <p class="card-text">TASK DESCRIPTION PLACEHOLDER</p>
-                                                <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Podgląd</a>
+    
+                    <div class="col-md-9">
+                        <div class="album py-5 bg-light">
+                            <div class="container">
+                                <h2><center>Zadania niezrealizowane</center></h2>
+                                <div class="row">
+                                    @for (var i = 0; i < 3; i++)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="card mb-3 box-shadow">
+                                                <!--<img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">-->
+                                                <div class="card-body">
+                                                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
+                                                    <p class="card-title">TASK TITLE PLACEHOLDER</p>
+                                                    <p class="card-text">TASK DESCRIPTION PLACEHOLDER</p>
+                                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Podgląd</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
+    
+                                <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
                             </div>
-
-                            <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
                         </div>
-                    </div>
-
-                    <div class="album py-5 bg-light">
-                        <div class="container">
-                            <h2><center>Zadania niezrealizowane</center></h2>
-                            <div class="row">
-                                @for (var i = 0; i < 3; i++)
-                                {
-                                    <div class="col-md-4">
-                                        <div class="card mb-3 box-shadow">
-                                            <div class="card-body">
-                                                <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
-                                                <p class="card-title">TASK TITLE PLACEHOLDER</p>
-                                                <p class="card-text">TASK DESCRIPTION PLACEHOLDER</p>
-                                                <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Podgląd</a>
+    
+                        <div class="album py-5 bg-light">
+                            <div class="container">
+                                <h2><center>Zadania niezrealizowane</center></h2>
+                                <div class="row">
+                                    @for (var i = 0; i < 3; i++)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="card mb-3 box-shadow">
+                                                <div class="card-body">
+                                                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
+                                                    <p class="card-title">TASK TITLE PLACEHOLDER</p>
+                                                    <p class="card-text">TASK DESCRIPTION PLACEHOLDER</p>
+                                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Podgląd</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
+                                <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
                             </div>
-                            <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    
+        <!-- ModalDelete -->
+        <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Usunięcie użytkownika</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Usuniecie użytkownika jest nieodwracalne! Czy na pewno chcesz usunąć tego użytkownika?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Anuluj</button>
+                        <form action="Delete" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ModalSuccess -->
+        <div class="modal fade" id="ModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="50" heighe="50">
+                        <p>Powodzenie</p>
+                        <p>Użytkownik został usunięty.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</form>

@@ -5,6 +5,7 @@ using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.ViewModels;
 using System.Reflection;
+//using System.Web.UI;
 
 namespace MVCSimpleCRM.Controllers
 {
@@ -125,6 +126,7 @@ namespace MVCSimpleCRM.Controllers
             if (userDetails == null) return View("Error");
 
             _userRepository.Delete(userDetails);
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true)
             return RedirectToAction("Index");
         }
     }
