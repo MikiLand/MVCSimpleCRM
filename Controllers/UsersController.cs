@@ -14,6 +14,8 @@ namespace MVCSimpleCRM.Controllers
         //private readonly ApplicationDbContext _context;
         private readonly IUserRepository _userRepository;
 
+        public object ViewBag { get; }
+
         //public UsersController(ApplicationDbContext context, IUserRepository userRepository)
         public UsersController(IUserRepository userRepository) 
         {
@@ -123,10 +125,17 @@ namespace MVCSimpleCRM.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var userDetails = await _userRepository.GetByIdAsync(id);
-            if (userDetails == null) return View("Error");
-
+            if (userDetails == null)
+            {
+                TempData["Result"] = "ERROR";
+                return View("Error");
+            }
             _userRepository.Delete(userDetails);
+            TempData["Result"] = "OK";
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true)
+
+            //return Ok();
+
             return RedirectToAction("Index");
         }
     }

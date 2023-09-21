@@ -1,11 +1,5 @@
 ﻿@model Users
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
 <script type="text/javascript">
     function openModal(ModalType) {
 
@@ -32,6 +26,17 @@
             $('#ModalSuccess').modal('hide');
         }
     }
+
+    /*if (ViewBag.Result === "OK")
+    {
+        alert("2");
+        openModal(3);
+    }
+    else if (ViewBag.Result === "ERROR")
+    {
+        alert("3");
+        openModal(2);
+    }*/
 </script>
 
 <form method="post" asp-action="Delete" enctype="multipart/form-data">
@@ -141,6 +146,22 @@
                         <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="50" heighe="50">
                         <p>Powodzenie</p>
                         <p>Użytkownik został usunięty.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ModalFailier -->
+        <div class="modal fade" id="ModalFailier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="50" heighe="50">
+                        <p>Niepowodzenie</p>
+                        <p>Użytkownik nie został usunięty.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>

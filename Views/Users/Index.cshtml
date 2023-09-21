@@ -1,10 +1,44 @@
 ﻿@model IEnumerable<Users>
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+<script type="text/javascript">
+    var Result = "@TempData["Result"]";
+
+    function openModal(ModalType) {
+
+        if (ModalType == 1) {
+            $('#ModalDelete').modal('show');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('show');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('show');
+        }
+    }
+
+    function closeModal(ModalType) {
+
+        if (ModalType == 1) {
+            $('#ModalDelete').modal('hide');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('hide');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('hide');
+        }
+    }
+
+ 
+
+    if (Result === "OK") {
+        $('#ModalSuccess').modal('show');
+        //openModal(3);
+    }
+    else if (Result === "ERROR") {
+        openModal(2);
+    }
+</script>
 
 <section class="jumbotron text-center">
     <div class="container">
@@ -53,6 +87,22 @@
                         </div>
                     </div>
                 }
+            </div>
+        </div>
+    </div>
+
+    <!-- ModalSuccess -->
+    <div class="modal fade" id="ModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="50" heighe="50">
+                    <p>Powodzenie</p>
+                    <p>Użytkownik został usunięty.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>
+                </div>
             </div>
         </div>
     </div>
