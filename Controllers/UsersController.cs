@@ -98,7 +98,7 @@ namespace MVCSimpleCRM.Controllers
 
             var user = new Users
             {
-                Id = id,
+                //Id = id,
                 Name = userVM.Name,
                 Surname = userVM.Surname,
                 Login = userVM.Login,

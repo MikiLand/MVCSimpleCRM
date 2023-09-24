@@ -31,12 +31,14 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<Users> GetByIdAsync(int id)
         {
-            return await _context.users.FirstOrDefaultAsync(i => i.Id == id);
+            return _context.users.FirstOrDefault();
+            //return await _context.users.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<Users> GetByIdAsyncNoTracking(int id)
         {
-            return await _context.users.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+            return _context.users.FirstOrDefault();
+            //return await _context.users.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<IEnumerable<Users>> GetUserByLogin(string login)

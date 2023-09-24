@@ -73,3 +73,9 @@ D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\refint\MVCSimpleCRM.dll
 D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\MVCSimpleCRM.pdb
 D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\MVCSimpleCRM.genruntimeconfig.cache
 D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\ref\MVCSimpleCRM.dll
+D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+D:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
