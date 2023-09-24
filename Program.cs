@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
+using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
