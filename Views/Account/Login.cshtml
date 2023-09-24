@@ -1,3 +1,99 @@
-﻿@model Users
+﻿@using MVCSimpleCRM.ViewModels
+@model LoginViewModel
 
-<p>Logowanie</p>
+@{
+    ViewData["Title"] = "Logowanie";
+}
+
+<div class="row">
+    <div class="col-md-5 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <center>
+                            <img width="200" src="https://placehold.co/200x200">
+                        </center>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col">
+                        <center>
+                            <h3 class="card-title">Logowanie</h3>
+                        </center>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <center>
+                            <hr />
+                        </center>
+                    </div>
+                </div>
+
+                @if (TempData["Error"] != null)
+                {
+                    <div class="col-md-12 alert alert-danger">
+                        <span><b>Uwaga!</b> - @TempData["Error"]</span>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col">
+                        <form asp-action="Login">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label">Wprowadz adres email</label>
+                                <input asp-for="Email" class="form-control" placeholder="Twój email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group" style="padding-top: 20px;">
+                                <label asp-for="PasswordHash" class="control-label">Wprowadz hasło</label>
+                                <input asp-for="PasswordHash" class="form-control" placeholder="Twoje hasło" />
+                                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                            </div>
+
+
+
+                            <center>
+                                <div class="form-group" style="padding-top: 20px;">
+                                    <input class="btn btn-outline-primary" type="submit" value="Zaloguj" />
+                                    <a class="btn btn-outline-secondary" asp-controller="Club" asp-action="Index">Wyjdź</a>
+                                </div>
+                            </center>
+                        </form>
+
+
+
+                        <!--<center>
+                            <label>Wprowadz adres email</label>
+                        </center>
+                        <div class="form-group">
+                            <asp:TextBox class="form-control" placeholder="Twój email"></asp:TextBox>
+                        </div>
+
+                        <center>
+                            <div class="mt-3">
+                                <label>Wprowadz hasło</label>
+                            </div>
+                        </center>
+                        <div class="form-group">
+                            <asp:TextBox class="form-control" placeholder="Twoje hasło" TextMode="Password"></asp:TextBox>
+                        </div>
+                        <center>
+                            <div class="d-grid gap-1">
+                                <center>
+                                    <asp:Button Class="btn d-grid gap-2 btn-primary btn-block btn-lg mt-3" style="width: 150px" Text="Login" />
+                                </center>
+                            </div>
+                        </center>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
