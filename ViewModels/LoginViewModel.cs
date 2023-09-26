@@ -5,7 +5,7 @@ namespace MVCSimpleCRM.ViewModels
     public class LoginViewModel
     {
         [Display(Name = "Email Address")]
-        [Required(ErrorMessage = "Email address is required")]
+        [Required(ErrorMessage = "Adres email jest wymagany!")]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]

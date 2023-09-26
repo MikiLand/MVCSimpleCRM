@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVCSimpleCRM.Data;
-using MVCSimpleCRM.ViewModels;
+using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using MVCSimpleCRM.ViewModels;
 
 namespace MVCSimpleCRM.Controllers
 {
@@ -37,47 +38,62 @@ namespace MVCSimpleCRM.Controllers
 
             if (user != null)
             {
-                //User is found, check password
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.PasswordHash);
                 if (passwordCheck)
                 {
-                    //Password correct, sign in
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.PasswordHash, false, false);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Users");
                     }
                 }
-                //Password is incorrect
                 TempData["Error"] = "Podane hasło nie jest prawidłowe!";
                 return View(loginVM);
             }
-            //User not found
             TempData["Error"] = "Podany użytkownik nie istnieje!";
             return View(loginVM);
+        }
 
-            /*if (!ModelState.IsValid) return View(loginVM);
+        [HttpGet]
+        public IActionResult Register()
+        {
+            var response = new RegisterViewModel();
+            return View(response);
+        }
 
-            var user = await _userManager.FindByLoginAsync(loginVM.Login, "");
-
-            if(User != null)
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid) return View(registerViewModel);
+        
+            var user = await _userManager.FindByEmailAsync(registerViewModel.Email);
+            if (user != null)
             {
-                var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
-
-                if (passwordCheck)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
-                    if(result.Succeeded)
-                    {
-                        RedirectToAction("Index", "Users");
-                    }
-                }
-
-                TempData["Error"] = "Podane hasło nie jest prawidłowe!";
-                return View(loginVM);
+                TempData["Error"] = "Użytkownik o takim adresie email już istnieje";
+                return View(registerViewModel);
             }
-            TempData["Error"] = "Podany użytkownik nie istnieje!";
-            return View(loginVM);*/
+
+            var newUser = new AppUser()
+            {
+                UserName = registerViewModel.UserName,
+                Name = registerViewModel.Name,
+                Surname = registerViewModel.Surname,
+                Email = registerViewModel.Email,
+                //PasswordHash = registerViewModel.PasswordHash
+            };
+            var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.PasswordHash);
+
+            if (newUserResponse.Succeeded)
+                await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+
+            return RedirectToAction("Index", "Race");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,0 +1,109 @@
+﻿@using MVCSimpleCRM.ViewModels
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Nowy użytkownik";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <!--<div class="row">
+                        <div-- class="col">
+                            <center>
+                                <img width="150px" src="imgs/candles.png">
+                            </center>
+                        </div>
+                    </div>-->
+
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <h3 class="card-title">Nowy użytkownika</h3>
+                            </center>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <hr />
+                            </center>
+                        </div>
+                    </div>
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="col-md-12 alert alert-danger">
+                            <span><b>Uwaga!</b> - @TempData["Error"]</span>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col">
+                            <form asp-action="Register">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="UserName">Login</label>
+                                    </center>
+                                    <input asp-for="UserName" class="form-control" placeholder="Twój login">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Name">Imię</label>
+                                    </center>
+                                    <input asp-for="Name" class="form-control" placeholder="Twoje imię">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Surname">Nazwisko</label>
+                                    </center>
+                                    <input asp-for="Surname" class="form-control" placeholder="Twoje nazwisko">
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="Email">Adres email</label>
+                                    </center>
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="Twój email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="PasswordHash">Hasło</label>
+                                    </center>
+                                    <input asp-for="PasswordHash" type="password" class="form-control" placeholder="Podaj hasło">
+                                    <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <center>
+                                        <label asp-for="ConfirmPassword">Powtórz hasło</label>
+                                    </center>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Powtórz hasło">
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+
+                                <center>
+                                    <div class="form-group">
+                                        <button type="submit" class="btm btn-outline-primary">Utwórz</button>
+                                        <a class="" asp-controller="Users" asp-action="Index">Zamknij</a>
+                                    </div>
+                                </center>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
