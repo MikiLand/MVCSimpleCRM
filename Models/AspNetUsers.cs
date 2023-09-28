@@ -12,6 +12,8 @@ namespace MVCSimpleCRM.Models
 
         //[DataType(DataType.Password)]
         public string PasswordHash { get; set; }
+
+        public DateTime CreateDate { get; set; }
         //public string ConfirmPassword { get; set; }
     }
 }
