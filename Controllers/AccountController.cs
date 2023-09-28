@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
 
 namespace MVCSimpleCRM.Controllers
@@ -10,16 +11,31 @@ namespace MVCSimpleCRM.Controllers
     public class AccountController : Controller
     {
         //private readonly ApplicationDbContext _context;
-        private readonly IUserRepository _accountRepository;
+
+
+        private readonly IAccountRepository _accountRepository;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
         public object ViewBag { get; }
 
-        //public UsersController(ApplicationDbContext context, IUserRepository userRepository)
-        public AccountsController(IUserRepository accountRepository) 
+        public AccountController(UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
+            ApplicationDbContext context,
+            IAccountRepository accountRepository)
+        {
+            _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            this._accountRepository = accountRepository;
+        }
+
+        /*public AccountController(IAccountRepository accountRepository) 
         {
             //_context = context;
             this._accountRepository = accountRepository;
-        }
+        }*/
 
         public async Task<IActionResult> Index()
         {
@@ -31,22 +47,22 @@ namespace MVCSimpleCRM.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             //Users users = _context.users.FirstOrDefault(u => u.Id == id);
-            Users users = await _userRepository.GetByIdAsync(id);
-            return View(users);
+            AspNetUsers accounts = await _accountRepository.GetByIdAsync(id);
+            return View(accounts);
         }
 
-        private readonly UserManager<AppUser> _userManager;
+        /*private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;*/
 
-        public AccountController(UserManager<AppUser> userManager,
+        /*public AccountController(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ApplicationDbContext context)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
-        }
+        }*/
 
         [HttpGet]
         public IActionResult Login()

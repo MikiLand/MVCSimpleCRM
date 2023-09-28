@@ -4,7 +4,7 @@ namespace MVCSimpleCRM.Models
 {
     public class AspNetUsers
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string UserName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -12,6 +12,6 @@ namespace MVCSimpleCRM.Models
 
         //[DataType(DataType.Password)]
         public string PasswordHash { get; set; }
-        public string ConfirmPassword { get; set; }
+        //public string ConfirmPassword { get; set; }
     }
 }

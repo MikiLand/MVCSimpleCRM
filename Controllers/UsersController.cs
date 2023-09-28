@@ -17,7 +17,7 @@ namespace MVCSimpleCRM.Controllers
         public object ViewBag { get; }
 
         //public UsersController(ApplicationDbContext context, IUserRepository userRepository)
-        public UsersController(IUserRepository userRepository) 
+        public UsersController(IUserRepository userRepository)
         {
             //_context = context;
             this._userRepository = userRepository;
@@ -45,7 +45,7 @@ namespace MVCSimpleCRM.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel userVM)
         {
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var user = new Users
                 {
