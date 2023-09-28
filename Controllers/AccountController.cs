@@ -9,6 +9,32 @@ namespace MVCSimpleCRM.Controllers
 {
     public class AccountController : Controller
     {
+        //private readonly ApplicationDbContext _context;
+        private readonly IUserRepository _accountRepository;
+
+        public object ViewBag { get; }
+
+        //public UsersController(ApplicationDbContext context, IUserRepository userRepository)
+        public AccountsController(IUserRepository accountRepository) 
+        {
+            //_context = context;
+            this._accountRepository = accountRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            //List<Users> users = _context.users.ToList();
+            IEnumerable<AspNetUsers> accounts = await _accountRepository.GetAll();
+            return View(accounts);
+        }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            //Users users = _context.users.FirstOrDefault(u => u.Id == id);
+            Users users = await _userRepository.GetByIdAsync(id);
+            return View(users);
+        }
+
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ApplicationDbContext _context;

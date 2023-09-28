@@ -46,7 +46,7 @@ namespace MVCSimpleCRM.Data
                         Surname = "Admin",
                     };
                     await userManager.CreateAsync(newAppUser, "!QAZ2wsx");
-                    //await userManager.AddToRoleAsync(newAppUser, UserRoles.Admin);
+                    await userManager.AddToRoleAsync(newAppUser, UserRoles.Admin);
                 }
             }
         }

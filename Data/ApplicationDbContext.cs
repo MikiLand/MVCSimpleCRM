@@ -15,6 +15,7 @@ namespace MVCSimpleCRM.Data
         public DbSet<Tasks> tasks { get; set; }
         public DbSet<TaskUsers> taskUsers { get; set; }
         public DbSet<TaskMessages> taskMessages { get; set; }
+        public DbSet<AspNetUsers> accounts { get; set; }
 
     }
 }

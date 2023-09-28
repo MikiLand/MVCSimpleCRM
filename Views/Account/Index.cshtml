@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AspNetUsers>
+
+<script type="text/javascript">
+    var Result = "@TempData["Result"]";
+    s
+    function openModal(ModalType) {
+
+        if (ModalType == 1) {
+            $('#ModalDelete').modal('show');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('show');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('show');
+        }
+    }
+
+    function closeModal(ModalType) {
+
+        if (ModalType == 1) {
+            $('#ModalDelete').modal('hide');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('hide');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('hide');
+        }
+    }
+
+
+
+    if (Result === "OK") {
+        $('#ModalSuccess').modal('show');
+        //openModal(3);
+    }
+    else if (Result === "ERROR") {
+        openModal(2);
+    }
+</script>
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Użytkownicy</h1>
+    </div>
+</section>
+
+<section>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-8">
+                        <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-primary" asp-controller="Account" asp-action="Register">Utwórz</a>
+                    </div>
+                    <div class="col-md-4">
+
+                        <div class="input-group col-md-3" style="margin-bottom: 20px">
+
+                            <input type="text" class="form-control" Style="width: 200px;" placeholder="Kogo szukasz?">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" Style="width: 120px;">Wyszukaj</button>
+
+                        </div>
+                    </div>
+
+                </div>
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3">
+                        <div class="card mb-4 box-shadow">
+                            <!--<img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">-->
+                            <div class="card-body">
+                                <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
+                                <p class="card-title" style="font-size:larger;">@item.Name @item.Surname</p>
+                                <p class="card-text"><span>&#64;</span>@item.UserName</p>
+                                <div class="d-flex" style="float: right;">
+                                    <div class="btn-group">
+                                        <button type="button" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
+                                        <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="@item.Id">Podgląd</a>
+                                    </div>
+                                    <!--<small class="text-muted">9 mins</small>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ModalSuccess -->
+    <div class="modal fade" id="ModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="50" heighe="50">
+                    <p>Powodzenie</p>
+                    <p>Użytkownik został usunięty.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
