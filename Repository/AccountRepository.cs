@@ -16,20 +16,26 @@ namespace MVCSimpleCRM.Repository
         {
             _context.Add(user);
             return Save();
+        }*/
+
+        public bool Update(AspNetUsers account)
+        {
+            _context.Update(account);
+            return Save();
         }
 
-        public bool Delete(Users user)
+        public bool Delete(AspNetUsers account)
         {
-            _context.Remove(user);
+            _context.Remove(account);
             return Save();
-        }*/
+        }
 
         public async Task<IEnumerable<AspNetUsers>> GetAll()
         {
             return await _context.aspNetUsers.ToListAsync();
         }
 
-        public async Task<AspNetUsers> GetByIdAsync(int id)
+        public async Task<AspNetUsers> GetByIdAsync(string id)
         {
             return _context.aspNetUsers.FirstOrDefault();
             //return await _context.accounts.FirstOrDefaultAsync(i => i.Id == id);
@@ -48,16 +54,10 @@ namespace MVCSimpleCRM.Repository
             return await _context.aspNetUsers.Where(u => u.UserName.Contains(username)).ToListAsync();
         }
 
-        /*public bool Save()
+        public bool Save()
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
-
-        public bool Update(Users user)
-        {
-            _context.Update(user);
-            return Save();
-        }*/
     }
 }

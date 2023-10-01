@@ -1,0 +1,73 @@
+﻿@using MVCSimpleCRM.ViewModels;
+@model EditAccountViewModel
+
+<form method="post" asp-action="Edit">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <center>
+                                    <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <h3 class="card-title">Edycja użytkownika</h3>
+                            </center>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <hr />
+                            </center>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="form-group mb-3">
+                                <center>
+                                    <label asp-for="Name">Imię</label>
+                                </center>
+                                <input asp-for="Name" class="form-control" placeholder="Twoje imię">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <center>
+                                    <label asp-for="Surname">Nazwisko</label>
+                                </center>
+                                <input asp-for="Surname" class="form-control" placeholder="Twoje nazwisko">
+                                <span asp-validation-for="Surname" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <center>
+                                    <label asp-for="Email">Adres email</label>
+                                </center>
+                                <input asp-for="Email" type="email" class="form-control" placeholder="Twój email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <center>
+                                <div class="form-group">
+                                    <button type="submit" class="btm btn-outline-primary">Aktualizuj</button>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -44,11 +44,46 @@ namespace MVCSimpleCRM.Controllers
             return View(accounts);
         }
 
-        public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(string id)
         {
             //Users users = _context.users.FirstOrDefault(u => u.Id == id);
             AspNetUsers accounts = await _accountRepository.GetByIdAsync(id);
             return View(accounts);
+        }
+
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var account = await _accountRepository.GetByIdAsync(id);
+            if (account == null) return View("Error");
+            var accountVM = new EditAccountViewModel
+            {
+                Name = account.Name,
+                Surname = account.Surname,
+                Email = account.Email
+            };
+            return View(accountVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, EditAccountViewModel accountVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Edycja nieudana!");
+                return View("Edit", accountVM);
+            }
+
+            var account = new AspNetUsers
+            {
+                Name = accountVM.Name,
+                Surname = accountVM.Surname,
+                Email = accountVM.Email
+            };
+
+            _accountRepository.Update(account);
+
+            return RedirectToAction("Index");
         }
 
         /*private readonly UserManager<AppUser> _userManager;
