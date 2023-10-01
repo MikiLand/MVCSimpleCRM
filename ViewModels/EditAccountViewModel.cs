@@ -20,9 +20,10 @@ namespace MVCSimpleCRM.ViewModels
         public string Email { get; set; }
 
         /*[Required]
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password)]*/
         public string PasswordHash { get; set; }
 
+        /*
         [Display(Name = "Confirm password")]
         [Required(ErrorMessage = "Potwierdzenie hasła jest wymagane!")]
         [DataType(DataType.Password)]

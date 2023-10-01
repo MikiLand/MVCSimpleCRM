@@ -58,9 +58,12 @@ namespace MVCSimpleCRM.Controllers
             if (account == null) return View("Error");
             var accountVM = new EditAccountViewModel
             {
+                Id = account.Id,
+                UserName = account.UserName,
                 Name = account.Name,
                 Surname = account.Surname,
-                Email = account.Email
+                Email = account.Email,
+                PasswordHash = account.PasswordHash
             };
             return View(accountVM);
         }
@@ -76,14 +79,17 @@ namespace MVCSimpleCRM.Controllers
 
             var account = new AspNetUsers
             {
+                Id = accountVM.Id,
+                UserName = accountVM.UserName,
                 Name = accountVM.Name,
                 Surname = accountVM.Surname,
-                Email = accountVM.Email
+                Email = accountVM.Email,
+                PasswordHash = accountVM.PasswordHash
             };
 
             _accountRepository.Update(account);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Account", "Detail");
         }
 
         /*private readonly UserManager<AppUser> _userManager;
@@ -163,7 +169,7 @@ namespace MVCSimpleCRM.Controllers
             if (newUserResponse.Succeeded)
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
 
-            return RedirectToAction("Index", "Race");
+            return RedirectToAction("Account", "Login");
         }
 
         [HttpPost]
