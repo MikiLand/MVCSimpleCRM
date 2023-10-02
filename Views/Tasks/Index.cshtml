@@ -122,6 +122,9 @@
                     </div>
                 </div>
                 <div class="col-md-9">
+                    <div class="col-md-12">
+                        <a type="btn" style="padding-right: 10px;" class="btn btn-sm btn-outline-primary" asp-controller="Task" asp-action="Create">Utwórz</a>
+                    </div>
                     @foreach (var item in Model)
                     {
                         <div class="card mb-4 box-shadow">
@@ -134,7 +137,7 @@
                                 <div class="col-md-11">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-7">
                                                 <p class="card-title">@item.Title</p>
                                                 <p class="card-text"> @item.Description</p>
                                                 <!--<div class="d-flex justify-content-between align-items-center">
@@ -148,6 +151,10 @@
                                                 <p class="card-title">@item.DueDate</p>
                                                 <p class="card-title">Aktualizacja:</p>
                                                 <p class="card-title">@item.CreateDate</p>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px; float: right;">Podgląd</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px; float: right;">Kopiuj</button>
                                             </div>
                                         </div>
                                     </div>

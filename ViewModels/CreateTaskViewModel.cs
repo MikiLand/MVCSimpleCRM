@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MVCSimpleCRM.Models
+namespace MVCSimpleCRM.ViewModels
 {
-    public class Tasks
+    public class CreateTaskViewModel
     {
         [Key]
         public int Id { get; set; }
