@@ -70,11 +70,12 @@
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
 
-                            <center>
-                                <div class="form-group">
+                            <div class="d-flex" style="padding-top: 20px;">
+                                <div class="btn-group">
                                     <button type="submit" class="btm btn-outline-primary">Aktualizuj</button>
+                                    <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="Detail" asp-route-id="@Model.Id">Anuluj</a>
                                 </div>
-                            </center>
+                            </div>
                         </div>
                     </div>
                 </div>

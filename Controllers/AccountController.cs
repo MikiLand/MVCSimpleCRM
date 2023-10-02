@@ -127,7 +127,7 @@ namespace MVCSimpleCRM.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.PasswordHash, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Users");
+                        return RedirectToAction("Index", "Account");
                     }
                 }
                 TempData["Error"] = "Podane hasło nie jest prawidłowe!";
@@ -169,7 +169,7 @@ namespace MVCSimpleCRM.Controllers
             if (newUserResponse.Succeeded)
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
 
-            return RedirectToAction("Account", "Login");
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]

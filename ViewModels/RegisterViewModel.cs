@@ -20,7 +20,8 @@ namespace MVCSimpleCRM.ViewModels
         [Required(ErrorMessage = "Adres email jest wymagany!")]
         public string Email { get; set; }
 
-        [Required]
+        [Display(Name = "Password")]
+        [Required(ErrorMessage = "Podanie hasła jest wymagane!")]
         [DataType(DataType.Password)]
         public string PasswordHash { get; set; }
 
