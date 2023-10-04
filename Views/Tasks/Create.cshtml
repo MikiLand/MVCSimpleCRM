@@ -13,18 +13,10 @@
             <div class="col-md-6 mx-auto">
                 <div class="card">
                     <div class="card-body">
-                        <!--<div class="row">
-                            <div-- class="col">
-                                <center>
-                                    <img width="150px" src="imgs/candles.png">
-                                </center>
-                            </div>
-                        </div>-->
-
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h3 class="card-title">Nowy użytkownika</h3>
+                                    <h3 class="card-title">Nowe zadanie</h3>
                                 </center>
                             </div>
                         </div>
@@ -37,17 +29,93 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <form asp-action="Register">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <center>
+                                        <label asp-for="Title">Tytuł</label>
+                                    </center>
+                                    <input asp-for="Title" class="form-control" placeholder="Tytuł zadania">
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-2">
+                                    <center>
+                                        <label asp-for="CreatorStatus">Status tworzącego</label>
+                                    </center>
+                                    <input asp-for="CreatorStatus" class="form-control" placeholder="PLACEHOLDER DDL">
+                                    <span asp-validation-for="CreatorStatus" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <center>
+                                        <label asp-for="CreateDate">Data utworzenia</label>
+                                    </center>
+                                    <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                    <span asp-validation-for="CreateDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-5">
+                                    <center>
+                                        <label asp-for="DueDate">Termin realizacji</label>
+                                    </center>
+                                    <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                    <span asp-validation-for="DueDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-2">
+                                    <center>
+                                        <label asp-for="Status">Status pracownika</label>
+                                    </center>
+                                    <input asp-for="Status" class="form-control" placeholder="PLACEHOLDER DDL">
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <center>
+                                    <label asp-for="Description">Opis zadania</label>
+                                </center>
+                                <input asp-for="Description" class="form-control" placeholder="Tytuł zadania">
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="d-flex" style="padding-top: 20px;">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-outline-primary">Utwórz</button>
+                                    <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="Index">Anuluj</a>
+                                </div>
+                            </div>
+                        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <!--<div class="row">
                             <div class="col">
                                 <div class="form-group mb-3">
                                     <center>
                                         <label asp-for="Login">Login</label>
                                     </center>
                                     <input asp-for="Login" class="form-control" placeholder="Twój login">
-                                    <span asp-validation-for="Login" class="text-danger"></span>
+                                    <span asp-validation-for="Login" class="text-danger"></span>-->
 
                                     <!--<input type="text" class="form-control" ID="TBLogin" placeholder="Twój login">-->
-                                </div>
+                        <!--</div>
 
                                 <div class="form-group mb-3">
                                     <center>
@@ -87,7 +155,7 @@
                                     </center>
                                     <input asp-for="Password" type="password" class="form-control" placeholder="Powtórz hasło">
                                     <span asp-validation-for="Password" class="text-danger"></span>
-                                </div>
+                                </div>-->
 
                                 <!--<div class="form-group mb-3">
                                     <center>
@@ -97,23 +165,22 @@
                                         <option>Wybierz</option>
                                     <span asp-validation-for="Position" class="text-danger"></span>
                                 </div>-->
-
-                                <div class="mb-3 form-check">
+                        <!--<div class="mb-3 form-check">
                                     <input asp-for="IsTACConfirmed" class="form-check-input me-1" type="checkbox" value="" aria-label="HYPERLINK PLACEHOLDER">
                                     <input asp-for="IsTACConfirmed" type="checkbox" class="form-check-input" id="CBTaC">
-                                    <span asp-validation-for="IsTACConfirmed" class="text-danger"></span>
+                                    <span asp-validation-for="IsTACConfirmed" class="text-danger"></span>-->
                                     <!--<a href="TermsAndConditions.aspx">Akceptacja regulaminu</a>-->
-                                </div>
+                        <!--<</div>
 
                                 <center>
                                     <div class="form-group">
-                                        <button type="submit" class="btm btn-outline-primary">Utwórz</button>
+                                        <button type="submit" class="btm btn-outline-primary">Utwórz</button>-->
                                         <!--<a type="btn" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Utwórz</a>-->
                                         <!--<asp:Button Class="btn d-grid gap-2 btn-primary btn-block btn-lg" style="width: 150px" ID="BtnRegister" runat="server" Text="Utwórz" OnClick="BtnLogin_Click" />-->
-                                    </div>
+                        <!--<</div>
                                 </center>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
