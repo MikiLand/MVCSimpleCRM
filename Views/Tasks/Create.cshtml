@@ -119,101 +119,41 @@
                                 </div>
                             </div>
 
+                            <!--@foreach (var item in Model)
+                            {
+                                <div class="card mb-4 box-shadow">-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <img class="card-img-top" src="https://placehold.co/20x20" alt="UserImage" width="200" heighe="200">
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <!--<p class="card-text"><span>&#64;</span>@item.UserName</p>-->
+                                                        <p class="card-text"><span>&#64;</span>TEST</p>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <!--<p class="card-title" style="font-size:larger;">@item.Name @item.Surname</p>-->
+                                                        <p class="card-title" style="font-size:larger;">TEST TEST</p>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right;">Usuń</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!--</div>
+                            }-->
 
-                        </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <!--<div class="row">
-                            <div class="col">
-                                <div class="form-group mb-3">
-                                    <center>
-                                        <label asp-for="Login">Login</label>
-                                    </center>
-                                    <input asp-for="Login" class="form-control" placeholder="Twój login">
-                                    <span asp-validation-for="Login" class="text-danger"></span>-->
-
-                                    <!--<input type="text" class="form-control" ID="TBLogin" placeholder="Twój login">-->
-                        <!--</div>
-
-                                <div class="form-group mb-3">
-                                    <center>
-                                        <label asp-for="Name">Imię</label>
-                                    </center>
-                                    <input asp-for="Name" class="form-control" placeholder="Twoje imię">
-                                    <span asp-validation-for="Name" class="text-danger"></span>
+                            <div class="d-flex" style="padding-top: 20px;">
+                                <div class="btn-group">
+                                    <button type="submit" class="btm btn-outline-primary">Aktualizuj</button>
+                                    <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="Detail" asp-route-id="@Model.Id">Anuluj</a>
                                 </div>
-
-                                <div class="form-group mb-3">
-                                    <center>
-                                        <label asp-for="Surname">Nazwisko</label>
-                                    </center>
-                                    <input asp-for="Surname" class="form-control" placeholder="Twoje nazwisko">
-                                    <span asp-validation-for="Surname" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <center>
-                                        <label asp-for="Email">Adres email</label>
-                                    </center>
-                                    <input asp-for="Email" type="email" class="form-control" placeholder="Twój email">
-                                    <span asp-validation-for="Email" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <center>
-                                        <label asp-for="Password">Hasło</label>
-                                    </center>
-                                    <input asp-for="Password" type="password" class="form-control" placeholder="Podaj hasło">
-                                    <span asp-validation-for="Password" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <center>
-                                        <label asp-for="Password">Powtórz hasło</label>
-                                    </center>
-                                    <input asp-for="Password" type="password" class="form-control" placeholder="Powtórz hasło">
-                                    <span asp-validation-for="Password" class="text-danger"></span>
-                                </div>-->
-
-                                <!--<div class="form-group mb-3">
-                                    <center>
-                                        <label asp-for="Position">Stanowisko</label>
-                                    </center>
-                                    <select asp-for="Position" asp-items=" ADD "AT SIGN" Html.GetEnumSelectList<Positions>"
-                                        <option>Wybierz</option>
-                                    <span asp-validation-for="Position" class="text-danger"></span>
-                                </div>-->
-                        <!--<div class="mb-3 form-check">
-                                    <input asp-for="IsTACConfirmed" class="form-check-input me-1" type="checkbox" value="" aria-label="HYPERLINK PLACEHOLDER">
-                                    <input asp-for="IsTACConfirmed" type="checkbox" class="form-check-input" id="CBTaC">
-                                    <span asp-validation-for="IsTACConfirmed" class="text-danger"></span>-->
-                                    <!--<a href="TermsAndConditions.aspx">Akceptacja regulaminu</a>-->
-                        <!--<</div>
-
-                                <center>
-                                    <div class="form-group">
-                                        <button type="submit" class="btm btn-outline-primary">Utwórz</button>-->
-                                        <!--<a type="btn" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Utwórz</a>-->
-                                        <!--<asp:Button Class="btn d-grid gap-2 btn-primary btn-block btn-lg" style="width: 150px" ID="BtnRegister" runat="server" Text="Utwórz" OnClick="BtnLogin_Click" />-->
-                        <!--<</div>
-                                </center>
                             </div>
-                        </div>-->
+                        </form>
                     </div>
                 </div>
             </div>
