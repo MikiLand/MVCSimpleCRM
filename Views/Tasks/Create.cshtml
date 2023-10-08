@@ -10,7 +10,7 @@
 <form method="post" asp-action="Create">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 mx-auto">
+            <div class="col-md-12 mx-auto">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -50,19 +50,22 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-2">
                                     <center>
                                         <label asp-for="CreateDate">Data utworzenia</label>
                                     </center>
                                     <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
                                     <span asp-validation-for="CreateDate" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-2">
                                     <center>
                                         <label asp-for="DueDate">Termin realizacji</label>
                                     </center>
                                     <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
                                     <span asp-validation-for="DueDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+
                                 </div>
                                 <div class="col-md-2">
                                     <center>
@@ -74,11 +77,13 @@
                             </div>
 
                             <div class="row">
-                                <center>
-                                    <label asp-for="Description">Opis zadania</label>
-                                </center>
-                                <input asp-for="Description" class="form-control" placeholder="Tytuł zadania">
-                                <span asp-validation-for="Description" class="text-danger"></span>
+                                <div class="col-md-12">
+                                    <center>
+                                        <label asp-for="Description">Opis zadania</label>
+                                    </center>
+                                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Opis zadania"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
                             </div>
 
                             <div class="d-flex" style="padding-top: 20px;">
@@ -87,6 +92,34 @@
                                     <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="Index">Anuluj</a>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <center>
+                                        <hr />
+                                    </center>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <center>
+                                        <label asp-for="Title">Tytuł</label>
+                                    </center>
+                                    <input asp-for="Title" class="form-control" placeholder="Tytuł zadania">
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-2">
+                                    <center>
+                                        <label asp-for="CreatorStatus">Status tworzącego</label>
+                                    </center>
+                                    <input asp-for="CreatorStatus" class="form-control" placeholder="PLACEHOLDER DDL">
+                                    <span asp-validation-for="CreatorStatus" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
                         </form>
 
 
