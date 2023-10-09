@@ -37,16 +37,30 @@
                                     <center>
                                         <label asp-for="Title">Tytuł</label>
                                     </center>
-                                    <input asp-for="Title" class="form-control" placeholder="Tytuł zadania">
+                                    <input asp-for="Title" class="form-control" placeholder="Uzupełnij tytuł zadania">
                                     <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-2">
                                     <center>
                                         <label asp-for="CreatorStatus">Status tworzącego</label>
                                     </center>
-                                    <input asp-for="CreatorStatus" class="form-control" placeholder="PLACEHOLDER DDL">
+                                    <div class="input-group col-md-3" style="margin-bottom: 20px">
+                                        <input asp-for="CreatorStatus" class="form-control" value="UTW">
+                                        <div class="dropdown m-1 mt-0 mb-0">
+                                            <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Zmień
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
+                                                <li><a class="dropdown-item" OnClick="ToProduct('Candles')">UTW - Utworzony</a></li>
+                                                <li><a class="dropdown-item" OnClick="ToProduct('Scents')">PRZ - Przypisany</a></li>
+                                                <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
+                                                <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <span asp-validation-for="CreatorStatus" class="text-danger"></span>
                                 </div>
+
                             </div>
 
                             <div class="row">
@@ -71,7 +85,19 @@
                                     <center>
                                         <label asp-for="Status">Status pracownika</label>
                                     </center>
-                                    <input asp-for="Status" class="form-control" placeholder="PLACEHOLDER DDL">
+                                    <div class="input-group col-md-3" style="margin-bottom: 20px">
+                                        <input asp-for="Status" class="form-control" value="NZR">
+                                        <div class="dropdown m-1 mt-0 mb-0">
+                                            <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Zmień
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
+                                                <li><a class="dropdown-item" OnClick="ToProduct('Candles')">NZR - Niezrealizowany</a></li>
+                                                <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
+                                                <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <span asp-validation-for="Status" class="text-danger"></span>
                                 </div>
                             </div>
@@ -81,7 +107,7 @@
                                     <center>
                                         <label asp-for="Description">Opis zadania</label>
                                     </center>
-                                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Opis zadania"></textarea>
+                                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Uzupełnij opis zadania"></textarea>
                                     <span asp-validation-for="Description" class="text-danger"></span>
                                 </div>
                             </div>
