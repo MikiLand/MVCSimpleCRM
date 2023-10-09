@@ -122,19 +122,34 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="col-md-12">
+                    <!--<div class="col-md-12">
                         <a type="btn" style="padding-right: 10px;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Create">Utwórz</a>
+                    </div>-->
+
+                    <div class="row">
+                        <div class="col-md-7" style="margin-bottom: 20px">
+                            <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Create">Utwórz</a>
+                        </div>
+                        <div class="col-md-5">
+
+                            <div class="input-group col-md-3" style="margin-bottom: 20px">
+
+                                <input type="text" class="form-control" Style="width: 200px;" placeholder="Jakiego zadania szukasz?">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" Style="width: 120px;">Wyszukaj</button>
+
+                            </div>
+                        </div>
                     </div>
+
                     @foreach (var item in Model)
                     {
                         <div class="card mb-4 box-shadow">
-                            <div style="height: 10px; background-color:aqua">
+                            <div style="height: 10px; background-color:aqua; border-radius: 3px 3px 0 0;">
                             </div>
                             <div class="row">
-                                <div class="col-md-1" style="width: 10px; height: 100px; background-color:deeppink">
-
-                                </div>
-                                <div class="col-md-11">
+                                <div class="col-md-12">
+                                    <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:deeppink; border-radius: 0 0 0 3px;">
+                                    </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-7">
@@ -152,9 +167,9 @@
                                                 <p class="card-title">Aktualizacja:</p>
                                                 <p class="card-title">@item.CreateDate</p>
                                             </div>
-                                            <div class="col-md-1">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px; float: right;">Podgląd</button>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px; float: right;">Kopiuj</button>
+                                            <div class="col-md-1" style="">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px;">Podgląd</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px;">Kopiuj</button>
                                             </div>
                                         </div>
                                     </div>

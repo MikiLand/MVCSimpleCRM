@@ -51,20 +51,17 @@
         <div class="container">
             <div class="row">
                 <div class="row">
-                    <div class="col-md-8">
-                        <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-primary" asp-controller="Account" asp-action="Register">Utwórz</a>
+                    <div class="col-md-8" style="margin-bottom: 20px">
+                        <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center;" class="btn btn-sm btn-outline-primary" asp-controller="Account" asp-action="Register">Utwórz</a>
                     </div>
                     <div class="col-md-4">
-
-                        <div class="input-group col-md-3" style="margin-bottom: 20px">
-
+                        <div class="input-group col-md-12" style="margin-bottom: 20px">
                             <input type="text" class="form-control" Style="width: 200px;" placeholder="Kogo szukasz?">
                             <button type="button" class="btn btn-sm btn-outline-secondary" Style="width: 120px;">Wyszukaj</button>
-
                         </div>
                     </div>
-
                 </div>
+
                 @foreach (var item in Model)
                 {
                     <div class="col-md-3">
