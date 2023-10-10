@@ -1,20 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
+using System.Reflection;
 
 namespace MVCSimpleCRM.Controllers
 {
     public class TasksController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
         private readonly ITaskRepository _taskRepository;
 
-        public TasksController(ApplicationDbContext context)
+        public TasksController(ITaskRepository taskRepository)
         {
-            _context = context;
+            //_context = context;
+            this._taskRepository = taskRepository;
         }
 
         /*public IActionResult Index()
