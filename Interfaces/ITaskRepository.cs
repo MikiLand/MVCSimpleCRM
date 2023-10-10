@@ -9,10 +9,10 @@ namespace MVCSimpleCRM.Interfaces
         Task<Tasks> GetByIdAsync(int id);
         //Task<IEnumerable<UsersTasks> GetUserByLogin(string login);
 
-        bool Add(Tasks user);
-        bool Update(Tasks user);
-        bool Delete(Tasks user);
-        //bool Edit(Users user);
+        bool Add(Tasks task);
+        bool Update(Tasks task);
+        bool Delete(Tasks task);
+        //bool Edit(Tasks task);
         bool Save();
     }
 }

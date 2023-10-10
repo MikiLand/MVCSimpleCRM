@@ -2,6 +2,7 @@
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
 
 namespace MVCSimpleCRM.Controllers
@@ -16,10 +17,17 @@ namespace MVCSimpleCRM.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        /*public IActionResult Index()
         {
             List<Tasks> tasks = _context.tasks.ToList();
             List<Users> users = _context.users.ToList();
+            return View(tasks);
+        }*/
+
+        public async Task<IActionResult> Index()
+        {
+            //List<Users> users = _context.users.ToList();
+            IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
             return View(tasks);
         }
 
@@ -41,7 +49,7 @@ namespace MVCSimpleCRM.Controllers
                     CreatorStatus = taskVM.CreatorStatus,
                     CreateDate = taskVM.CreateDate,
                     DueDate = taskVM.DueDate,
-                    IDUserCreate = ""
+                    IDUserCreate = taskVM.IDUserCreate
                 };
                 _taskRepository.Add(task);
                 return RedirectToAction("Index");
