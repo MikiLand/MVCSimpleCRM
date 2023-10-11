@@ -1,13 +1,34 @@
-﻿@using MVCSimpleCRM.ViewModels;
-@model EditTaskViewModel
+﻿@model Tasks
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+<script type="text/javascript">
+    function openModal(ModalType) {
 
-<form method="post" asp-action="Edit">
+        if (ModalType == 1) {
+            $('#ModalDelete').modal('show');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('show');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('show');
+        }
+    }
+
+    function closeModal(ModalType) {
+
+        if (ModalType == 1) {
+            $('#ModalDelete').modal('hide');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('hide');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('hide');
+        }
+    }
+</script>
+
+<form method="post" asp-action="Delete" enctype="multipart/form-data">
     <div class="container">
         <div class="row">
             <div class="col-md-12 mx-auto">
@@ -16,11 +37,12 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h3 class="card-title">Edycja użytkownika</h3>
+                                    <h3 class="card-title">Podgląd zadania</h3>
                                 </center>
                             </div>
                         </div>
-
+                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
+                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Usuń</a>
                         <div class="row">
                             <div class="col">
                                 <center>
@@ -156,6 +178,59 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ModalDelete -->
+    <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usunięcie zadania</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Usuniecie użytkownika jest nieodwracalne! Czy na pewno chcesz usunąć to zadanie?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
+                    <form action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ModalSuccess -->
+    <div class="modal fade" id="ModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="50" heighe="50">
+                    <p>Powodzenie</p>
+                    <p>Użytkownik został usunięty.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ModalFailier -->
+    <div class="modal fade" id="ModalFailier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="50" heighe="50">
+                    <p>Niepowodzenie</p>
+                    <p>Użytkownik nie został usunięty.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>
                 </div>
             </div>
         </div>

@@ -35,6 +35,12 @@ namespace MVCSimpleCRM.Controllers
             return View(tasks);
         }
 
+        public async Task<IActionResult> Detail(int id)
+        {
+            Tasks task = await _taskRepository.GetByIdAsync(id);
+            return View(task);
+        }
+
         public IActionResult Create()
         {
             return View();
