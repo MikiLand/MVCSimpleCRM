@@ -6,6 +6,7 @@ using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace MVCSimpleCRM.Controllers
 {
@@ -63,6 +64,48 @@ namespace MVCSimpleCRM.Controllers
             }
 
             return View(taskVM);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var task = await _taskRepository.GetByIdAsync(id);
+            if (task == null) return View("Error");
+            var taskVM = new EditTaskViewModel
+            {
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status,
+                CreatorStatus = task.CreatorStatus,
+                CreateDate = task.CreateDate,
+                DueDate = task.DueDate,
+                IDUserCreate = task.IDUserCreate
+            };
+            return View(taskVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditTaskViewModel taskVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Edycja nieudana!");
+                return View("Edit", taskVM);
+            }
+
+            var task = new Tasks
+            {
+                Title = taskVM.Title,
+                Description = taskVM.Description,
+                Status = taskVM.Status,
+                CreatorStatus = taskVM.CreatorStatus,
+                CreateDate = taskVM.CreateDate,
+                DueDate = taskVM.DueDate,
+                IDUserCreate = taskVM.IDUserCreate
+            };
+
+            _taskRepository.Update(task);
+
+            return RedirectToAction("Index");
         }
     }
 }
