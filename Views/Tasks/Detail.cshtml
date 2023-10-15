@@ -41,13 +41,12 @@
                                 </center>
                             </div>
                         </div>
-                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
-                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Usuń</a>
                         <div class="row">
-                            <div class="col">
-                                <center>
-                                    <hr />
-                                </center>
+                            <div class="col-md-11">
+                                <hr />
+                            </div>
+                            <div class="col-md-1">
+                                <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
                             </div>
                         </div>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -57,26 +56,15 @@
                                 <center>
                                     <label asp-for="Title">Tytuł</label>
                                 </center>
-                                <input asp-for="Title" class="form-control" placeholder="Uzupełnij tytuł zadania">
+                                <input asp-for="Title" class="form-control" placeholder="Uzupełnij tytuł zadania" readonly="True">
                                 <span asp-validation-for="Title" class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
                                 <center>
                                     <label asp-for="CreatorStatus">Status tworzącego</label>
                                 </center>
-                                <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="CreatorStatus" class="form-control" value="UTW">
-                                    <div class="dropdown m-1 mt-0 mb-0">
-                                        <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Zmień
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Candles')">UTW - Utworzony</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Scents')">PRZ - Przypisany</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
-                                        </ul>
-                                    </div>
+                                <div class="col-md-12" style="margin-bottom: 20px">
+                                    <input asp-for="CreatorStatus" class="form-control" value="UTW" readonly="True">
                                 </div>
                                 <span asp-validation-for="CreatorStatus" class="text-danger"></span>
                             </div>
@@ -88,14 +76,14 @@
                                 <center>
                                     <label asp-for="CreateDate">Data utworzenia</label>
                                 </center>
-                                <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31" readonly="True">
                                 <span asp-validation-for="CreateDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
                                 <center>
                                     <label asp-for="DueDate">Termin realizacji</label>
                                 </center>
-                                <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31" readonly="True">
                                 <span asp-validation-for="DueDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
@@ -105,18 +93,8 @@
                                 <center>
                                     <label asp-for="Status">Status pracownika</label>
                                 </center>
-                                <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="Status" class="form-control" value="NZR">
-                                    <div class="dropdown m-1 mt-0 mb-0">
-                                        <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Zmień
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Candles')">NZR - Niezrealizowany</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
-                                        </ul>
-                                    </div>
+                                <div class="input-group col-md-12" style="margin-bottom: 20px">
+                                    <input asp-for="Status" class="form-control" value="NZR" readonly="True">
                                 </div>
                                 <span asp-validation-for="Status" class="text-danger"></span>
                             </div>
@@ -127,7 +105,7 @@
                                 <center>
                                     <label asp-for="Description">Opis zadania</label>
                                 </center>
-                                <textarea asp-for="Description" class="form-control" rows="5" placeholder="Uzupełnij opis zadania"></textarea>
+                                <textarea asp-for="Description" class="form-control" rows="5" placeholder="Uzupełnij opis zadania" readonly="True"></textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
                         </div>
@@ -159,22 +137,15 @@
                                                     <!--<p class="card-title" style="font-size:larger;">USERNAME USERSURNAME PLACEHOLDER</p>-->
                                                 <p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">TEST TEST</p>
                                                 </div>
-                                                <div class="col-md-1">
-                                                <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         <!-- ForEach end here-->
-
-                        <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Create">Dodaj użytkownika</a>
-
                         <div class="d-flex" style="padding-top: 20px;">
                             <div class="btn-group">
-                                <button type="submit" class="btn btn-outline-primary">Utwórz</button>
-                                <a class="btn btn-outline-secondary" asp-controller="Tasks" asp-action="Index">Anuluj</a>
+                                <a class="btn btn-outline-secondary" asp-controller="Tasks" asp-action="Index">Wróć</a>
                             </div>
                         </div>
                     </div>
