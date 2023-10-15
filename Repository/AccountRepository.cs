@@ -35,10 +35,11 @@ namespace MVCSimpleCRM.Repository
             return await _context.aspNetUsers.ToListAsync();
         }
 
-        public async Task<AspNetUsers> GetByIdAsync(string id)
+        public async Task<AspNetUsers> GetByIdAsync(string Id)
         {
-            return _context.aspNetUsers.FirstOrDefault();
-            //return await _context.accounts.FirstOrDefaultAsync(i => i.Id == id);
+            //return _context.aspNetUsers.FirstOrDefault(i => i.Id == id);
+            //return await _context.aspNetUsers.FirstOrDefaultAsync(x => x.Id == Id);
+            return await _context.aspNetUsers.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
 
         public async Task<AspNetUsers> GetByIdAsyncNoTracking(int id)

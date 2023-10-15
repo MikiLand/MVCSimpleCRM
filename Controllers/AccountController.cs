@@ -89,7 +89,7 @@ namespace MVCSimpleCRM.Controllers
 
             _accountRepository.Update(account);
 
-            return RedirectToAction("Account", "Detail");
+            return RedirectToAction("Detail", "Account");
         }
 
         /*private readonly UserManager<AppUser> _userManager;

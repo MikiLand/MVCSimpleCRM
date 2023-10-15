@@ -34,6 +34,7 @@ namespace MVCSimpleCRM.Controllers
         {
             //Users users = _context.users.FirstOrDefault(u => u.Id == id);
             Users users = await _userRepository.GetByIdAsync(id);
+            //Users users = _userRepository.GetByIdAsync(u => u.Id == id);
             return View(users);
         }
 
