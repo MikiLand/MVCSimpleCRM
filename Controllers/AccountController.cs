@@ -46,7 +46,6 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
-            //Users users = _context.users.FirstOrDefault(u => u.Id == id);
             AspNetUsers accounts = await _accountRepository.GetByIdAsync(id);
             return View(accounts);
         }

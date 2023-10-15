@@ -37,8 +37,6 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<AspNetUsers> GetByIdAsync(string Id)
         {
-            //return _context.aspNetUsers.FirstOrDefault(i => i.Id == id);
-            //return await _context.aspNetUsers.FirstOrDefaultAsync(x => x.Id == Id);
             return await _context.aspNetUsers.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
 

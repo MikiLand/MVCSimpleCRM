@@ -29,9 +29,9 @@ namespace MVCSimpleCRM.Repository
             return await _context.tasks.ToListAsync();
         }
 
-        public async Task<Tasks> GetByIdAsync(int id)
+        public async Task<Tasks> GetByIdAsync(int Id)
         {
-            return _context.tasks.FirstOrDefault();
+            return await _context.tasks.Where(x => x.Id == Id).FirstOrDefaultAsync();
             //return await _context.users.FirstOrDefaultAsync(i => i.Id == id);
         }
 
