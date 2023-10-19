@@ -77,14 +77,14 @@
                                 <center>
                                     <label asp-for="CreateDate">Data utworzenia</label>
                                 </center>
-                                <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31" readonly="True">
+                                <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31" readonly="True" id="DateFrom">
                                 <span asp-validation-for="CreateDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
                                 <center>
                                     <label asp-for="DueDate">Termin realizacji</label>
                                 </center>
-                                <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31" readonly="True">
+                                <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31" readonly="True" id="DateTo">
                                 <span asp-validation-for="DueDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
