@@ -12,7 +12,6 @@ namespace MVCSimpleCRM.Interfaces
         bool Add(Tasks task);
         bool Update(Tasks task);
         bool Delete(Tasks task);
-        //bool Edit(Tasks task);
         bool Save();
     }
 }

@@ -100,6 +100,7 @@ namespace MVCSimpleCRM.Controllers
 
             var task = new Tasks
             {
+                Id = id,
                 Title = taskVM.Title,
                 Description = taskVM.Description,
                 Status = taskVM.Status,
