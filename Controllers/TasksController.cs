@@ -112,7 +112,7 @@ namespace MVCSimpleCRM.Controllers
 
             _taskRepository.Update(task);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Detail", "Tasks", new { id = task.Id });
         }
 
         public async Task<IActionResult> Delete(int id)
