@@ -88,7 +88,7 @@ namespace MVCSimpleCRM.Controllers
 
             _accountRepository.Update(account);
 
-            return RedirectToAction("Detail", "Account");
+            return RedirectToAction("Detail", "Account", new {id = account.Id });
         }
 
         /*private readonly UserManager<AppUser> _userManager;
