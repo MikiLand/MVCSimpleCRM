@@ -178,8 +178,6 @@ namespace MVCSimpleCRM.Controllers
             TempData["Result"] = "OK";
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true)
 
-            //return Ok();
-
             return RedirectToAction("Index");
         }
     }

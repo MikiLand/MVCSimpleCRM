@@ -41,13 +41,6 @@ namespace MVCSimpleCRM.Repository
             //return await _context.users.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        /*public async Task<IEnumerable<Tasks>> GetUserByLogin(string login)
-        {
-            //return await _context.users.Where(u => u.Login == login).ToListAsync();
-            //return await _context.users.Where(u => u.Login.Contains(login) && u.Login.StartsWith("aaa")).ToListAsync();
-            return await _context.users.Where(u => u.Login.Contains(login)).ToListAsync();
-        }*/
-
         public bool Save()
         {
             var saved = _context.SaveChanges();

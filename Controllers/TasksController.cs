@@ -115,13 +115,6 @@ namespace MVCSimpleCRM.Controllers
             return RedirectToAction("Detail", "Tasks", new { id = task.Id });
         }
 
-        public async Task<IActionResult> Delete(int id)
-        {
-            var taskDetails = await _taskRepository.GetByIdAsync(id);
-            if (taskDetails == null) return View("Error");
-            return View(taskDetails);
-        }
-
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteTask(int id)
         {
@@ -134,8 +127,6 @@ namespace MVCSimpleCRM.Controllers
             _taskRepository.Delete(taskDetails);
             TempData["Result"] = "OK";
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true)
-
-            //return Ok();
 
             return RedirectToAction("Index");
         }
