@@ -47,6 +47,7 @@
                             </div>
                             <div class="col-md-1">
                                 <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
+                                <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Usuń</a>
                             </div>
                         </div>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
