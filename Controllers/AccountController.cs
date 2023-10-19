@@ -91,19 +91,6 @@ namespace MVCSimpleCRM.Controllers
             return RedirectToAction("Detail", "Account", new {id = account.Id });
         }
 
-        /*private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly ApplicationDbContext _context;*/
-
-        /*public AccountController(UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
-            ApplicationDbContext context)
-        {
-            _context = context;
-            _signInManager = signInManager;
-            _userManager = userManager;
-        }*/
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -175,6 +162,24 @@ namespace MVCSimpleCRM.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var accountDetails = await _accountRepository.GetByIdAsync(id);
+            if (accountDetails == null)
+            {
+                TempData["Result"] = "ERROR";
+                return View("Error");
+            }
+            _accountRepository.Delete(accountDetails);
+            TempData["Result"] = "OK";
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true)
+
+            //return Ok();
+
             return RedirectToAction("Index");
         }
     }
