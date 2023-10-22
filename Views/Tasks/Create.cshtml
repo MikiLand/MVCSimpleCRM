@@ -2,12 +2,24 @@
 @model EditTaskViewModel
 
 <script type="text/javascript">
-    const date = new Date();
-    const dateFrom = document.getElementById("DateFrom");
-    const dateTo = document.getElementById("DateTo");
+    document.addEventListener('readystatechange', event => {
+        switch (document.readyState) {
+            case "complete":
+                const date = new Date();
+                
+                const dateFrom = document.getElementById("CreateDate");
+                const dateTo = document.getElementById("DueDate");
 
-    dateFrom.valueAsDate = new Date()
-    dateTo.valueAsDate = date.addDays(new Date(), 7)
+                dateFrom.value = formatDate(date);
+                dateTo.value = formatDate(addDays(date, 7));
+                break;
+        }
+    });
+
+    function formatDate(dateToFormat) {
+        var result = dateToFormat.getFullYear() + "-" + (dateToFormat.getMonth() + 1) + "-" + dateToFormat.getDate();
+        return result;
+    }
 
     function addDays(date, days) {
         var result = new Date(date);
@@ -27,6 +39,10 @@
             $('#ModalSuccess').modal('hide');
         }
     }
+</script>
+<script defer>
+    
+    //document.getElementById('TitleEditBox').textContent = 'AAAAA';
 </script>
 
 <form method="post" asp-action="Create">
@@ -88,14 +104,14 @@
                                 <center>
                                     <label asp-for="CreateDate">Data utworzenia</label>
                                 </center>
-                                <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" asp-for="CreateDate" id="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
                                 <span asp-validation-for="CreateDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
                                 <center>
                                     <label asp-for="DueDate">Termin realizacji</label>
                                 </center>
-                                <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" asp-for="DueDate" id="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
                                 <span asp-validation-for="DueDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
