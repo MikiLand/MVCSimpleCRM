@@ -1,11 +1,27 @@
 ﻿@using MVCSimpleCRM.ViewModels;
 @model EditTaskViewModel
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+<script type="text/javascript">
+    function CreatorStatusChange(Status) {
+        if (Status == 'UTW')
+            document.getElementById('CreatorStatus').value = "UTW";
+        else if (Status == 'PRZ')
+            document.getElementById('CreatorStatus').value = "PRZ";
+        else if (Status == 'WRZ')
+            document.getElementById('CreatorStatus').value = "WRZ";
+        else if (Status == 'ZAK')
+            document.getElementById('CreatorStatus').value = "ZAK";
+    }
+
+    function StatusChange(Status) {
+        if (Status == 'NZR')
+            document.getElementById('Status').value = "NZR";
+        else if (Status == 'WRZ')
+            document.getElementById('Status').value = "WRZ";
+        else if (Status == 'ZAK')
+            document.getElementById('Status').value = "ZAK";
+    }
+</script>
 
 <form method="post" asp-action="Edit">
     <div class="container">
@@ -16,7 +32,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h3 class="card-title">Edycja użytkownika</h3>
+                                    <h3 class="card-title">Edycja zadania</h3>
                                 </center>
                             </div>
                         </div>
@@ -43,16 +59,16 @@
                                     <label asp-for="CreatorStatus">Status tworzącego</label>
                                 </center>
                                 <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="CreatorStatus" class="form-control" value="UTW">
+                                    <input asp-for="CreatorStatus" readonly="True" class="form-control">
                                     <div class="dropdown m-1 mt-0 mb-0">
                                         <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
                                             Zmień
                                         </a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Candles')">UTW - Utworzony</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Scents')">PRZ - Przypisany</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('UTW')">UTW - Utworzony</a></li>
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('PRZ')">PRZ - Przypisany</a></li>
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('WRZ')">WRZ - W realizacji</a></li>
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('ZAK')">ZAK - Zakończony</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -66,14 +82,14 @@
                                 <center>
                                     <label asp-for="CreateDate">Data utworzenia</label>
                                 </center>
-                                <input type="date" asp-for="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" asp-for="CreateDate" class="form-control" min="2000-01-01" max="2060-12-31">
                                 <span asp-validation-for="CreateDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
                                 <center>
                                     <label asp-for="DueDate">Termin realizacji</label>
                                 </center>
-                                <input type="date" asp-for="DueDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" asp-for="DueDate" class="form-control" min="2000-01-01" max="2060-12-31">
                                 <span asp-validation-for="DueDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
@@ -84,15 +100,15 @@
                                     <label asp-for="Status">Status pracownika</label>
                                 </center>
                                 <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="Status" class="form-control" value="NZR">
+                                    <input asp-for="Status" readonly="True" class="form-control">
                                     <div class="dropdown m-1 mt-0 mb-0">
                                         <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
                                             Zmień
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Candles')">NZR - Niezrealizowany</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
+                                            <li><a class="dropdown-item" OnClick="StatusChange('NZR')">NZR - Niezrealizowany</a></li>
+                                            <li><a class="dropdown-item" OnClick="StatusChange('WRZ')">WRZ - W realizacji</a></li>
+                                            <li><a class="dropdown-item" OnClick="StatusChange('ZAK')">ZAK - Zakończony</a></li>
                                         </ul>
                                     </div>
                                 </div>

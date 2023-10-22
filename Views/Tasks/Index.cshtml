@@ -1,10 +1,42 @@
 ﻿@model IEnumerable<Tasks>
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+<script type="text/javascript">
+    document.addEventListener('readystatechange', event => {
+        switch (document.readyState) {
+            case "complete":
+                const date = new Date();
+
+                const dateFrom = document.getElementById("DateFrom");
+                const dateTo = document.getElementById("DateTo");
+
+                dateFrom.value = formatDate(date);
+                dateTo.value = formatDate(addDays(date, 7));
+                break;
+        }
+    });
+
+    function DateTypeChange(Type) {
+        if (Type == 'UTW')
+            document.getElementById('DateType').value = "Utworzenia";
+        else if (Type == 'PRZ')
+            document.getElementById('DateType').value = "Przypomnienia";
+        else if (Type == 'AKT')
+            document.getElementById('DateType').value = "Aktualizacji";
+        else if (Type == 'ZAK')
+            document.getElementById('DateType').value = "Zakończenia";
+    }
+
+    function formatDate(dateToFormat) {
+        var result = dateToFormat.getFullYear() + "-" + (dateToFormat.getMonth() + 1) + "-" + dateToFormat.getDate();
+        return result;
+    }
+
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+</script>
 
 <section class="jumbotron text-center">
     <div class="container">
@@ -48,23 +80,23 @@
                             </div>
 
                             <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                <input type="text" class="form-control" placeholder="Rodzaj daty">
+                                <input type="text" readonly="True" id="DateType" class="form-control" value="Zakończenia" placeholder="Rodzaj daty">
                                 <div class="dropdown m-1 mt-0 mb-0">
-                                    <a class="btn btn-secondary dropdown-toggle" style="width: 100px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="btn btn-secondary dropdown-toggle" style="width: 100px" href="#" role="button"  data-bs-toggle="dropdown" aria-expanded="false">
                                         Wybierz
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
-                                        <li><a class="dropdown-item" OnClick="ToProduct('Candles')">Utworzenia</a></li>
-                                        <li><a class="dropdown-item" OnClick="ToProduct('Scents')">Przypomnienia</a></li>
-                                        <li><a class="dropdown-item" OnClick="ToProduct('Other')">Aktualizacji</a></li>
-                                        <li><a class="dropdown-item" OnClick="ToProduct('Other')">Zakończenia</a></li>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" OnClick="DateTypeChange('UTW')">Utworzenia</a></li>
+                                        <li><a class="dropdown-item" OnClick="DateTypeChange('PRZ')">Przypomnienia</a></li>
+                                        <li><a class="dropdown-item" OnClick="DateTypeChange('AKT')">Aktualizacji</a></li>
+                                        <li><a class="dropdown-item" OnClick="DateTypeChange('ZAK')">Zakończenia</a></li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                <input type="date" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
-                                <input type="date" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" id="DateFrom" class="form-control" min="2000-01-01" max="2060-12-31">
+                                <input type="date" id="DateTo" class="form-control" min="2000-01-01" max="2060-12-31">
                             </div>
 
                             <div class="row">

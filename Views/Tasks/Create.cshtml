@@ -7,7 +7,7 @@
             case "complete":
                 const date = new Date();
                 
-                const dateFrom = document.getElementById("CreateDate");
+                const dateFrom = document.getElementById("DateFrom");
                 const dateTo = document.getElementById("DueDate");
 
                 dateFrom.value = formatDate(date);
@@ -97,12 +97,12 @@
                                     <label asp-for="CreatorStatus">Status tworzącego</label>
                                 </center>
                                 <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="CreatorStatus" id="CreatorStatus" class="form-control" value="UTW">
+                                    <input asp-for="CreatorStatus" readonly="True" id="CreatorStatus" class="form-control" value="UTW">
                                     <div class="dropdown m-1 mt-0 mb-0">
                                         <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
                                             Zmień
                                         </a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             <li><a class="dropdown-item" OnClick="CreatorStatusChange('UTW')">UTW - Utworzony</a></li>
                                             <li><a class="dropdown-item" OnClick="CreatorStatusChange('PRZ')">PRZ - Przypisany</a></li>
                                             <li><a class="dropdown-item" OnClick="CreatorStatusChange('WRZ')">WRZ - W realizacji</a></li>
@@ -120,7 +120,7 @@
                                 <center>
                                     <label asp-for="CreateDate">Data utworzenia</label>
                                 </center>
-                                <input type="date" asp-for="CreateDate" id="CreateDate" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
+                                <input type="date" asp-for="CreateDate" id="DateFrom" class="form-control" value="2018-07-22" min="2000-01-01" max="2060-12-31">
                                 <span asp-validation-for="CreateDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-2">
@@ -138,12 +138,12 @@
                                     <label asp-for="Status">Status pracownika</label>
                                 </center>
                                 <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="Status" id="Status" class="form-control" value="NZR">
+                                    <input asp-for="Status" id="Status" readonly="True" class="form-control" value="NZR">
                                     <div class="dropdown m-1 mt-0 mb-0">
                                         <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
                                             Zmień
                                         </a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             <li><a class="dropdown-item" OnClick="StatusChange('NZR')">NZR - Niezrealizowany</a></li>
                                             <li><a class="dropdown-item" OnClick="StatusChange('WRZ')">WRZ - W realizacji</a></li>
                                             <li><a class="dropdown-item" OnClick="StatusChange('ZAK')">ZAK - Zakończony</a></li>
