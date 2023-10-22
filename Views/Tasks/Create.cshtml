@@ -16,6 +16,26 @@
         }
     });
 
+    function CreatorStatusChange(Status) {
+        if (Status == 'UTW')
+            document.getElementById('CreatorStatus').value = "UTW";
+        else if (Status == 'PRZ')
+            document.getElementById('CreatorStatus').value = "PRZ";
+        else if (Status == 'WRZ')
+            document.getElementById('CreatorStatus').value = "WRZ";
+        else if (Status == 'ZAK')
+            document.getElementById('CreatorStatus').value = "ZAK";
+    }
+
+    function StatusChange(Status) {
+        if (Status == 'NZR')
+            document.getElementById('Status').value = "NZR";
+        else if (Status == 'WRZ')
+            document.getElementById('Status').value = "WRZ";
+        else if (Status == 'ZAK')
+            document.getElementById('Status').value = "ZAK";
+    }
+
     function formatDate(dateToFormat) {
         var result = dateToFormat.getFullYear() + "-" + (dateToFormat.getMonth() + 1) + "-" + dateToFormat.getDate();
         return result;
@@ -39,10 +59,6 @@
             $('#ModalSuccess').modal('hide');
         }
     }
-</script>
-<script defer>
-    
-    //document.getElementById('TitleEditBox').textContent = 'AAAAA';
 </script>
 
 <form method="post" asp-action="Create">
@@ -81,16 +97,16 @@
                                     <label asp-for="CreatorStatus">Status tworzącego</label>
                                 </center>
                                 <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="CreatorStatus" class="form-control" value="UTW">
+                                    <input asp-for="CreatorStatus" id="CreatorStatus" class="form-control" value="UTW">
                                     <div class="dropdown m-1 mt-0 mb-0">
                                         <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
                                             Zmień
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Candles')">UTW - Utworzony</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Scents')">PRZ - Przypisany</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('UTW')">UTW - Utworzony</a></li>
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('PRZ')">PRZ - Przypisany</a></li>
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('WRZ')">WRZ - W realizacji</a></li>
+                                            <li><a class="dropdown-item" OnClick="CreatorStatusChange('ZAK')">ZAK - Zakończony</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -122,15 +138,15 @@
                                     <label asp-for="Status">Status pracownika</label>
                                 </center>
                                 <div class="input-group col-md-3" style="margin-bottom: 20px">
-                                    <input asp-for="Status" class="form-control" value="NZR">
+                                    <input asp-for="Status" id="Status" class="form-control" value="NZR">
                                     <div class="dropdown m-1 mt-0 mb-0">
                                         <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
                                             Zmień
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Candles')">NZR - Niezrealizowany</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">WRZ - W realizacji</a></li>
-                                            <li><a class="dropdown-item" OnClick="ToProduct('Other')">ZAK - Zakończony</a></li>
+                                            <li><a class="dropdown-item" OnClick="StatusChange('NZR')">NZR - Niezrealizowany</a></li>
+                                            <li><a class="dropdown-item" OnClick="StatusChange('WRZ')">WRZ - W realizacji</a></li>
+                                            <li><a class="dropdown-item" OnClick="StatusChange('ZAK')">ZAK - Zakończony</a></li>
                                         </ul>
                                     </div>
                                 </div>
