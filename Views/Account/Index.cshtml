@@ -9,7 +9,7 @@
             $('#ModalDelete').modal('show');
         }
         else if (ModalType == 2) {
-            $('#ModalError').modal('show');
+            $('#ModalPermissions').modal('show');
         }
         else if (ModalType == 3) {
             $('#ModalSuccess').modal('show');
@@ -22,7 +22,7 @@
             $('#ModalDelete').modal('hide');
         }
         else if (ModalType == 2) {
-            $('#ModalError').modal('hide');
+            $('#ModalPermissions').modal('hide');
         }
         else if (ModalType == 3) {
             $('#ModalSuccess').modal('hide');
@@ -51,9 +51,18 @@
         <div class="container">
             <div class="row">
                 <div class="row">
-                    <div class="col-md-8" style="margin-bottom: 20px">
-                        <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center;" class="btn btn-sm btn-outline-primary" asp-controller="Account" asp-action="Register">Utwórz</a>
-                    </div>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <div class="col-md-8" style="margin-bottom: 20px">
+                            <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center;" class="btn btn-sm btn-outline-primary" asp-controller="Account" asp-action="Register">Utwórz</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-8" style="margin-bottom: 20px">
+                            <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center;" class="btn btn-sm btn-outline-primary" onclick="openModal(2);">Utwórz</a>
+                        </div>
+                    }
                     <div class="col-md-4">
                         <div class="input-group col-md-12" style="margin-bottom: 20px">
                             <input type="text" class="form-control" Style="width: 200px;" placeholder="Kogo szukasz?">
@@ -97,6 +106,21 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Kontynuuj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ModalFailier -->
+    <div class="modal fade" id="ModalPermissions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Brak uprawnień</p>
+                    <p>Nie posiadasz uprawnień wymaganych do wykonania tej akcji.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="closeModal(2);">Kontynuuj</button>
                 </div>
             </div>
         </div>

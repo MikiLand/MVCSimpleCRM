@@ -44,12 +44,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <hr />
-                            <!--</div>
-                                <div class="col-md-1">-->
-                                <div class="btn-group" style="float: right;">
-                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
-                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-danger" onclick="openModal(1)">Usuń</a>
-                                </div>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                {
+                                    <div class="btn-group" style="float: right;">
+                                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
+                                        <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-danger" onclick="openModal(1)">Usuń</a>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
