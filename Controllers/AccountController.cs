@@ -158,11 +158,11 @@ namespace MVCSimpleCRM.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Account");
         }
 
         [HttpPost, ActionName("Delete")]
