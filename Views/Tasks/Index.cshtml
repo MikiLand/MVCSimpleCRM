@@ -16,7 +16,6 @@
     });
 
     function ColorStatus(Type, Status) {
-        alert('AAAAA');
         if(Type == 1)
             if(Status == 'NZR')
                 document.getElementById('CreatorStatusColor').style.backgroundColor = "lightblue";
@@ -161,10 +160,6 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <!--<div class="col-md-12">
-                        <a type="btn" style="padding-right: 10px;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Create">Utwórz</a>
-                    </div>-->
-
                     <div class="row">
                         <div class="col-md-7" style="margin-bottom: 20px">
                             <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Create">Utwórz</a>
@@ -204,8 +199,7 @@
                                         break;
                                 }
                             }
-                            <!--<div style="height: 10px; background-color:aqua; border-radius: 3px 3px 0 0;" id="CreatorStatusColor" onclick="ColorStatus(1, 'NZR')" onshow="ColorStatus(1, 'NZR');">
-                            </div>-->
+
                             <div class="row">
                                 <div class="col-md-12">
                                     @{

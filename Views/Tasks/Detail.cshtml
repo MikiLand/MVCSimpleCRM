@@ -42,12 +42,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-11">
+                            <div class="col-md-12">
                                 <hr />
-                            </div>
-                            <div class="col-md-1">
-                                <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
-                                <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Usuń</a>
+                            <!--</div>
+                                <div class="col-md-1">-->
+                                <div class="btn-group" style="float: right;">
+                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a>
+                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-danger" onclick="openModal(1)">Usuń</a>
+                                </div>
                             </div>
                         </div>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -145,8 +147,8 @@
                             </div>
                         <!-- ForEach end here-->
                         <div class="d-flex" style="padding-top: 20px;">
-                            <div class="btn-group">
-                                <a class="btn btn-outline-secondary" asp-controller="Tasks" asp-action="Index">Wróć</a>
+                            <div class="btn-group" style="margin:0 auto">
+                                <a class="btn btn-outline-secondary" style="" asp-controller="Tasks" asp-action="Index">Wróć</a>
                             </div>
                         </div>
                     </div>
