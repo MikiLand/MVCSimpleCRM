@@ -16,6 +16,7 @@
     });
 
     function ColorStatus(Type, Status) {
+        alert('AAAAA');
         if(Type == 1)
             if(Status == 'NZR')
                 document.getElementById('CreatorStatusColor').style.backgroundColor = "lightblue";
@@ -182,12 +183,50 @@
                     @foreach (var item in Model)
                     {
                         <div class="card mb-4 box-shadow">
-                            <div style="height: 10px; background-color:aqua; border-radius: 3px 3px 0 0;" id="CreatorStatusColor" onshow="ColorStatus(1, 'NZR');">
-                            </div>
+                            @{
+                                switch (item.CreatorStatus)
+                                {
+                                    case "UTW":
+                                        <div style="height: 10px; background-color: rebeccapurple; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                        </div>
+                                        break;
+                                    case "PRZ":
+                                        <div style="height: 10px; background-color: deepskyblue; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                        </div>
+                                        break;
+                                    case "WRZ":
+                                        <div style="height: 10px; background-color:darkorange; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                        </div>
+                                        break;
+                                    case "ZAK":
+                                        <div style="height: 10px; background-color:green; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                        </div>
+                                        break;
+                                }
+                            }
+                            <!--<div style="height: 10px; background-color:aqua; border-radius: 3px 3px 0 0;" id="CreatorStatusColor" onclick="ColorStatus(1, 'NZR')" onshow="ColorStatus(1, 'NZR');">
+                            </div>-->
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:deeppink; border-radius: 0 0 0 3px;">
-                                    </div>
+                                    @{
+                                        switch (item.Status)
+                                        {
+                                            case "NZR":
+                                                <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:red; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                </div>
+                                                break;
+                                            case "WRZ":
+                                                <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:darkorange; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                </div>
+                                                break;
+                                            case "ZAK":
+                                                <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:green; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                </div>
+                                                break;
+                                        }
+                                    }
+                                    <!--<div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:deeppink; border-radius: 0 0 0 3px;">
+                                    </div>-->
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-7">
