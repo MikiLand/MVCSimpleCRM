@@ -5,6 +5,7 @@ using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
+using System.Security.Claims;
 
 namespace MVCSimpleCRM.Controllers
 {
@@ -50,6 +51,11 @@ namespace MVCSimpleCRM.Controllers
             return View(accounts);
         }
 
+        public async Task<IActionResult> DetailMyAccount()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return RedirectToAction("Detail", "Account", new { id = userId });
+        }
 
         public async Task<IActionResult> Edit(string id)
         {
