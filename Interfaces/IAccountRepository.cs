@@ -1,10 +1,13 @@
 ﻿using MVCSimpleCRM.Models;
+using System.Diagnostics;
 
 namespace MVCSimpleCRM.Interfaces
 {
     public interface IAccountRepository
     {
         Task<IEnumerable<AspNetUsers>> GetAll();
+
+        Task<List<Tasks>> GetAllUserCreatedTasks();
 
         Task<AspNetUsers> GetByIdAsync(string id);
         Task<IEnumerable<AspNetUsers>> GetUserByLogin(string username);

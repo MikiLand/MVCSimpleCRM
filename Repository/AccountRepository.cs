@@ -1,16 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using System.Security.Claims;
 
 namespace MVCSimpleCRM.Repository
 {
     public class AccountRepository : IAccountRepository
     {
         private readonly ApplicationDbContext _context;
-        public AccountRepository(ApplicationDbContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AccountRepository(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
         /*public bool Add(Users user)
         {
@@ -57,6 +61,14 @@ namespace MVCSimpleCRM.Repository
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
+        }
+
+        public async Task<List<Tasks>> GetAllUserCreatedTasks()
+        {
+            var curUser = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var userTasks = _context.tasks.Where(r => r.IDUserCreate == curUser);
+            return userTasks.ToList();
         }
     }
 }

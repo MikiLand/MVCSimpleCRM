@@ -42,6 +42,7 @@ namespace MVCSimpleCRM.Controllers
         {
             //List<Users> users = _context.users.ToList();
             IEnumerable<AspNetUsers> accounts = await _accountRepository.GetAll();
+            var userCreatedTasks = await _accountRepository.GetAllUserCreatedTasks();
             return View(accounts);
         }
 
