@@ -48,8 +48,21 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Detail(string id)
         {
-            AspNetUsers accounts = await _accountRepository.GetByIdAsync(id);
-            return View(accounts);
+            //AspNetUsers accounts = await _accountRepository.GetByIdAsync(id);
+            //return View(accounts);
+
+            var account = await _accountRepository.GetByIdAsync(id);
+            if (account == null) return View("Error");
+            var accountVM = new DetailAccountViewModel
+            {
+                Id = account.Id,
+                UserName = account.UserName,
+                Name = account.Name,
+                Surname = account.Surname,
+                Email = account.Email,
+                PasswordHash = account.PasswordHash
+             };
+            return View(accountVM);
         }
 
         public async Task<IActionResult> DetailMyAccount()

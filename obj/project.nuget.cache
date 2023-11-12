@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AdK+l0Z9XESeNTYXmmiPs1EDs49Yki0cUcD24kgn5DHTM9Y+ZYLBua83D3XcjM+J+G2Ia85zztPruc3UzE09zg==",
+  "dgSpecHash": "45GOSK28X3fsHQdDpwFgjzcyZn/zUiY3pJ3WBJuV2ady4mH65NVuGmQ5gdcYzH1akVBggkOeznq9sINPTSzC+Q==",
   "success": true,
-  "projectFilePath": "D:\\DEV Git\\C#\\MVCSimpleCRM\\MVCSimpleCRM\\MVCSimpleCRM.csproj",
+  "projectFilePath": "E:\\DEV Git\\C#\\MVCSimpleCRM\\MVCSimpleCRM\\MVCSimpleCRM.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\troll\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\troll\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

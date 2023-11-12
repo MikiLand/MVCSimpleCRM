@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using MVCSimpleCRM.ViewModels;
 using System.Security.Claims;
 
 namespace MVCSimpleCRM.Repository
@@ -43,6 +44,11 @@ namespace MVCSimpleCRM.Repository
         {
             return await _context.aspNetUsers.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
+
+        /*public async Task<DetailAccountViewModel> GetByIdVMAsync(string Id)
+        {
+            return await _context.aspNetUsers.Where(x => x.Id == Id).FirstOrDefaultAsync();
+        }*/
 
         public async Task<AspNetUsers> GetByIdAsyncNoTracking(int id)
         {
