@@ -6,6 +6,7 @@ using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
 using System.Reflection;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MVCSimpleCRM.Controllers
@@ -59,7 +60,7 @@ namespace MVCSimpleCRM.Controllers
                     CreatorStatus = taskVM.CreatorStatus,
                     CreateDate = taskVM.CreateDate,
                     DueDate = taskVM.DueDate,
-                    IDUserCreate = taskVM.IDUserCreate
+                    IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier)
                 };
                 _taskRepository.Add(task);
                 return RedirectToAction("Index");

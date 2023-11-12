@@ -72,8 +72,17 @@
                     <div class="col-md-9">
                         <div class="album py-5 bg-light">
                             <div class="container">
-                                <h2><center>Zadania niezrealizowane</center></h2>
+                                <h2><center>Wystawione zadania</center></h2>
                                 <div class="row">
+                                    @if(!Model.Tasks.Any())
+                                    {
+                                        <div class="card mb-12 box-shadow">
+                                            <center>
+                                                <p class="card-title">Brak danych do wyświetlenia</p>
+                                            </center>
+                                        </div>
+                                    }
+
                                     @foreach (var item in Model.Tasks)
                                     {
                                         <div class="col-md-4">
@@ -88,9 +97,14 @@
                                             </div>
                                         </div>
                                     }
+                                    @if (Model.Tasks.Any())
+                                    {
+                                        <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
+                                    }
+                                    
                                 </div>
     
-                                <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
+                                
                             </div>
                         </div>
     

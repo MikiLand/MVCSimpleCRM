@@ -29,6 +29,11 @@ namespace MVCSimpleCRM.Repository
             return await _context.tasks.ToListAsync();
         }
 
+        public async Task<IEnumerable<Tasks>> GetAllTasksCreatedByUser(string UserID)
+        {
+            return await _context.tasks.Where(x => x.IDUserCreate == UserID).Take(3).ToListAsync();
+        }
+
         public async Task<Tasks> GetByIdAsync(int Id)
         {
             return await _context.tasks.Where(x => x.Id == Id).FirstOrDefaultAsync();

@@ -64,8 +64,8 @@ namespace MVCSimpleCRM.Controllers
                 Surname = account.Surname,
                 Email = account.Email,
                 PasswordHash = account.PasswordHash,
-                Tasks = await _taskRepository.GetAll()
-        };
+                Tasks = await _taskRepository.GetAllTasksCreatedByUser(account.Id)
+            };
             return View(accountVM);
         }
 
