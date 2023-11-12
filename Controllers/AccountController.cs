@@ -15,6 +15,7 @@ namespace MVCSimpleCRM.Controllers
 
 
         private readonly IAccountRepository _accountRepository;
+        private readonly ITaskRepository _taskRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ApplicationDbContext _context;
@@ -24,12 +25,14 @@ namespace MVCSimpleCRM.Controllers
         public AccountController(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ApplicationDbContext context,
-            IAccountRepository accountRepository)
+            IAccountRepository accountRepository,
+            ITaskRepository taskRepository)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
             this._accountRepository = accountRepository;
+            this._taskRepository = taskRepository;
         }
 
         /*public AccountController(IAccountRepository accountRepository) 
@@ -60,8 +63,9 @@ namespace MVCSimpleCRM.Controllers
                 Name = account.Name,
                 Surname = account.Surname,
                 Email = account.Email,
-                PasswordHash = account.PasswordHash
-             };
+                PasswordHash = account.PasswordHash,
+                Tasks = await _taskRepository.GetAll()
+        };
             return View(accountVM);
         }
 
