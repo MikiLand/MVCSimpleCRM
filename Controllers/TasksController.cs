@@ -15,11 +15,13 @@ namespace MVCSimpleCRM.Controllers
     {
         //private readonly ApplicationDbContext _context;
         private readonly ITaskRepository _taskRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public TasksController(ITaskRepository taskRepository)
+        public TasksController(ITaskRepository taskRepository, IAccountRepository accountRepository)
         {
             //_context = context;
             this._taskRepository = taskRepository;
+            this._accountRepository = accountRepository;
         }
 
         /*public IActionResult Index()
@@ -42,9 +44,13 @@ namespace MVCSimpleCRM.Controllers
             return View(task);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var tasksVM = new EditTaskViewModel
+            {
+                Users = await _accountRepository.GetAll(),
+            };
+            return View(tasksVM);
         }
 
         [HttpPost]
@@ -52,7 +58,7 @@ namespace MVCSimpleCRM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var task = new Tasks
+                var task = new EditTaskViewModel
                 {
                     Title = taskVM.Title,
                     Description = taskVM.Description,
@@ -60,7 +66,8 @@ namespace MVCSimpleCRM.Controllers
                     CreatorStatus = taskVM.CreatorStatus,
                     CreateDate = taskVM.CreateDate,
                     DueDate = taskVM.DueDate,
-                    IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    Users = await _accountRepository.GetAll()
                 };
                 _taskRepository.Add(task);
                 return RedirectToAction("Index");

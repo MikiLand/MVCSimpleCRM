@@ -16,6 +16,10 @@
         }
     });
 
+    function ChooseUserOnChange(User) {
+        document.getElementById('ChoosenUser').value = User;
+    }
+
     function CreatorStatusChange(Status) {
         if (Status == 'UTW')
             document.getElementById('CreatorStatus').value = "UTW";
@@ -60,10 +64,22 @@
         return result;
     }
 
+    function openModal(ModalType) {
+        if (ModalType == 1) {
+            $('#ModalChooseUser').modal('show');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('show');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('show');
+        }
+    }
+
     function closeModal(ModalType) {
 
         if (ModalType == 1) {
-            $('#ModalDelete').modal('hide');
+            $('#ModalChooseUser').modal('hide');
         }
         else if (ModalType == 2) {
             $('#ModalError').modal('hide');
@@ -144,7 +160,6 @@
                                 <span asp-validation-for="DueDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-
                             </div>
                             <div class="col-md-2">
                                 <center>
@@ -177,7 +192,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <div class="row">
                             <div class="col">
@@ -188,33 +203,33 @@
                         </div>
 
                         <!--ForEach is needed to be added in later stages-->
-                            <div class="card mb-4 box-shadow">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <img class="card-img-top" src="https://placehold.co/20x20" alt="UserImage" maxwidth="20" maxheighe="20">
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <!--<p class="card-text"><span>&#64;</span>USERNAME PLACEHOLDER</p>-->
+                        <div class="card mb-4 box-shadow">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <img class="card-img-top" src="https://placehold.co/20x20" alt="UserImage" maxwidth="20" maxheighe="20">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <!--<p class="card-text"><span>&#64;</span>USERNAME PLACEHOLDER</p>-->
                                                 <p class="card-text" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;"><span>&#64;</span>TEST</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <!--<p class="card-title" style="font-size:larger;">USERNAME USERSURNAME PLACEHOLDER</p>-->
+                                            </div>
+                                            <div class="col-md-9">
+                                                <!--<p class="card-title" style="font-size:larger;">USERNAME USERSURNAME PLACEHOLDER</p>-->
                                                 <p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">TEST TEST</p>
-                                                </div>
-                                                <div class="col-md-1">
+                                            </div>
+                                            <div class="col-md-1">
                                                 <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         <!-- ForEach end here-->
 
-                        <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Create">Dodaj użytkownika</a>
+                        <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Dodaj użytkownika</a>
 
                         <div class="d-flex" style="padding-top: 20px;">
                             <div class="btn-group" style="margin:0 auto">
@@ -237,25 +252,29 @@
                 </div>
                 <div class="modal-body">
                     <p>Wybierz użytkownika.</p>
-                    <input asp-for="CreatorStatus" readonly="True" id="CreatorStatus" class="form-control" value="UTW">
-                    <div class="dropdown m-1 mt-0 mb-0">
-                        <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
-                            Zmień
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (var item in Model)
-                            {
-                                <li><a class="dropdown-item" OnClick="CreatorStatusChange(@Model.User)">@Model.User</a></li>
-                            }
-                        </ul>
+                    <!--<input asp-for="CreatorStatus" readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">-->
+                    <div class="input-group col-md-3">
+                        <input readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">
+                        <div class="dropdown m-1 mt-0 mb-0">
+                            <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                Zmień
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                @foreach (var item in Model.Users)
+                                {
+                                    <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.Name @item.Surname')">@item.Name @item.Surname</a></li>
+                                }
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
-                    <form action="Delete" method="post">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="closeModal(1)">Dodaj</button>
+                    <!--<form action="Delete" method="post">
                         <input type="hidden" asp-for="Id" />
                         <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
-                    </form>
+                    </form>-->
                 </div>
             </div>
         </div>

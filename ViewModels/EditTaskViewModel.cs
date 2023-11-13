@@ -1,4 +1,6 @@
-﻿namespace MVCSimpleCRM.ViewModels
+﻿using MVCSimpleCRM.Models;
+
+namespace MVCSimpleCRM.ViewModels
 {
     public class EditTaskViewModel
     {
@@ -11,5 +13,7 @@
         public DateTime DueDate { get; set; }
         //[ForeignKey("UserID")]
         public string IDUserCreate { get; set; }
+
+        public IEnumerable<AspNetUsers> Users { get; set; }
     }
 }

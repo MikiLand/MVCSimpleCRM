@@ -1,4 +1,5 @@
 ﻿using MVCSimpleCRM.Models;
+using MVCSimpleCRM.ViewModels;
 
 namespace MVCSimpleCRM.Interfaces
 {
@@ -10,7 +11,7 @@ namespace MVCSimpleCRM.Interfaces
         Task<Tasks> GetByIdAsync(int id);
         //Task<IEnumerable<UsersTasks> GetUserByLogin(string login);
 
-        bool Add(Tasks task);
+        bool Add(EditTaskViewModel task);
         bool Update(Tasks task);
         bool Delete(Tasks task);
         bool Save();

@@ -2,6 +2,7 @@
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using MVCSimpleCRM.ViewModels;
 
 namespace MVCSimpleCRM.Repository
 {
@@ -12,7 +13,7 @@ namespace MVCSimpleCRM.Repository
         {
             _context = context;
         }
-        public bool Add(Tasks task)
+        public bool Add(EditTaskViewModel task)
         {
             _context.Add(task);
             return Save();
