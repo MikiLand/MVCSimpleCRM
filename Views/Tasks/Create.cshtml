@@ -202,7 +202,7 @@
                             </div>
                         </div>
 
-                        @foreach (var item in Model.Users)
+                        @foreach (var item in Model.AddedUsers)
                         {
                             <div class="card mb-4 box-shadow">
                                 <div class="row">
@@ -229,7 +229,6 @@
                                 </div>
                             </div>
                         }
-                        <!-- ForEach end here-->
 
                         <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Dodaj użytkownika</a>
 
@@ -273,6 +272,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="closeModal(1)">Dodaj</button>
+
+                    @using (Html.BeginForm("AddUserToModel", "TasksController", FormMethod.Post))
+                    {
+                        <button type="submit">Send</button>
+                    }
                     <!--<form action="Delete" method="post">
                         <input type="hidden" asp-for="Id" />
                         <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />

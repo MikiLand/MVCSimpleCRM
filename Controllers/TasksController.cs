@@ -17,6 +17,15 @@ namespace MVCSimpleCRM.Controllers
         private readonly ITaskRepository _taskRepository;
         private readonly IAccountRepository _accountRepository;
 
+        public static IEnumerable<T> Add<T>(this IEnumerable<T> e, T value)
+        {
+            foreach (var cur in e)
+            {
+                yield return cur;
+            }
+            yield return value;
+        }
+
         public TasksController(ITaskRepository taskRepository, IAccountRepository accountRepository)
         {
             //_context = context;
@@ -49,6 +58,7 @@ namespace MVCSimpleCRM.Controllers
             var tasksVM = new EditTaskViewModel
             {
                 Users = await _accountRepository.GetAll(),
+                AddedUsers = await _accountRepository.GetUserByLogin("AAA")
             };
             return View(tasksVM);
         }
@@ -68,6 +78,7 @@ namespace MVCSimpleCRM.Controllers
                     DueDate = taskVM.DueDate,
                     IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
                     Users = await _accountRepository.GetAll()
+                    //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
                 };
                 _taskRepository.Add(task);
                 return RedirectToAction("Index");
@@ -77,6 +88,29 @@ namespace MVCSimpleCRM.Controllers
                 ModelState.AddModelError("", "Error");
             }
 
+            return View(taskVM);
+        }
+
+        public async Task<IActionResult> AddUserToModel(EditTaskViewModel taskVM)
+        {
+            //var items = taskVM.AddedUsers;
+            //items = items.Add(_accountRepository.GetAll);
+
+            var items = new string[] { "foo" };
+            items = items.Add("bar");
+
+            var task = new EditTaskViewModel
+            {
+                Title = taskVM.Title,
+                Description = taskVM.Description,
+                Status = taskVM.Status,
+                CreatorStatus = taskVM.CreatorStatus,
+                CreateDate = taskVM.CreateDate,
+                DueDate = taskVM.DueDate,
+                IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                Users = await _accountRepository.GetAll(),
+                AddedUsers = taskVM.AddedUsers.Add
+            };
             return View(taskVM);
         }
 
