@@ -11,6 +11,7 @@ namespace MVCSimpleCRM.Interfaces
 
         Task<AspNetUsers> GetByIdAsync(string id);
         Task<IEnumerable<AspNetUsers>> GetUserByLogin(string username);
+        Task<IList<AspNetUsers>> GetUserByLoginList(string username);
 
         //bool Add(AspNetUsers account);
         bool Update(AspNetUsers account);

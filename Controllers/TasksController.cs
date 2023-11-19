@@ -5,6 +5,9 @@ using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -16,15 +19,16 @@ namespace MVCSimpleCRM.Controllers
         //private readonly ApplicationDbContext _context;
         private readonly ITaskRepository _taskRepository;
         private readonly IAccountRepository _accountRepository;
+        //public IList<AspNetUsers> AddUserToTask;
 
-        public static IEnumerable<T> Add<T>(this IEnumerable<T> e, T value)
+        /*public static IEnumerable<T> Add<T>(this IEnumerable<T> e, T value)
         {
             foreach (var cur in e)
             {
                 yield return cur;
             }
             yield return value;
-        }
+        }*/
 
         public TasksController(ITaskRepository taskRepository, IAccountRepository accountRepository)
         {
@@ -53,12 +57,35 @@ namespace MVCSimpleCRM.Controllers
             return View(task);
         }
 
+
+        public IList<AspNetUsers> AddUserToTask;
+
         public async Task<IActionResult> Create()
         {
+            //IList<object> list = null;
+            //var test = (await _accountRepository.GetUserByLogin("")).ToList();
+            //AddUserToTask = await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd");
+            AddUserToTask = (await _accountRepository.GetUserByLogin("qwertyuio")).ToList();
+            AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
+            //AddUserToTask.Add(await _accountRepository.GetByIdAsync("a53989d9-f8c0-42ba-b2ff-9acbcc168dec"));
+            //AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
+            var test = (await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
+            //list.Add(test);
+            if(test == null)
+            {
+
+            }
+            else
+            {
+                AddUserToTask.Add(test);
+            }
+
             var tasksVM = new EditTaskViewModel
             {
                 Users = await _accountRepository.GetAll(),
-                AddedUsers = await _accountRepository.GetUserByLogin("AAA")
+                //AddedUsers = (IEnumerable<AspNetUsers>)list
+                AddedUsers = Enumerable.Empty<AspNetUsers>(),
+                AddedUsersList = AddUserToTask
             };
             return View(tasksVM);
         }
@@ -93,12 +120,6 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> AddUserToModel(EditTaskViewModel taskVM)
         {
-            //var items = taskVM.AddedUsers;
-            //items = items.Add(_accountRepository.GetAll);
-
-            var items = new string[] { "foo" };
-            items = items.Add("bar");
-
             var task = new EditTaskViewModel
             {
                 Title = taskVM.Title,
@@ -109,7 +130,7 @@ namespace MVCSimpleCRM.Controllers
                 DueDate = taskVM.DueDate,
                 IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 Users = await _accountRepository.GetAll(),
-                AddedUsers = taskVM.AddedUsers.Add
+                //AddedUsers = taskVM.AddedUsers.Add
             };
             return View(taskVM);
         }

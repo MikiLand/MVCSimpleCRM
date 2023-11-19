@@ -16,5 +16,6 @@ namespace MVCSimpleCRM.ViewModels
 
         public IEnumerable<AspNetUsers> Users { get; set; }
         public IEnumerable<AspNetUsers> AddedUsers { get; set; }
+        public IList<AspNetUsers> AddedUsersList { get; set;}
 }
 }

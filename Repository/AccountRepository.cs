@@ -45,6 +45,7 @@ namespace MVCSimpleCRM.Repository
             return await _context.aspNetUsers.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
 
+        
         /*public async Task<DetailAccountViewModel> GetByIdVMAsync(string Id)
         {
             return await _context.aspNetUsers.Where(x => x.Id == Id).FirstOrDefaultAsync();
@@ -57,6 +58,13 @@ namespace MVCSimpleCRM.Repository
         }
 
         public async Task<IEnumerable<AspNetUsers>> GetUserByLogin(string username)
+        {
+            //return await _context.users.Where(u => u.Login == login).ToListAsync();
+            //return await _context.users.Where(u => u.Login.Contains(login) && u.Login.StartsWith("aaa")).ToListAsync();
+            return await _context.aspNetUsers.Where(u => u.UserName.Contains(username)).ToListAsync();
+        }
+
+        public async Task<IList<AspNetUsers>> GetUserByLoginList(string username)
         {
             //return await _context.users.Where(u => u.Login == login).ToListAsync();
             //return await _context.users.Where(u => u.Login.Contains(login) && u.Login.StartsWith("aaa")).ToListAsync();
@@ -76,5 +84,7 @@ namespace MVCSimpleCRM.Repository
             var userTasks = _context.tasks.Where(r => r.IDUserCreate == curUser);
             return userTasks.ToList();
         }
+
+       
     }
 }
