@@ -19,16 +19,7 @@ namespace MVCSimpleCRM.Controllers
         //private readonly ApplicationDbContext _context;
         private readonly ITaskRepository _taskRepository;
         private readonly IAccountRepository _accountRepository;
-        //public IList<AspNetUsers> AddUserToTask;
-
-        /*public static IEnumerable<T> Add<T>(this IEnumerable<T> e, T value)
-        {
-            foreach (var cur in e)
-            {
-                yield return cur;
-            }
-            yield return value;
-        }*/
+        public IList<AspNetUsers> AddUserToTask;
 
         public TasksController(ITaskRepository taskRepository, IAccountRepository accountRepository)
         {
@@ -57,8 +48,30 @@ namespace MVCSimpleCRM.Controllers
             return View(task);
         }
 
+        public async Task<JsonResult> MyJson(string SearchedTitle)
+        {
+            //IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
 
-        public IList<AspNetUsers> AddUserToTask;
+            //Task test = _taskRepository.GetAll();
+
+            var task = new EditTaskViewModel
+            {
+                Title = "Test",
+                Description = "Test",
+                Status = "Test",
+                CreatorStatus = "Test",
+                CreateDate = DateTime.Now,
+                DueDate = DateTime.Now,
+                IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                Users = Enumerable.Empty<AspNetUsers>(),
+                //Users = await _accountRepository.GetAll()
+                //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
+            };
+
+
+            return Json(task);
+            //return Json("TTTEST");
+        }
 
         public async Task<IActionResult> Create()
         {
@@ -83,7 +96,6 @@ namespace MVCSimpleCRM.Controllers
             var tasksVM = new EditTaskViewModel
             {
                 Users = await _accountRepository.GetAll(),
-                //AddedUsers = (IEnumerable<AspNetUsers>)list
                 AddedUsers = Enumerable.Empty<AspNetUsers>(),
                 AddedUsersList = AddUserToTask
             };

@@ -7,7 +7,7 @@ namespace MVCSimpleCRM.Interfaces
     {
         Task<IEnumerable<Tasks>> GetAll();
         Task<IEnumerable<Tasks>> GetAllTasksCreatedByUser(string UserID);
-
+        Task<IEnumerable<Tasks>> GetByTitleLike(string TitleLike);
         Task<Tasks> GetByIdAsync(int id);
         //Task<IEnumerable<UsersTasks> GetUserByLogin(string login);
 

@@ -15,6 +15,20 @@
         }
     });
 
+    $(document).ready(function () {
+        alert('1')
+        $("#BtnSearch").on('click', function () {
+            alert('2')
+            $.get("/tasks/MyJson?SearchedTitle='aaaa'", function (data) {
+                alert('3')
+                const object1 = data;
+                console.log(Object.entries(object1));
+                console.log(object1[0])
+                $("#DivTasks").html('<div>' + Object.keys+ '</div>')
+            })
+        })
+    })
+
     function ColorStatus(Type, Status) {
         if(Type == 1)
             if(Status == 'NZR')
@@ -181,85 +195,86 @@
                             <div class="input-group col-md-3" style="margin-bottom: 20px">
 
                                 <input type="text" class="form-control" Style="width: 200px;" placeholder="Jakiego zadania szukasz?">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" Style="width: 120px;">Wyszukaj</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" id="BtnSearch" Style="width: 120px;">Wyszukaj</button>
 
                             </div>
                         </div>
                     </div>
-
-                    @foreach (var item in Model)
-                    {
-                        <div class="card mb-4 box-shadow">
-                            @{
-                                switch (item.CreatorStatus)
-                                {
-                                    case "UTW":
-                                                <div style="height: 10px; background-color: rebeccapurple; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                </div>
-                                        break;
-                                    case "PRZ":
-                                                <div style="height: 10px; background-color: deepskyblue; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                </div>
-                                        break;
-                                    case "WRZ":
-                                                <div style="height: 10px; background-color:darkorange; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                </div>
-                                        break;
-                                    case "ZAK":
-                                                <div style="height: 10px; background-color:green; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                </div>
-                                        break;
-                                }
-                            }
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    @{
-                                        switch (item.Status)
-                                        {
-                                            case "NZR":
-                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:red; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                        </div>
-                                                break;
-                                            case "WRZ":
-                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:darkorange; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                        </div>
-                                                break;
-                                            case "ZAK":
-                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:green; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                        </div>
-                                                break;
-                                        }
+                    <div id="DivTasks">
+                        @foreach (var item in Model)
+                        {
+                            <div class="card mb-4 box-shadow">
+                                @{
+                                    switch (item.CreatorStatus)
+                                    {
+                                        case "UTW":
+                                                                <div style="height: 10px; background-color: rebeccapurple; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                </div>
+                                            break;
+                                        case "PRZ":
+                                                                <div style="height: 10px; background-color: deepskyblue; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                </div>
+                                            break;
+                                        case "WRZ":
+                                                                <div style="height: 10px; background-color:darkorange; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                </div>
+                                            break;
+                                        case "ZAK":
+                                                                <div style="height: 10px; background-color:green; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                </div>
+                                            break;
                                     }
-                                    <!--<div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:deeppink; border-radius: 0 0 0 3px;">
-                                    </div>-->
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-7">
-                                                <p class="card-title">@item.Title</p>
-                                                <p class="card-text"> @item.Description</p>
-                                                <!--<div class="d-flex justify-content-between align-items-center">
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
-                                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
-                                                    </div>
-                                                </div>-->
-                                            </div>
-                                            <div class="col-md-3">
-                                                <p class="card-title">@item.DueDate</p>
-                                                <p class="card-title">Aktualizacja:</p>
-                                                <p class="card-title">@item.CreateDate</p>
-                                            </div>
-                                            <div class="col-md-1" style="">
-                                                <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Detail" asp-route-id="@item.Id">Podgląd</a>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px;">Kopiuj</button>
+                                }
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @{
+                                            switch (item.Status)
+                                            {
+                                                case "NZR":
+                                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:red; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                                        </div>
+                                                    break;
+                                                case "WRZ":
+                                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:darkorange; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                                        </div>
+                                                    break;
+                                                case "ZAK":
+                                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:green; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                                        </div>
+                                                    break;
+                                            }
+                                        }
+                                        <!--<div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:deeppink; border-radius: 0 0 0 3px;">
+                                        </div>-->
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    <p class="card-title">@item.Title</p>
+                                                    <p class="card-text"> @item.Description</p>
+                                                    <!--<div class="d-flex justify-content-between align-items-center">
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
+                                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
+                                                        </div>
+                                                    </div>-->
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <p class="card-title">@item.DueDate</p>
+                                                    <p class="card-title">Aktualizacja:</p>
+                                                    <p class="card-title">@item.CreateDate</p>
+                                                </div>
+                                                <div class="col-md-1" style="">
+                                                    <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Detail" asp-route-id="@item.Id">Podgląd</a>
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px;">Kopiuj</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </div>
