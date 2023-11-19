@@ -214,11 +214,11 @@
                                                 </div>
                                                 <div class="col-md-1">
                                                     <!--<p class="card-text"><span>&#64;</span>USERNAME PLACEHOLDER</p>-->
-                                                    <p class="card-text" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;"><span>&#64;</span>TEST</p>
+                                                    <p class="card-text" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;"><span>&#64;</span>@item.UserName</p>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <!--<p class="card-title" style="font-size:larger;">USERNAME USERSURNAME PLACEHOLDER</p>-->
-                                                    <p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">TEST TEST</p>
+                                                    <p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">@item.Name @item.Surname</p>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
@@ -272,10 +272,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="closeModal(1)">Dodaj</button>
+                    <a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToModel2" value="" asp-route-id="">Moje konto</a>
 
                     @using (Html.BeginForm("AddUserToModel", "TasksController", FormMethod.Post))
                     {
-                        <button type="submit">Send</button>
+                        <button type="">Send</button>
                     }
                     <!--<form action="Delete" method="post">
                         <input type="hidden" asp-for="Id" />
