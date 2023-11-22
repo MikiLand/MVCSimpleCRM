@@ -16,15 +16,11 @@
     });
 
     $(document).ready(function () {
-        alert('1')
         $("#BtnSearch").on('click', function () {
-            alert('2')
             $.get("/tasks/MyJson?SearchedTitle='aaaa'", function (data) {
-                alert('3')
                 const object1 = data;
-                console.log(Object.entries(object1));
-                console.log(object1[0])
-                $("#DivTasks").html('<div>' + Object.keys+ '</div>')
+                
+                $("#DivTasks").html('<div>' + object1.title + ' ' + object1.description + '</div> ');
             })
         })
     })
@@ -208,20 +204,20 @@
                                     switch (item.CreatorStatus)
                                     {
                                         case "UTW":
-                                                                <div style="height: 10px; background-color: rebeccapurple; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                </div>
+                                                                    <div style="height: 10px; background-color: rebeccapurple; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                    </div>
                                             break;
                                         case "PRZ":
-                                                                <div style="height: 10px; background-color: deepskyblue; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                </div>
+                                                                    <div style="height: 10px; background-color: deepskyblue; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                    </div>
                                             break;
                                         case "WRZ":
-                                                                <div style="height: 10px; background-color:darkorange; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                </div>
+                                                                    <div style="height: 10px; background-color:darkorange; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                    </div>
                                             break;
                                         case "ZAK":
-                                                                <div style="height: 10px; background-color:green; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                </div>
+                                                                    <div style="height: 10px; background-color:green; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
+                                                                    </div>
                                             break;
                                     }
                                 }
@@ -232,16 +228,16 @@
                                             switch (item.Status)
                                             {
                                                 case "NZR":
-                                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:red; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                                        </div>
+                                                                            <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:red; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                                            </div>
                                                     break;
                                                 case "WRZ":
-                                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:darkorange; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                                        </div>
+                                                                            <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:darkorange; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                                            </div>
                                                     break;
                                                 case "ZAK":
-                                                                        <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:green; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                                        </div>
+                                                                            <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:green; border-radius: 0 0 0 3px;" id="StatusColor">
+                                                                            </div>
                                                     break;
                                             }
                                         }
