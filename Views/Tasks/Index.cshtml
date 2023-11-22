@@ -19,8 +19,25 @@
         $("#BtnSearch").on('click', function () {
             $.get("/tasks/MyJson?SearchedTitle='aaaa'", function (data) {
                 const object1 = data;
-                
-                $("#DivTasks").html('<div>' + object1.title + ' ' + object1.description + '</div> ');
+                //console.log(object1[1].title);
+                //var i = 0;
+                //while (i < object1.length) {
+                    //$("#DivTasks").html('<div>' + object1[i].title + ' ' + object1[i].description + '</div> ');
+                //    var hangDiv = document.createElement('span')
+                //    hangDiv.innerHTML = '<div>' + object1[i].title + ' ' + object1[i].description + '</div> '
+                //    document.body.appendChild(hangDiv);
+                //    i++;
+                //}
+                //document.querySelector('.content').appendChild(hangDiv)
+
+                var hangDiv = document.createElement("div")
+
+                for (i = 0; i < object1.length; i++) {
+                    var span = document.createElement('span')
+                    span.innerHTML = object1[i].title
+                    console.log(hangDiv.appendChild(span));
+                };
+                document.querySelector('.content').appendChild(hangDiv)
             })
         })
     })

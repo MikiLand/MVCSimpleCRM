@@ -50,7 +50,7 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<JsonResult> MyJson(string SearchedTitle)
         {
-            //IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
+            IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
 
             //Task test = _taskRepository.GetAll();
 
@@ -69,7 +69,7 @@ namespace MVCSimpleCRM.Controllers
             };
 
 
-            return Json(task);
+            return Json(tasks);
             //return Json("TTTEST");
         }
 
