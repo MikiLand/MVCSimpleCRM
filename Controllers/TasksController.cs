@@ -20,6 +20,7 @@ namespace MVCSimpleCRM.Controllers
         private readonly ITaskRepository _taskRepository;
         private readonly IAccountRepository _accountRepository;
         public IList<AspNetUsers> AddUserToTask;
+        public List<string> UsersAddedToTask; 
 
         public TasksController(ITaskRepository taskRepository, IAccountRepository accountRepository)
         {
@@ -162,6 +163,13 @@ namespace MVCSimpleCRM.Controllers
                 AddedUsers = Enumerable.Empty<AspNetUsers>(),
                 AddedUsersList = AddUserToTask
             };
+            return View(taskVM);
+        }
+
+        public async Task<IActionResult> AddUserToList(string UserLogin, EditTaskViewModel taskVM)
+        {
+            AddUserToTask.Add((AspNetUsers)await _accountRepository.GetUserByLogin(UserLogin));
+            //AddUserToTask.Add(await _accountRepository.GetUserByLogin(UserID)); ;
             return View(taskVM);
         }
 

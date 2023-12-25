@@ -263,7 +263,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 @foreach (var item in Model.Users)
                                 {
-                                    <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.Name @item.Surname')">@item.Name @item.Surname</a></li>
+                                    <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.UserName')">@item.UserName - @item.Name @item.Surname</a></li>
                                 }
                             </ul>
                         </div>
@@ -271,13 +271,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="closeModal(1)">Dodaj</button>
-                    <a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToModel2" value="" asp-route-id="">Moje konto</a>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value)">Dodaj</button>
+                    <a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToList(document.getElementById('ChoosenUser').value)" value="" asp-route-id="">Dodaj2</a>
 
-                    @using (Html.BeginForm("AddUserToModel", "TasksController", FormMethod.Post))
-                    {
-                        <button type="">Send</button>
-                    }
+
                     <!--<form action="Delete" method="post">
                         <input type="hidden" asp-for="Id" />
                         <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
