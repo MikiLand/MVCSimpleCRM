@@ -40,5 +40,10 @@ namespace MVCSimpleCRM.Repository
         {
             return await _context.taskUsers.Where(x => x.IdTask == TaskID).Take(3).ToListAsync();
         }
+
+        public async Task<List<TaskUsers>> GetAllTaskUsersAttachedToTask(int TaskID)
+        {
+            return await _context.taskUsers.Where(x => x.IdTask == TaskID).ToListAsync();
+        }
     }
 }

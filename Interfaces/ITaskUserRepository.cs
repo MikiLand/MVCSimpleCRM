@@ -9,6 +9,7 @@ namespace MVCSimpleCRM.Interfaces
         bool Update(TaskUsers taskUser);
         bool Delete(TaskUsers taskUser);
         bool Save();
+        Task<List<TaskUsers>> GetAllTaskUsersAttachedToTask(int TaskID);
         //Task<IEnumerable<AspNetUsers>> GetAllUsersAttachedToTask(string UserID);
     }
 }

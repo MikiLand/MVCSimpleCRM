@@ -45,10 +45,31 @@ namespace MVCSimpleCRM.Controllers
             return View(tasks);
         }
 
-        public async Task<IActionResult> Detail(int id)
+        /*public async Task<IActionResult> Detail(int id)
         {
             Tasks task = await _taskRepository.GetByIdAsync(id);
             return View(task);
+        }*/
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            Tasks task = await _taskRepository.GetByIdAsync(id);
+
+            var taskVM = new EditTaskViewModel
+            {
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status,
+                CreatorStatus = task.CreatorStatus,
+                CreateDate = task.CreateDate,
+                DueDate = task.DueDate,
+                IDUserCreate = task.IDUserCreate,
+                TaskPositionUsers = await _taskUserRepository.GetAllTaskUsersAttachedToTask(task.Id)
+                //Users = await _accountRepository.GetAll()
+                //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
+            };
+
+            return View(taskVM);
         }
 
         public async Task<JsonResult> MyJson(string SearchedTitle)
@@ -57,7 +78,7 @@ namespace MVCSimpleCRM.Controllers
 
             //Task test = _taskRepository.GetAll();
 
-            var task = new EditTaskViewModel
+            /*var task = new EditTaskViewModel
             {
                 Title = "Test",
                 Description = "Test",
@@ -69,7 +90,7 @@ namespace MVCSimpleCRM.Controllers
                 //Users = Enumerable.Empty<AspNetUsers>(),
                 //Users = await _accountRepository.GetAll()
                 //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
-            };
+            };*/
 
 
             return Json(tasks);
