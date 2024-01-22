@@ -64,7 +64,7 @@ namespace MVCSimpleCRM.Controllers
                 CreateDate = DateTime.Now,
                 DueDate = DateTime.Now,
                 IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                Users = Enumerable.Empty<AspNetUsers>(),
+                //Users = Enumerable.Empty<AspNetUsers>(),
                 //Users = await _accountRepository.GetAll()
                 //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
             };
@@ -96,9 +96,9 @@ namespace MVCSimpleCRM.Controllers
 
             var tasksVM = new EditTaskViewModel
             {
-                Users = await _accountRepository.GetAll(),
-                AddedUsers = Enumerable.Empty<AspNetUsers>(),
-                AddedUsersList = AddUserToTask
+                //Users = await _accountRepository.GetAll(),
+                //AddedUsers = Enumerable.Empty<AspNetUsers>(),
+                //AddedUsersList = AddUserToTask
             };
             return View(tasksVM);
         }
@@ -117,7 +117,7 @@ namespace MVCSimpleCRM.Controllers
                     CreateDate = taskVM.CreateDate,
                     DueDate = taskVM.DueDate,
                     IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                    Users = await _accountRepository.GetAll()
+                    //Users = await _accountRepository.GetAll()
                     //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
                 };
                 _taskRepository.Add(task);
@@ -138,10 +138,10 @@ namespace MVCSimpleCRM.Controllers
 
             var task = new EditTaskViewModel
             {
-                Users = await _accountRepository.GetAll(),
+                //Users = await _accountRepository.GetAll(),
                 //AddedUsers = (IEnumerable<AspNetUsers>)list
-                AddedUsers = Enumerable.Empty<AspNetUsers>(),
-                AddedUsersList = AddUserToTask
+                //AddedUsers = Enumerable.Empty<AspNetUsers>(),
+                //AddedUsersList = AddUserToTask
             };
             return View(task);
         }
@@ -159,9 +159,9 @@ namespace MVCSimpleCRM.Controllers
                 CreateDate = taskVM.CreateDate,
                 DueDate = taskVM.DueDate,
                 IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                Users = await _accountRepository.GetAll(),
-                AddedUsers = Enumerable.Empty<AspNetUsers>(),
-                AddedUsersList = AddUserToTask
+                //Users = await _accountRepository.GetAll(),
+                //AddedUsers = Enumerable.Empty<AspNetUsers>(),
+                //AddedUsersList = AddUserToTask
             };
             return View(taskVM);
         }
