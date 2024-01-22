@@ -13,9 +13,10 @@ namespace MVCSimpleCRM.ViewModels
         public DateTime DueDate { get; set; }
         //[ForeignKey("UserID")]
         public string IDUserCreate { get; set; }
+        public List<TaskUsers> TaskPositionUsers { get; set; }
 
         //public IEnumerable<AspNetUsers> Users { get; set; }
         //public IEnumerable<AspNetUsers> AddedUsers { get; set; }
         //public IList<AspNetUsers> AddedUsersList { get; set;}
-}
+    }
 }

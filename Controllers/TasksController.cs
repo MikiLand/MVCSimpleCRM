@@ -19,14 +19,16 @@ namespace MVCSimpleCRM.Controllers
         //private readonly ApplicationDbContext _context;
         private readonly ITaskRepository _taskRepository;
         private readonly IAccountRepository _accountRepository;
-        public IList<AspNetUsers> AddUserToTask;
-        public List<string> UsersAddedToTask; 
+        private readonly ITaskUserRepository _taskUserRepository;
+        //public IList<AspNetUsers> AddUserToTask;
+        //public List<string> UsersAddedToTask; 
 
-        public TasksController(ITaskRepository taskRepository, IAccountRepository accountRepository)
+        public TasksController(ITaskRepository taskRepository, IAccountRepository accountRepository, ITaskUserRepository taskUserRepository)
         {
             //_context = context;
             this._taskRepository = taskRepository;
             this._accountRepository = accountRepository;
+            this._taskUserRepository = taskUserRepository;
         }
 
         /*public IActionResult Index()
@@ -79,7 +81,7 @@ namespace MVCSimpleCRM.Controllers
             //IList<object> list = null;
             //var test = (await _accountRepository.GetUserByLogin("")).ToList();
             //AddUserToTask = await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd");
-            AddUserToTask = (await _accountRepository.GetUserByLogin("qwertyuio")).ToList();
+            //AddUserToTask = (await _accountRepository.GetUserByLogin("qwertyuio")).ToList();
             //AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
             //AddUserToTask.Add(await _accountRepository.GetByIdAsync("a53989d9-f8c0-42ba-b2ff-9acbcc168dec"));
             //AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
@@ -121,6 +123,9 @@ namespace MVCSimpleCRM.Controllers
                     //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
                 };
                 _taskRepository.Add(task);
+
+                AddUsersToTasks(taskVM);
+
                 return RedirectToAction("Index");
             }
             else
@@ -133,8 +138,8 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> AddUserToModel2(EditTaskViewModel taskVM)
         {
-            AddUserToTask = (await _accountRepository.GetUserByLogin("qwertyuio")).ToList();
-            AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
+            //AddUserToTask = (await _accountRepository.GetUserByLogin("qwertyuio")).ToList();
+            //AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
 
             var task = new EditTaskViewModel
             {
@@ -146,7 +151,16 @@ namespace MVCSimpleCRM.Controllers
             return View(task);
         }
 
-        public async Task<IActionResult> AddUserToModel(EditTaskViewModel taskVM)
+        public void AddUsersToTasks(EditTaskViewModel taskVM)
+        {
+            foreach (var User in taskVM.TaskPositionUsers)
+            {
+
+                _taskUserRepository.Add(User);
+            }
+        }
+
+/*        public async Task<IActionResult> AddUserToModel(EditTaskViewModel taskVM)
         {
             AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
 
@@ -164,14 +178,14 @@ namespace MVCSimpleCRM.Controllers
                 //AddedUsersList = AddUserToTask
             };
             return View(taskVM);
-        }
+        }*/
 
-        public async Task<IActionResult> AddUserToList(string UserLogin, EditTaskViewModel taskVM)
+        /*public async Task<IActionResult> AddUserToList(string UserLogin, EditTaskViewModel taskVM)
         {
             AddUserToTask.Add((AspNetUsers)await _accountRepository.GetUserByLogin(UserLogin));
             //AddUserToTask.Add(await _accountRepository.GetUserByLogin(UserID)); ;
             return View(taskVM);
-        }
+        }*/
 
         public async Task<IActionResult> Edit(int id)
         {
