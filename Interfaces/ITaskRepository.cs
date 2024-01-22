@@ -11,7 +11,8 @@ namespace MVCSimpleCRM.Interfaces
         Task<Tasks> GetByIdAsync(int id);
         //Task<IEnumerable<UsersTasks> GetUserByLogin(string login);
 
-        bool Add(EditTaskViewModel task);
+        //bool Add(EditTaskViewModel task);
+        bool Add(Tasks task);
         bool Update(Tasks task);
         bool Delete(Tasks task);
         bool Save();

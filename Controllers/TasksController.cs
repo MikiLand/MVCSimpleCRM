@@ -108,7 +108,7 @@ namespace MVCSimpleCRM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var task = new EditTaskViewModel
+                var task = new Tasks
                 {
                     Title = taskVM.Title,
                     Description = taskVM.Description,
@@ -116,7 +116,7 @@ namespace MVCSimpleCRM.Controllers
                     CreatorStatus = taskVM.CreatorStatus,
                     CreateDate = taskVM.CreateDate,
                     DueDate = taskVM.DueDate,
-                    IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier)
                     //Users = await _accountRepository.GetAll()
                     //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
                 };

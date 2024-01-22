@@ -13,7 +13,7 @@ namespace MVCSimpleCRM.Repository
         {
             _context = context;
         }
-        public bool Add(EditTaskViewModel task)
+        public bool Add(Tasks task)
         {
             _context.Add(task);
             return Save();
