@@ -126,7 +126,8 @@
                             </div>
                         </div>
 
-                        <!--ForEach is needed to be added in later stages-->
+                        @foreach (var item in Model.TaskPositionUsers)
+                        {
                             <div class="card mb-4 box-shadow">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -148,7 +149,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <!-- ForEach end here-->
+                        }
                         <div class="d-flex" style="padding-top: 20px;">
                             <div class="btn-group" style="margin:0 auto">
                                 <a class="btn btn-outline-secondary" style="" asp-controller="Tasks" asp-action="Index">Wróć</a>
