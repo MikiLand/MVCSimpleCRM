@@ -57,6 +57,7 @@ namespace MVCSimpleCRM.Controllers
 
             var taskVM = new EditTaskViewModel
             {
+                Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
@@ -70,6 +71,7 @@ namespace MVCSimpleCRM.Controllers
 
             var TaskVM2 = new EditTaskViewModel2
             {
+                Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
@@ -238,7 +240,53 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var task = await _taskRepository.GetByIdAsync(id);
+            Tasks task = await _taskRepository.GetByIdAsync(id);
+            if (task == null) return View("Error");
+            var taskVM = new EditTaskViewModel
+            {
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status,
+                CreatorStatus = task.CreatorStatus,
+                CreateDate = task.CreateDate,
+                DueDate = task.DueDate,
+                IDUserCreate = task.IDUserCreate,
+                //TaskPositionUsers = new List<TaskUsers> { }
+                TaskPositionUsers = await _taskUserRepository.GetAllTaskUsersAttachedToTask(task.Id)
+            };
+
+            var TaskVM2 = new EditTaskViewModel2
+            {
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status,
+                CreatorStatus = task.CreatorStatus,
+                CreateDate = task.CreateDate,
+                DueDate = task.DueDate,
+                IDUserCreate = task.IDUserCreate,
+                TaskPositionUsers = new List<TaskUserViewModel> { }
+            };
+
+            foreach (var User in taskVM.TaskPositionUsers)
+            {
+                AspNetUsers UserVM = await _accountRepository.GetByIdAsync(User.IdUser);
+
+
+                var TaskUserViewModelVM = new TaskUserViewModel
+                {
+                    IdTask = User.IdTask,
+                    IdUser = User.IdUser,
+                    UserName = UserVM.UserName,
+                    Name = UserVM.Name,
+                    Surname = UserVM.Surname
+                };
+
+                TaskVM2.TaskPositionUsers.Add(TaskUserViewModelVM);
+            }
+
+            return View(TaskVM2);
+
+            /*var task = await _taskRepository.GetByIdAsync(id);
             if (task == null) return View("Error");
             var taskVM = new EditTaskViewModel
             {
@@ -250,7 +298,7 @@ namespace MVCSimpleCRM.Controllers
                 DueDate = task.DueDate,
                 IDUserCreate = task.IDUserCreate
             };
-            return View(taskVM);
+            return View(taskVM);*/
         }
 
         [HttpPost]
