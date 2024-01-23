@@ -10,12 +10,9 @@ namespace MVCSimpleCRM.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-
         //[DataType(DataType.Password)]
         public string PasswordHash { get; set; }
-
         public DateTime CreateDate { get; set; }
-
         //public string ConfirmPassword { get; set; }
     }
 }

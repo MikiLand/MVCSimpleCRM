@@ -66,11 +66,38 @@ namespace MVCSimpleCRM.Controllers
                 IDUserCreate = task.IDUserCreate,
                 //TaskPositionUsers = new List<TaskUsers> { }
                 TaskPositionUsers = await _taskUserRepository.GetAllTaskUsersAttachedToTask(task.Id)
-                //Users = await _accountRepository.GetAll()
-                //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
             };
 
-            return View(taskVM);
+            var TaskVM2 = new EditTaskViewModel2
+            {
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status,
+                CreatorStatus = task.CreatorStatus,
+                CreateDate = task.CreateDate,
+                DueDate = task.DueDate,
+                IDUserCreate = task.IDUserCreate,
+                TaskPositionUsers = new List<TaskUserViewModel> { }
+            };
+
+            foreach (var User in taskVM.TaskPositionUsers)
+            {
+                AspNetUsers UserVM = await _accountRepository.GetByIdAsync(User.IdUser);
+
+
+                var TaskUserViewModelVM = new TaskUserViewModel
+                {
+                    IdTask = User.IdTask,
+                    IdUser = User.IdUser,
+                    UserName = UserVM.UserName,
+                    Name = UserVM.Name,
+                    Surname = UserVM.Surname
+                };
+
+                TaskVM2.TaskPositionUsers.Add(TaskUserViewModelVM);
+            }
+
+            return View(TaskVM2);
         }
 
         public async Task<JsonResult> MyJson(string SearchedTitle)

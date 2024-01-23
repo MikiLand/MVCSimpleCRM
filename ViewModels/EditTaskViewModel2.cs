@@ -2,7 +2,7 @@
 
 namespace MVCSimpleCRM.ViewModels
 {
-    public class EditTaskViewModel
+    public class EditTaskViewModel2
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -13,7 +13,7 @@ namespace MVCSimpleCRM.ViewModels
         public DateTime DueDate { get; set; }
         //[ForeignKey("UserID")]
         public string IDUserCreate { get; set; }
-        public List<TaskUsers> TaskPositionUsers { get; set; }
+        public List<TaskUserViewModel> TaskPositionUsers { get; set; }
         //public List<TaskUsers> TaskPositionUsers { get; set; }
     }
 }
