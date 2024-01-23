@@ -285,20 +285,45 @@ namespace MVCSimpleCRM.Controllers
             }
 
             return View(TaskVM2);
+        }
 
-            /*var task = await _taskRepository.GetByIdAsync(id);
-            if (task == null) return View("Error");
-            var taskVM = new EditTaskViewModel
+        public async Task<IActionResult> RefreshAddUser(EditTaskViewModel2 TaskVM, string AttachedUserID)
+        {
+            AspNetUsers UserVM = await _accountRepository.GetByIdAsync(AttachedUserID);
+
+            var TaskUserViewModelVM = new TaskUserViewModel
             {
-                Title = task.Title,
-                Description = task.Description,
-                Status = task.Status,
-                CreatorStatus = task.CreatorStatus,
-                CreateDate = task.CreateDate,
-                DueDate = task.DueDate,
-                IDUserCreate = task.IDUserCreate
+                IdTask = TaskVM.Id,
+                IdUser = UserVM.Id,
+                UserName = UserVM.UserName,
+                Name = UserVM.Name,
+                Surname = UserVM.Surname
             };
-            return View(taskVM);*/
+
+            foreach (var User in TaskVM.TaskPositionUsers)
+            {
+                if (AttachedUserID == User.IdUser)
+                {
+                    return View(TaskVM);
+                }
+            }
+
+            TaskVM.TaskPositionUsers.Add(TaskUserViewModelVM);
+
+            return View(TaskVM);
+        }
+
+        public async Task<IActionResult> RefreshRemoveUser(EditTaskViewModel2 TaskVM, string AttachedUserID)
+        {
+            foreach (var User in TaskVM.TaskPositionUsers)
+            {
+                if(AttachedUserID == User.IdUser)
+                {
+                    TaskVM.TaskPositionUsers.Remove(User);
+                }
+            }
+
+            return View(TaskVM);
         }
 
         [HttpPost]

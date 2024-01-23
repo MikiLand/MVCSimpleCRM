@@ -177,4 +177,44 @@
             </div>
         </div>
     </div>
+    
+    <!-- ModalChooseUser -->
+    <div class="modal fade" id="ModalChooseUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Dodanie użytkownika</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Wybierz użytkownika.</p>
+                    <!--<input asp-for="CreatorStatus" readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">-->
+                    <div class="input-group col-md-3">
+                        <input readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">
+                        <div class="dropdown m-1 mt-0 mb-0">
+                            <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                Zmień
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                foreach (var item in Model.Users)
+                                {
+                                <li><a class="dropdown-item" OnClick="ChooseUserOnChange('item.UserName')">item.UserName - item.Name item.Surname</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value)">Dodaj</button>
+                    <a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToList(document.getElementById('ChoosenUser').value)" value="" asp-route-id="">Dodaj2</a>
+
+
+                    <!--<form action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
+                    </form>-->
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
