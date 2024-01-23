@@ -64,6 +64,7 @@ namespace MVCSimpleCRM.Controllers
                 CreateDate = task.CreateDate,
                 DueDate = task.DueDate,
                 IDUserCreate = task.IDUserCreate,
+                //TaskPositionUsers = new List<TaskUsers> { }
                 TaskPositionUsers = await _taskUserRepository.GetAllTaskUsersAttachedToTask(task.Id)
                 //Users = await _accountRepository.GetAll()
                 //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()

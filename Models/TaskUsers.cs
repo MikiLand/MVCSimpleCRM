@@ -10,6 +10,6 @@ namespace MVCSimpleCRM.Models
         [ForeignKey("TaskID")]
         public int IdTask { get; set; }
         [ForeignKey("UserID")]
-        public int IdUser { get; set; }
+        public string IdUser { get; set; }
     }
 }
