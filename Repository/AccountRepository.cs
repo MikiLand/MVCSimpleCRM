@@ -39,6 +39,10 @@ namespace MVCSimpleCRM.Repository
         {
             return await _context.aspNetUsers.ToListAsync();
         }
+        public async Task<List<AspNetUsers>> GetAllList()
+        {
+            return await _context.aspNetUsers.ToListAsync();
+        }
 
         public async Task<AspNetUsers> GetByIdAsync(string Id)
         {

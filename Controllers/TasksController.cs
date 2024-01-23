@@ -79,7 +79,8 @@ namespace MVCSimpleCRM.Controllers
                 CreateDate = task.CreateDate,
                 DueDate = task.DueDate,
                 IDUserCreate = task.IDUserCreate,
-                TaskPositionUsers = new List<TaskUserViewModel> { }
+                TaskPositionUsers = new List<TaskUserViewModel> { },
+                AvileableUsers = new List<AspNetUsers> { }
             };
 
             foreach (var User in taskVM.TaskPositionUsers)
@@ -264,7 +265,8 @@ namespace MVCSimpleCRM.Controllers
                 CreateDate = task.CreateDate,
                 DueDate = task.DueDate,
                 IDUserCreate = task.IDUserCreate,
-                TaskPositionUsers = new List<TaskUserViewModel> { }
+                TaskPositionUsers = new List<TaskUserViewModel> { },
+                AvileableUsers = await _accountRepository.GetAllList()
             };
 
             foreach (var User in taskVM.TaskPositionUsers)

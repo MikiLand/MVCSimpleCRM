@@ -6,6 +6,7 @@ namespace MVCSimpleCRM.Interfaces
     public interface IAccountRepository
     {
         Task<IEnumerable<AspNetUsers>> GetAll();
+        Task<List<AspNetUsers>> GetAllList();
 
         Task<List<Tasks>> GetAllUserCreatedTasks();
 

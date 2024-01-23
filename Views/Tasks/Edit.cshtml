@@ -21,6 +21,35 @@
         else if (Status == 'ZAK')
             document.getElementById('Status').value = "ZAK";
     }
+
+    function ChooseUserOnChange(User) {
+        document.getElementById('ChoosenUser').value = User;
+    }
+
+    function openModal(ModalType) {
+        if (ModalType == 1) {
+            $('#ModalChooseUser').modal('show');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('show');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('show');
+        }
+    }
+
+    function closeModal(ModalType) {
+
+        if (ModalType == 1) {
+            $('#ModalChooseUser').modal('hide');
+        }
+        else if (ModalType == 2) {
+            $('#ModalError').modal('hide');
+        }
+        else if (ModalType == 3) {
+            $('#ModalSuccess').modal('hide');
+        }
+    }
 </script>
 
 <form method="post" asp-action="Edit">
@@ -164,7 +193,7 @@
                             </div>
                         }
 
-                        <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Create">Dodaj użytkownika</a>
+                        <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Dodaj użytkownika</a>
 
                         <div class="d-flex" style="padding-top: 20px;">
                             <div class="btn-group" style="margin:0 auto">
@@ -195,9 +224,9 @@
                                 Zmień
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                foreach (var item in Model.Users)
+                                @foreach (var item in Model.AvileableUsers)
                                 {
-                                <li><a class="dropdown-item" OnClick="ChooseUserOnChange('item.UserName')">item.UserName - item.Name item.Surname</a></li>
+                                <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.UserName')">@item.UserName - @item.Name @item.Surname</a></li>
                                 }
                             </ul>
                         </div>

@@ -14,7 +14,7 @@ namespace MVCSimpleCRM.ViewModels
         //[ForeignKey("UserID")]
         public string IDUserCreate { get; set; }
         public List<TaskUserViewModel> TaskPositionUsers { get; set; }
-        //public List<AspNetUsers> AvileableUsers { get; set; }
+        public List<AspNetUsers> AvileableUsers { get; set; }
         //public List<TaskUsers> TaskPositionUsers { get; set; }
     }
 }
