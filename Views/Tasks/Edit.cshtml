@@ -56,7 +56,7 @@
         var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
 
         $.get("/tasks/RefreshAddUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
-            //const object1 = data;
+            $("#_TaskUsersContainer").html(data);
         })
     }
 </script>
@@ -164,8 +164,6 @@
                             </div>
                         </div>
 
-                        
-
                         <div class="row">
                             <div class="col">
                                 <center>
@@ -174,33 +172,12 @@
                             </div>
                         </div>
 
-                        @foreach (var item in Model.TaskPositionUsers)
-                        {
-                            <div class="card mb-4 box-shadow">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <img class="card-img-top" src="https://placehold.co/20x20" alt="UserImage" maxwidth="20" maxheighe="20">
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <!--<p class="card-text"><span>&#64;</span>USERNAME PLACEHOLDER</p>-->
-                                                    <p class="card-text" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;"><span>&#64;</span>@item.UserName</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <!--<p class="card-title" style="font-size:larger;">USERNAME USERSURNAME PLACEHOLDER</p>-->
-                                                    <p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">@item.Name @item.Surname</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        <div id="_TaskUsersContainer">
+                            @Html.Partial("_TaskUsers")
+                        </div>
+                        <div id="Test">
+
+                        </div>
 
                         <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Dodaj użytkownika</a>
 

@@ -252,6 +252,11 @@ namespace MVCSimpleCRM.Controllers
             return View(TaskVM2);
         }
 
+        /*public async Task<IActionResult> RefreshEdit(EditTaskViewModel2 TaskVM)
+        {
+            return View(TaskVM);
+        }*/
+
         [HttpGet]
         [Route("/tasks/RefreshAddUser")]
         public async Task<IActionResult> RefreshAddUser(string json, string AttachedUserName)
@@ -279,7 +284,10 @@ namespace MVCSimpleCRM.Controllers
 
             TaskVM.TaskPositionUsers.Add(TaskUserViewModelVM);
 
-            return View(TaskVM);
+            return PartialView("_TaskUsers", TaskVM);
+            //return RedirectToAction("RefreshAddUser", new { json = JsonConvert.SerializeObject(TaskVM), AttachedUserName = AttachedUserName });
+            //return RedirectToAction("RefreshEdit", "Tasks", new { TaskVM = TaskVM });
+            //return View(TaskVM);
         }
 
         public async Task<IActionResult> RefreshRemoveUser(EditTaskViewModel2 TaskVM, string AttachedUserID)
