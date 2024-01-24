@@ -161,3 +161,4 @@ E:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\MVCSimpleCRM.pdb
 E:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\MVCSimpleCRM.genruntimeconfig.cache
 E:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\ref\MVCSimpleCRM.dll
 E:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\obj\Debug\net7.0\MVCSimpleCRM.sourcelink.json
+E:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM\bin\Debug\net7.0\Newtonsoft.Json.dll

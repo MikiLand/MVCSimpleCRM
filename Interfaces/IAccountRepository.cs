@@ -11,6 +11,7 @@ namespace MVCSimpleCRM.Interfaces
         Task<List<Tasks>> GetAllUserCreatedTasks();
 
         Task<AspNetUsers> GetByIdAsync(string id);
+        Task<AspNetUsers> GetUserByUserName(string username);
         Task<IEnumerable<AspNetUsers>> GetUserByLogin(string username);
         Task<IList<AspNetUsers>> GetUserByLoginList(string username);
 

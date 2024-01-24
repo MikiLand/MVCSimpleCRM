@@ -51,28 +51,14 @@
         }
     }
 
-    function AddUserToList(UserName, TaskModel) {
-        $.get("/tasks/RefreshAddUser", { TaskVM: Model, AttachedUserID: UserName }, function (data) {
-            alert('4')
-            const object1 = data;
+    function AddUserToList(UserName) {
+        console.log(@Html.Raw(Json.Serialize(Model)))
+        var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
+
+        $.get("/tasks/RefreshAddUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
+            //const object1 = data;
         })
     }
-
-    //$(document).ready(function () {
-    //    alert('1')
-    //    $("#BtnAddUser").on('click', function () {
-    //        alert('2')
-    //        $.get("/tasks/RefreshAddUser", { TaskVM: Model, AttachedUserID: }, function (data) {
-    //            alert('3')
-    //            const object1 = data;
-                //console.log(Object.entries(object1));
-                //console.log(object1[0])
-                //$("#DivTasks").html('<div>' + Object.keys + '</div>')
-
-                //$("#DivTasks").html('<div>' + object1.title + ' ' + object1.description + '</div> ');
-    //        })
-    //    })
-    //})
 </script>
 
 <form method="post" asp-action="Edit">
@@ -257,8 +243,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
-                    <button type="button" id="BtnAddUserrr" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value,Model)">Dodaj</button>
-                    <a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToList(document.getElementById('ChoosenUser').value)" value="" asp-route-id="">Dodaj2</a>
+                    <button type="button" id="BtnAddUserrr" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value)">Dodaj</button>
+                    <!--<a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToList(document.getElementById('ChoosenUser').value)" value="" asp-route-id="">Dodaj2</a>-->
 
 
                     <!--<form action="Delete" method="post">

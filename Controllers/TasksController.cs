@@ -5,6 +5,7 @@ using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,25 +32,12 @@ namespace MVCSimpleCRM.Controllers
             this._taskUserRepository = taskUserRepository;
         }
 
-        /*public IActionResult Index()
-        {
-            List<Tasks> tasks = _context.tasks.ToList();
-            List<Users> users = _context.users.ToList();
-            return View(tasks);
-        }*/
-
         public async Task<IActionResult> Index()
         {
             //List<Users> users = _context.users.ToList();
             IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
             return View(tasks);
         }
-
-        /*public async Task<IActionResult> Detail(int id)
-        {
-            Tasks task = await _taskRepository.GetByIdAsync(id);
-            return View(task);
-        }*/
 
         public async Task<IActionResult> Detail(int id)
         {
@@ -101,31 +89,6 @@ namespace MVCSimpleCRM.Controllers
             }
 
             return View(TaskVM2);
-        }
-
-        public async Task<JsonResult> MyJson(string SearchedTitle)
-        {
-            IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
-
-            //Task test = _taskRepository.GetAll();
-
-            /*var task = new EditTaskViewModel
-            {
-                Title = "Test",
-                Description = "Test",
-                Status = "Test",
-                CreatorStatus = "Test",
-                CreateDate = DateTime.Now,
-                DueDate = DateTime.Now,
-                IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                //Users = Enumerable.Empty<AspNetUsers>(),
-                //Users = await _accountRepository.GetAll()
-                //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
-            };*/
-
-
-            return Json(tasks);
-            //return Json("TTTEST");
         }
 
         public async Task<IActionResult> Create()
@@ -289,9 +252,13 @@ namespace MVCSimpleCRM.Controllers
             return View(TaskVM2);
         }
 
-        public async Task<IActionResult> RefreshAddUser(EditTaskViewModel2 TaskVM, string AttachedUserID)
+        [HttpGet]
+        [Route("/tasks/RefreshAddUser")]
+        public async Task<IActionResult> RefreshAddUser(string json, string AttachedUserName)
         {
-            AspNetUsers UserVM = await _accountRepository.GetByIdAsync(AttachedUserID);
+
+            AspNetUsers UserVM = await _accountRepository.GetUserByUserName(AttachedUserName);
+            EditTaskViewModel2 TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(json);
 
             var TaskUserViewModelVM = new TaskUserViewModel
             {
@@ -304,7 +271,7 @@ namespace MVCSimpleCRM.Controllers
 
             foreach (var User in TaskVM.TaskPositionUsers)
             {
-                if (AttachedUserID == User.IdUser)
+                if (AttachedUserName == User.UserName)
                 {
                     return View(TaskVM);
                 }
