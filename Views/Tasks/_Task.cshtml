@@ -1,0 +1,198 @@
+﻿@using MVCSimpleCRM.ViewModels;
+@model EditTaskViewModel2
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <h3 class="card-title">Edycja zadania</h3>
+                            </center>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <hr />
+                            </center>
+                        </div>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="IDUserCreate" hidden="True" readonly="True" class="form-control" value="1">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <center>
+                                <label asp-for="Title">Tytuł</label>
+                            </center>
+                            <input asp-for="Title" class="form-control" placeholder="Uzupełnij tytuł zadania">
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-2">
+                            <center>
+                                <label asp-for="CreatorStatus">Status tworzącego</label>
+                            </center>
+                            <div class="input-group col-md-3" style="margin-bottom: 20px">
+                                <input asp-for="CreatorStatus" readonly="True" class="form-control">
+                                <div class="dropdown m-1 mt-0 mb-0">
+                                    <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Zmień
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" OnClick="CreatorStatusChange('UTW')">UTW - Utworzony</a></li>
+                                        <li><a class="dropdown-item" OnClick="CreatorStatusChange('PRZ')">PRZ - Przypisany</a></li>
+                                        <li><a class="dropdown-item" OnClick="CreatorStatusChange('WRZ')">WRZ - W realizacji</a></li>
+                                        <li><a class="dropdown-item" OnClick="CreatorStatusChange('ZAK')">ZAK - Zakończony</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <span asp-validation-for="CreatorStatus" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <center>
+                                <label asp-for="CreateDate">Data utworzenia</label>
+                            </center>
+                            <input type="date" asp-for="CreateDate" class="form-control" min="2000-01-01" max="2060-12-31">
+                            <span asp-validation-for="CreateDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-2">
+                            <center>
+                                <label asp-for="DueDate">Termin realizacji</label>
+                            </center>
+                            <input type="date" asp-for="DueDate" class="form-control" min="2000-01-01" max="2060-12-31">
+                            <span asp-validation-for="DueDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-2">
+                            <center>
+                                <label asp-for="Status">Status pracownika</label>
+                            </center>
+                            <div class="input-group col-md-3" style="margin-bottom: 20px">
+                                <input asp-for="Status" readonly="True" class="form-control">
+                                <div class="dropdown m-1 mt-0 mb-0">
+                                    <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Zmień
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" ID="DDLProductType" onselect="DDLProductTypeOnSelect">
+                                        <li><a class="dropdown-item" OnClick="StatusChange('NZR')">NZR - Niezrealizowany</a></li>
+                                        <li><a class="dropdown-item" OnClick="StatusChange('WRZ')">WRZ - W realizacji</a></li>
+                                        <li><a class="dropdown-item" OnClick="StatusChange('ZAK')">ZAK - Zakończony</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <center>
+                                <label asp-for="Description">Opis zadania</label>
+                            </center>
+                            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Uzupełnij opis zadania"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <hr />
+                            </center>
+                        </div>
+                    </div>
+
+                    @foreach (var item in Model.TaskPositionUsers)
+                    {
+                        <div class="card mb-4 box-shadow">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <img class="card-img-top" src="https://placehold.co/20x20" alt="UserImage" maxwidth="20" maxheighe="20">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <!--<p class="card-text"><span>&#64;</span>USERNAME PLACEHOLDER</p>-->
+                                                <p class="card-text" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;"><span>&#64;</span>@item.UserName</p>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <!--<p class="card-title" style="font-size:larger;">USERNAME USERSURNAME PLACEHOLDER</p>-->
+                                                <p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">@item.Name @item.Surname</p>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!--<div id="_TaskUsersContainer">
+                        Html.Partial("_TaskUsers")
+                    </div>-->
+                    <div id="Test">
+                    </div>
+
+                    <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Dodaj użytkownika</a>
+
+                    <div class="d-flex" style="padding-top: 20px;">
+                        <div class="btn-group" style="margin:0 auto">
+                            <button type="submit" class="btn btn-outline-primary">Zapisz</button>
+                            <a class="btn btn-outline-secondary" asp-controller="Tasks" asp-action="Index">Anuluj</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ModalChooseUser -->
+<div class="modal fade" id="ModalChooseUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dodanie użytkownika</h5>
+            </div>
+            <div class="modal-body">
+                <p>Wybierz użytkownika.</p>
+                <!--<input asp-for="CreatorStatus" readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">-->
+                <div class="input-group col-md-3">
+                    <input readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">
+                    <div class="dropdown m-1 mt-0 mb-0">
+                        <a class="btn btn-secondary dropdown-toggle" style="width: 80px" href="#" role="button" id="DDType" data-bs-toggle="dropdown" aria-expanded="false">
+                            Zmień
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @foreach (var item in Model.AvileableUsers)
+                            {
+                                <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.UserName')">@item.UserName - @item.Name @item.Surname</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
+                <button type="button" id="BtnAddUserrr" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value)">Dodaj</button>
+                <!--<a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToList(document.getElementById('ChoosenUser').value)" value="" asp-route-id="">Dodaj2</a>-->
+                <!--<form action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
+                </form>-->
+            </div>
+        </div>
+    </div>
+</div>

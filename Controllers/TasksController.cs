@@ -151,59 +151,21 @@ namespace MVCSimpleCRM.Controllers
             return View(taskVM);
         }
 
-        public async Task<IActionResult> AddUserToModel2(EditTaskViewModel taskVM)
-        {
-            //AddUserToTask = (await _accountRepository.GetUserByLogin("qwertyuio")).ToList();
-            //AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
-
-            var task = new EditTaskViewModel
-            {
-                //Users = await _accountRepository.GetAll(),
-                //AddedUsers = (IEnumerable<AspNetUsers>)list
-                //AddedUsers = Enumerable.Empty<AspNetUsers>(),
-                //AddedUsersList = AddUserToTask
-            };
-            return View(task);
-        }
-
         public void AddUsersToTasks(EditTaskViewModel taskVM)
         {
             foreach (var User in taskVM.TaskPositionUsers)
             {
-
                 _taskUserRepository.Add(User);
             }
         }
 
-/*        public async Task<IActionResult> AddUserToModel(EditTaskViewModel taskVM)
+        public async Task<IActionResult> Edit(int id, EditTaskViewModel2 TaskVM3)
         {
-            AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
-
-            var task = new EditTaskViewModel
+            if(id == 0)
             {
-                Title = taskVM.Title,
-                Description = taskVM.Description,
-                Status = taskVM.Status,
-                CreatorStatus = taskVM.CreatorStatus,
-                CreateDate = taskVM.CreateDate,
-                DueDate = taskVM.DueDate,
-                IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                //Users = await _accountRepository.GetAll(),
-                //AddedUsers = Enumerable.Empty<AspNetUsers>(),
-                //AddedUsersList = AddUserToTask
-            };
-            return View(taskVM);
-        }*/
+                return View(TaskVM3);
+            }
 
-        /*public async Task<IActionResult> AddUserToList(string UserLogin, EditTaskViewModel taskVM)
-        {
-            AddUserToTask.Add((AspNetUsers)await _accountRepository.GetUserByLogin(UserLogin));
-            //AddUserToTask.Add(await _accountRepository.GetUserByLogin(UserID)); ;
-            return View(taskVM);
-        }*/
-
-        public async Task<IActionResult> Edit(int id)
-        {
             Tasks task = await _taskRepository.GetByIdAsync(id);
             if (task == null) return View("Error");
             var taskVM = new EditTaskViewModel
@@ -284,7 +246,10 @@ namespace MVCSimpleCRM.Controllers
 
             TaskVM.TaskPositionUsers.Add(TaskUserViewModelVM);
 
-            return PartialView("_TaskUsers", TaskVM);
+            return RedirectToAction("Edit", "Tasks", new { id = 0 , TaskVM3 = TaskVM});
+            //return Ok(new { TaskVM });
+            //return PartialView("_TaskUsers", TaskVM);
+            //return View(TaskVM);
             //return RedirectToAction("RefreshAddUser", new { json = JsonConvert.SerializeObject(TaskVM), AttachedUserName = AttachedUserName });
             //return RedirectToAction("RefreshEdit", "Tasks", new { TaskVM = TaskVM });
             //return View(TaskVM);
