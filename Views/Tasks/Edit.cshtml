@@ -57,12 +57,12 @@
         //var jsonPartialString = JSON.stringify(Html.Raw(Json.Serialize(Partial)));
 
         $.get("/tasks/RefreshAddUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
-            const updatedModel = data.mainModel;
+            //const updatedModel = data.mainModel;
 
             // Update your page with the new model
             // For example, replace the content of an element with the updated data
             //$('#resultContainer').html(`<p>${updatedModel.property1}</p><p>${updatedModel.property2}</p>`);
-            //$("#_TaskUsersContainer").html(data);
+            $("#_TaskUsersContainer").html(data);
             //$("#_TaskContainer").html(data);
         })
     }
@@ -219,7 +219,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 @foreach (var item in Model.AvileableUsers)
                                 {
-                                <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.UserName')">@item.UserName - @item.Name @item.Surname</a></li>
+                                    <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.UserName')">@item.UserName - @item.Name @item.Surname</a></li>
                                 }
                             </ul>
                         </div>

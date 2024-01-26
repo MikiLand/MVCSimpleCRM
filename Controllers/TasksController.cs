@@ -161,13 +161,11 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Edit(int id, string json2, string test)
         {
-            
-
-            if (id == 0)
+            /*if (id == 0)
             {
                 EditTaskViewModel2 TaskVM3 = JsonConvert.DeserializeObject<EditTaskViewModel2>(json2);
                 return View(TaskVM3);
-            }
+            }*/
 
             Tasks task = await _taskRepository.GetByIdAsync(id);
             if (task == null) return View("Error");
@@ -249,11 +247,11 @@ namespace MVCSimpleCRM.Controllers
 
             TaskVM.TaskPositionUsers.Add(TaskUserViewModelVM);
 
-            string json2 = JsonConvert.SerializeObject(TaskVM);
+            //string json2 = JsonConvert.SerializeObject(TaskVM);
+            //return RedirectToAction("Edit", "Tasks", new { id = 0 , json2 = json2, test = "łeło"});
 
-            return RedirectToAction("Edit", "Tasks", new { id = 0 , json2 = json2, test = "łeło"});
             //return Ok(new { TaskVM });
-            //return PartialView("_TaskUsers", TaskVM);
+            return PartialView("_TaskUsers", TaskVM);
             //return View(TaskVM);
             //return RedirectToAction("RefreshAddUser", new { json = JsonConvert.SerializeObject(TaskVM), AttachedUserName = AttachedUserName });
             //return RedirectToAction("RefreshEdit", "Tasks", new { TaskVM = TaskVM });
