@@ -159,13 +159,19 @@ namespace MVCSimpleCRM.Controllers
             }
         }
 
+        
+
         public async Task<IActionResult> Edit(int id, string json2, string test)
         {
+
+
             /*if (id == 0)
             {
                 EditTaskViewModel2 TaskVM3 = JsonConvert.DeserializeObject<EditTaskViewModel2>(json2);
                 return View(TaskVM3);
             }*/
+
+            //HttpContext.Session.SetString("ActualModel", null);
 
             Tasks task = await _taskRepository.GetByIdAsync(id);
             if (task == null) return View("Error");
@@ -227,6 +233,14 @@ namespace MVCSimpleCRM.Controllers
 
             AspNetUsers UserVM = await _accountRepository.GetUserByUserName(AttachedUserName);
             EditTaskViewModel2 TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(json);
+            var ActualModel = HttpContext.Session.GetString("ActualModel");
+
+
+
+            if (ActualModel is not null)
+            {
+                TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
+            }
 
             var TaskUserViewModelVM = new TaskUserViewModel
             {
@@ -251,6 +265,7 @@ namespace MVCSimpleCRM.Controllers
             //return RedirectToAction("Edit", "Tasks", new { id = 0 , json2 = json2, test = "łeło"});
 
             //return Ok(new { TaskVM });
+            HttpContext.Session.SetString("ActualModel", JsonConvert.SerializeObject(TaskVM));
             return PartialView("_TaskUsers", TaskVM);
             //return View(TaskVM);
             //return RedirectToAction("RefreshAddUser", new { json = JsonConvert.SerializeObject(TaskVM), AttachedUserName = AttachedUserName });
