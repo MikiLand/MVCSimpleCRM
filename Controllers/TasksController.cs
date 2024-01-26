@@ -161,18 +161,8 @@ namespace MVCSimpleCRM.Controllers
 
         
 
-        public async Task<IActionResult> Edit(int id, string json2, string test)
+        public async Task<IActionResult> Edit(int id)
         {
-
-
-            /*if (id == 0)
-            {
-                EditTaskViewModel2 TaskVM3 = JsonConvert.DeserializeObject<EditTaskViewModel2>(json2);
-                return View(TaskVM3);
-            }*/
-
-            //HttpContext.Session.SetString("ActualModel", null);
-
             Tasks task = await _taskRepository.GetByIdAsync(id);
             if (task == null) return View("Error");
             var taskVM = new EditTaskViewModel
@@ -235,8 +225,6 @@ namespace MVCSimpleCRM.Controllers
             EditTaskViewModel2 TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(json);
             var ActualModel = HttpContext.Session.GetString("ActualModel");
 
-
-
             if (ActualModel is not null)
             {
                 TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
@@ -287,13 +275,18 @@ namespace MVCSimpleCRM.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditTaskViewModel taskVM)
+        public async Task<IActionResult> Edit(int id, EditTaskViewModel2 taskVM)
         {
-            if (!ModelState.IsValid)
+            var ActualModel = HttpContext.Session.GetString("ActualModel");
+
+            
+
+            //Code need to be eliminated as returned model isn't. Another method of model veryfication need to be implemented
+            /*if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Edycja nieudana!");
                 return View("Edit", taskVM);
-            }
+            }*/
 
             var task = new Tasks
             {
@@ -307,7 +300,24 @@ namespace MVCSimpleCRM.Controllers
                 IDUserCreate = taskVM.IDUserCreate
             };
 
+            
+
             _taskRepository.Update(task);
+
+            List<TaskUsers> TaskPositionUsersOld = await _taskUserRepository.GetAllTaskUsersAttachedToTask(task.Id);
+
+            if (ActualModel is not null)
+            {
+                EditTaskViewModel2 ActualTaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
+                foreach (var User in ActualTaskVM.TaskPositionUsers)
+                {
+                    bool exists = false;
+                    foreach( var OldUser in TaskPositionUsersOld)
+                    {
+                        if(User == TaskPositionUsersOld)
+                    }
+                }
+            }
 
             return RedirectToAction("Detail", "Tasks", new { id = task.Id });
         }
