@@ -8,6 +8,7 @@ using MVCSimpleCRM.ViewModels;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
@@ -309,14 +310,40 @@ namespace MVCSimpleCRM.Controllers
             if (ActualModel is not null)
             {
                 EditTaskViewModel2 ActualTaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
-                foreach (var User in ActualTaskVM.TaskPositionUsers)
+
+                //Deleting
+                foreach (var OldUserList in TaskPositionUsersOld)
                 {
-                    bool exists = false;
-                    foreach( var OldUser in TaskPositionUsersOld)
+                    AspNetUsers OldUser = await _accountRepository.GetByIdAsync(OldUserList.IdUser);
+                    if (OldUser != null) 
                     {
-                        if(User == TaskPositionUsersOld)
+                        bool NotDelete = false;
+                        foreach (var NewUserList in ActualTaskVM.TaskPositionUsers) 
+                        {
+                            
+                            AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);
+                            if (NewUser != null)
+                            {
+                                if(OldUser == NewUser)
+                                {
+                                    NotDelete = true;
+                                }
+                            }
+                        }
+                        if(NotDelete == false) 
+                        {
+                            //_accountRepository.Delete(OldUser);
+                            _taskUserRepository.Delete(_taskUserRepository.GetTaskUserByID(OldUser.Id, ActualTaskVM.Id);
+                        }
                     }
                 }
+
+
+
+
+
+                //Adding
+
             }
 
             return RedirectToAction("Detail", "Tasks", new { id = task.Id });

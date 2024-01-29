@@ -36,10 +36,15 @@ namespace MVCSimpleCRM.Repository
             return Save();
         }
 
-        public async Task<IEnumerable<TaskUsers>> GetAllUsersAttachedToTask(int TaskID)
+        public TaskUsers GetTaskUserByID(string IDUser, int IDTask)
+        {
+            return _context.taskUsers.Where(x => x.IdUser == IDUser) &&(x => x.IdTask == IDTask);
+        }
+
+        /*public async Task<IEnumerable<TaskUsers>> GetAllUsersAttachedToTask(int TaskID)
         {
             return await _context.taskUsers.Where(x => x.IdTask == TaskID).Take(3).ToListAsync();
-        }
+        }*/
 
         public async Task<List<TaskUsers>> GetAllTaskUsersAttachedToTask(int TaskID)
         {
