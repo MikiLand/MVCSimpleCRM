@@ -2,6 +2,7 @@
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
+using System.Threading.Tasks;
 
 namespace MVCSimpleCRM.Repository
 {
@@ -36,19 +37,14 @@ namespace MVCSimpleCRM.Repository
             return Save();
         }
 
-        public TaskUsers GetTaskUserByID(string IDUser, int IDTask)
-        {
-            return _context.taskUsers.Where(x => x.IdUser == IDUser) &&(x => x.IdTask == IDTask);
-        }
-
-        /*public async Task<IEnumerable<TaskUsers>> GetAllUsersAttachedToTask(int TaskID)
-        {
-            return await _context.taskUsers.Where(x => x.IdTask == TaskID).Take(3).ToListAsync();
-        }*/
-
         public async Task<List<TaskUsers>> GetAllTaskUsersAttachedToTask(int TaskID)
         {
             return await _context.taskUsers.Where(x => x.IdTask == TaskID).ToListAsync();
+        }
+
+        public async Task<TaskUsers> GetTaskUserByID(string IDUser, int IDTask)
+        {
+            return await _context.taskUsers.FirstOrDefaultAsync(x => x.IdUser == IDUser && x.IdTask == IDTask);
         }
     }
 }

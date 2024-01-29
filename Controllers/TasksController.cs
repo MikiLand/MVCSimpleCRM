@@ -332,20 +332,41 @@ namespace MVCSimpleCRM.Controllers
                         }
                         if(NotDelete == false) 
                         {
-                            //_accountRepository.Delete(OldUser);
-                            _taskUserRepository.Delete(_taskUserRepository.GetTaskUserByID(OldUser.Id, ActualTaskVM.Id);
+                            _taskUserRepository.Delete(await _taskUserRepository.GetTaskUserByID(OldUser.Id, ActualTaskVM.Id));
                         }
                     }
                 }
 
-
-
-
-
                 //Adding
-
+                foreach(var NewUserList in ActualTaskVM.TaskPositionUsers)
+                {
+                    AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);
+                    if (NewUser != null)
+                    {
+                        bool NotAdd = false;
+                        foreach(var OldUserList in TaskPositionUsersOld)
+                        {
+                            AspNetUsers OldUser = await _accountRepository.GetByIdAsync(OldUserList.IdUser);
+                            if(OldUser != null)
+                            {
+                                if(NewUser == OldUser)
+                                {
+                                    NotAdd = true;
+                                }
+                            }
+                        }
+                        if(NotAdd == false)
+                        {
+                            TaskUsers NewTaskUser = new TaskUsers
+                            {
+                                IdTask = ActualTaskVM.Id,
+                                IdUser = NewUser.Id
+                            };
+                            _taskUserRepository.Add(NewTaskUser);
+                        }
+                    }
+                }
             }
-
             return RedirectToAction("Detail", "Tasks", new { id = task.Id });
         }
 
