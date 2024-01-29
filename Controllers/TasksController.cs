@@ -94,24 +94,6 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Create()
         {
-            //IList<object> list = null;
-            //var test = (await _accountRepository.GetUserByLogin("")).ToList();
-            //AddUserToTask = await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd");
-            //AddUserToTask = (await _accountRepository.GetUserByLogin("qwertyuio")).ToList();
-            //AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
-            //AddUserToTask.Add(await _accountRepository.GetByIdAsync("a53989d9-f8c0-42ba-b2ff-9acbcc168dec"));
-            //AddUserToTask.Add(await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
-            //var test = (await _accountRepository.GetByIdAsync("4673c067-0dc8-4c61-952a-46a5b91adfcd"));
-            //list.Add(test);
-            //if(test == null)
-            //{
-
-            //}
-            //else
-            //{
-            //    AddUserToTask.Add(test);
-            //}
-
             var tasksVM = new EditTaskViewModel
             {
                 //Users = await _accountRepository.GetAll(),
@@ -181,6 +163,7 @@ namespace MVCSimpleCRM.Controllers
 
             var TaskVM2 = new EditTaskViewModel2
             {
+                Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
@@ -212,16 +195,10 @@ namespace MVCSimpleCRM.Controllers
             return View(TaskVM2);
         }
 
-        /*public async Task<IActionResult> RefreshEdit(EditTaskViewModel2 TaskVM)
-        {
-            return View(TaskVM);
-        }*/
-
         [HttpGet]
         [Route("/tasks/RefreshAddUser")]
         public async Task<IActionResult> RefreshAddUser(string json, string AttachedUserName)
         {
-
             AspNetUsers UserVM = await _accountRepository.GetUserByUserName(AttachedUserName);
             EditTaskViewModel2 TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(json);
             var ActualModel = HttpContext.Session.GetString("ActualModel");
@@ -250,16 +227,8 @@ namespace MVCSimpleCRM.Controllers
 
             TaskVM.TaskPositionUsers.Add(TaskUserViewModelVM);
 
-            //string json2 = JsonConvert.SerializeObject(TaskVM);
-            //return RedirectToAction("Edit", "Tasks", new { id = 0 , json2 = json2, test = "łeło"});
-
-            //return Ok(new { TaskVM });
             HttpContext.Session.SetString("ActualModel", JsonConvert.SerializeObject(TaskVM));
             return PartialView("_TaskUsers", TaskVM);
-            //return View(TaskVM);
-            //return RedirectToAction("RefreshAddUser", new { json = JsonConvert.SerializeObject(TaskVM), AttachedUserName = AttachedUserName });
-            //return RedirectToAction("RefreshEdit", "Tasks", new { TaskVM = TaskVM });
-            //return View(TaskVM);
         }
 
         public async Task<IActionResult> RefreshRemoveUser(EditTaskViewModel2 TaskVM, string AttachedUserID)
