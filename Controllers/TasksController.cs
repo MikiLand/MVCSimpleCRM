@@ -190,6 +190,7 @@ namespace MVCSimpleCRM.Controllers
                 TaskVM2.TaskPositionUsers.Add(TaskUserViewModelVM);
             }
 
+            HttpContext.Session.SetString("ActualModel", JsonConvert.SerializeObject(TaskVM2));
             return View(TaskVM2);
         }
 
@@ -251,12 +252,21 @@ namespace MVCSimpleCRM.Controllers
                 Surname = UserVM.Surname
             };
 
-            foreach (var User in TaskVM.TaskPositionUsers)
+            TaskUserViewModel RemovedTUVM = null;
+
+            for (int i = TaskVM.TaskPositionUsers.Count - 1; i >= 0; i--)
             {
+                TaskUserViewModel User = TaskVM.TaskPositionUsers[i];
+
                 if (AttachedUserName == User.UserName)
                 {
-                    TaskVM.TaskPositionUsers.Remove(TaskUserViewModelVM);
+                    RemovedTUVM = TaskVM.TaskPositionUsers[i];
                 }
+            }
+
+            if(RemovedTUVM is not null)
+            {
+                TaskVM.TaskPositionUsers.Remove(RemovedTUVM);
             }
 
             HttpContext.Session.SetString("ActualModel", JsonConvert.SerializeObject(TaskVM));
@@ -299,7 +309,7 @@ namespace MVCSimpleCRM.Controllers
             {
                 EditTaskViewModel2 ActualTaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
 
-                //Deleting
+                //Removing user
                 foreach (var OldUserList in TaskPositionUsersOld)
                 {
                     AspNetUsers OldUser = await _accountRepository.GetByIdAsync(OldUserList.IdUser);
@@ -325,7 +335,7 @@ namespace MVCSimpleCRM.Controllers
                     }
                 }
 
-                //Adding
+                //Adding user
                 foreach(var NewUserList in ActualTaskVM.TaskPositionUsers)
                 {
                     AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);

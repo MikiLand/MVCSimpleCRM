@@ -60,7 +60,6 @@
     }
 
     function RemoveUserFromList(UserName) {
-        alert(UserName);
         var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
 
         $.get("/tasks/RefreshRemoveUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
