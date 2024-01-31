@@ -94,21 +94,25 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var tasksVM = new EditTaskViewModel
+            var tasksVM = new EditTaskViewModel2
             {
-                //Users = await _accountRepository.GetAll(),
-                //AddedUsers = Enumerable.Empty<AspNetUsers>(),
-                //AddedUsersList = AddUserToTask
+                TaskPositionUsers = new List<TaskUserViewModel> { },
+                AvileableUsers = await _accountRepository.GetAllList()
             };
+
+            HttpContext.Session.SetString("ActualModel", JsonConvert.SerializeObject(tasksVM));
             return View(tasksVM);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(EditTaskViewModel taskVM)
+        public async Task<IActionResult> Create(EditTaskViewModel2 taskVM)
         {
-            if (ModelState.IsValid)
-            {
-                var task = new Tasks
+            var ActualModel = HttpContext.Session.GetString("ActualModel");
+
+            //Code need to be eliminated as returned model isn't. Another method of model veryfication need to be implemented            
+            //if (ModelState.IsValid)
+            //{
+            var task = new Tasks
                 {
                     Title = taskVM.Title,
                     Description = taskVM.Description,
@@ -117,30 +121,44 @@ namespace MVCSimpleCRM.Controllers
                     CreateDate = taskVM.CreateDate,
                     DueDate = taskVM.DueDate,
                     IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                    //Users = await _accountRepository.GetAll()
-                    //AddedUsers = await _taskUsersRepository.GetAllUserAddedToTask()
                 };
                 _taskRepository.Add(task);
 
-                AddUsersToTasks(taskVM);
+                if (ActualModel is not null)
+                {
+                    EditTaskViewModel2 ActualTaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
+
+                    foreach (var NewUserList in ActualTaskVM.TaskPositionUsers)
+                    {
+                        AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);
+                        if (NewUser != null)
+                        {
+                            TaskUsers NewTaskUser = new TaskUsers
+                            {
+                                IdTask = ActualTaskVM.Id,
+                                IdUser = NewUser.Id
+                            };
+                            _taskUserRepository.Add(NewTaskUser);
+                        }
+                    }
+                }
 
                 return RedirectToAction("Index");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Error");
-            }
-
-            return View(taskVM);
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError("", "Error");
+            //}
+            //return View(taskVM);
         }
 
-        public void AddUsersToTasks(EditTaskViewModel taskVM)
+        /*public void AddUsersToTasks(EditTaskViewModel taskVM)
         {
             foreach (var User in taskVM.TaskPositionUsers)
             {
                 _taskUserRepository.Add(User);
             }
-        }
+        }*/
 
         public async Task<IActionResult> Edit(int id)
         {

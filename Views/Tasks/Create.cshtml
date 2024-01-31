@@ -1,5 +1,5 @@
 ﻿@using MVCSimpleCRM.ViewModels;
-@model EditTaskViewModel
+@model EditTaskViewModel2
 
 <script type="text/javascript">
     document.addEventListener('readystatechange', event => {
@@ -87,6 +87,22 @@
         else if (ModalType == 3) {
             $('#ModalSuccess').modal('hide');
         }
+    }
+
+    function AddUserToList(UserName) {
+        var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
+
+        $.get("/tasks/RefreshAddUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
+            $("#_TaskUsersContainer").html(data);
+        })
+    }
+
+    function RemoveUserFromList(UserName) {
+        var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
+
+        $.get("/tasks/RefreshRemoveUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
+            $("#_TaskUsersContainer").html(data);
+        })
     }
 </script>
 
@@ -192,8 +208,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="row">
                             <div class="col">
                                 <center>
@@ -201,34 +215,10 @@
                                 </center>
                             </div>
                         </div>
-                        
-                        <!--foreach (var item in Model.AddedUsersList)
-                        {
-                                <div class="card mb-4 box-shadow">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <img class="card-img-top" src="https://placehold.co/20x20" alt="UserImage" maxwidth="20" maxheighe="20">
-                                                </div>
-                                                <div class="col-md-1">-->
-                                                    <!--<p class="card-text"><span>&#64;</span>USERNAME PLACEHOLDER</p>-->
-                        <!-- <p class="card-text" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;"><span>&#64;</span>item.UserName</p>
-                                                </div>
-                                                <div class="col-md-9">-->
-                                                    <!--<p class="card-title" style="font-size:larger;">USERNAME USERSURNAME PLACEHOLDER</p>-->
-                        <!--<p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">item.Name item.Surname</p>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }-->
+
+                        <div id="_TaskUsersContainer">
+                            @Html.Partial("_TaskUsers")
+                        </div>
 
                         <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center; margin-top: -20px" class="btn btn-sm btn-outline-secondary" onclick="openModal(1)">Dodaj użytkownika</a>
 
@@ -253,7 +243,6 @@
                 </div>
                 <div class="modal-body">
                     <p>Wybierz użytkownika.</p>
-                    <!--<input asp-for="CreatorStatus" readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">-->
                     <div class="input-group col-md-3">
                         <input readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">
                         <div class="dropdown m-1 mt-0 mb-0">
@@ -261,24 +250,17 @@
                                 Zmień
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                foreach (var item in Model.Users)
+                                @foreach (var item in Model.AvileableUsers)
                                 {
-                                    <li><a class="dropdown-item" OnClick="ChooseUserOnChange('item.UserName')">item.UserName - item.Name item.Surname</a></li>
+                                    <li><a class="dropdown-item" OnClick="ChooseUserOnChange('@item.UserName')">@item.UserName - @item.Name @item.Surname</a></li>
                                 }
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" id="BtnAddUserrr" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value)">Dodaj</button>
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value)">Dodaj</button>
-                    <a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToList(document.getElementById('ChoosenUser').value)" value="" asp-route-id="">Dodaj2</a>
-
-
-                    <!--<form action="Delete" method="post">
-                        <input type="hidden" asp-for="Id" />
-                        <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
-                    </form>-->
                 </div>
             </div>
         </div>
