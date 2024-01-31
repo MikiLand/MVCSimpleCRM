@@ -18,10 +18,6 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = E:\DEV Git\C#\MVCSimpleCRM\MVCSimpleCRM
 build_property._RazorSourceGeneratorDebug = 
 
-[E:/DEV Git/C\#/MVCSimpleCRM/MVCSimpleCRM/PartialViews/_TaskUsers.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFydGlhbFZpZXdzXF9UYXNrVXNlcnMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [E:/DEV Git/C\#/MVCSimpleCRM/MVCSimpleCRM/Views/Account/Detail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxEZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

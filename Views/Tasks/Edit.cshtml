@@ -60,8 +60,7 @@
     }
 
     function RemoveUserFromList(UserName) {
-        alert("Hello! I am an alert box!!");
-        console.log("RemoveUserFromList Started");
+        alert(UserName);
         var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
 
         $.get("/tasks/RefreshRemoveUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
