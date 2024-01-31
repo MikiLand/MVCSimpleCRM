@@ -57,6 +57,7 @@
         $.get("/tasks/RefreshAddUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
             $("#_TaskUsersContainer").html(data);
         })
+        closeModal(1);
     }
 
     function RemoveUserFromList(UserName) {
@@ -65,6 +66,7 @@
         $.get("/tasks/RefreshRemoveUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
             $("#_TaskUsersContainer").html(data);
         })
+        closeModal(1);
     }
 </script>
 
