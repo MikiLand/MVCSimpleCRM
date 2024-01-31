@@ -142,8 +142,6 @@ namespace MVCSimpleCRM.Controllers
             }
         }
 
-        
-
         public async Task<IActionResult> Edit(int id)
         {
             Tasks task = await _taskRepository.GetByIdAsync(id);
@@ -231,17 +229,38 @@ namespace MVCSimpleCRM.Controllers
             return PartialView("_TaskUsers", TaskVM);
         }
 
-        public async Task<IActionResult> RefreshRemoveUser(EditTaskViewModel2 TaskVM, string AttachedUserID)
+        [HttpGet]
+        [Route("/tasks/RefreshRemoveUser")]
+        public async Task<IActionResult> RefreshRemoveUser(string json, string AttachedUserName)
         {
+            AspNetUsers UserVM = await _accountRepository.GetUserByUserName(AttachedUserName);
+            EditTaskViewModel2 TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(json);
+            var ActualModel = HttpContext.Session.GetString("ActualModel");
+
+            if (ActualModel is not null)
+            {
+                TaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
+            }
+
+            var TaskUserViewModelVM = new TaskUserViewModel
+            {
+                IdTask = TaskVM.Id,
+                IdUser = UserVM.Id,
+                UserName = UserVM.UserName,
+                Name = UserVM.Name,
+                Surname = UserVM.Surname
+            };
+
             foreach (var User in TaskVM.TaskPositionUsers)
             {
-                if(AttachedUserID == User.IdUser)
+                if (AttachedUserName == User.UserName)
                 {
-                    TaskVM.TaskPositionUsers.Remove(User);
+                    TaskVM.TaskPositionUsers.Remove(TaskUserViewModelVM);
                 }
             }
 
-            return View(TaskVM);
+            HttpContext.Session.SetString("ActualModel", JsonConvert.SerializeObject(TaskVM));
+            return PartialView("_TaskUsers", TaskVM);
         }
 
         [HttpPost]

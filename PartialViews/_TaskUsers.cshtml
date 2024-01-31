@@ -1,6 +1,18 @@
 ﻿@using MVCSimpleCRM.ViewModels;
 @model EditTaskViewModel2
 
+<script type="text/javascript">
+    function RemoveUserFromList(UserName) {
+        alert("Hello! I am an alert box!!");
+        console.log("RemoveUserFromList Started");
+        var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
+        
+
+        $.get("/tasks/RefreshRemoveUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
+            $("#_TaskUsersContainer").html(data);
+        })
+    }
+</script>
 
 @foreach (var item in Model.TaskPositionUsers)
 {
@@ -21,7 +33,7 @@
                             <p class="card-title" style="display: flex; width: 50%; height: 100%; align-items:center; justify-content:center;">@item.Name @item.Surname</p>
                         </div>
                         <div class="col-md-1">
-                            <button type="button" class="btn btn-sm btn-outline-danger" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="RemoveUserFromList(@item.UserName)" style="width: 100px; float: right; display: flex; height: 100%; align-items:center; justify-content:center;">Usuń</button>
                         </div>
                     </div>
                 </div>

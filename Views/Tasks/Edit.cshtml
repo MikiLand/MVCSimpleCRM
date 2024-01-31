@@ -52,18 +52,20 @@
     }
 
     function AddUserToList(UserName) {
-        console.log(@Html.Raw(Json.Serialize(Model)))
         var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
-        //var jsonPartialString = JSON.stringify(Html.Raw(Json.Serialize(Partial)));
 
         $.get("/tasks/RefreshAddUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
-            //const updatedModel = data.mainModel;
-
-            // Update your page with the new model
-            // For example, replace the content of an element with the updated data
-            //$('#resultContainer').html(`<p>${updatedModel.property1}</p><p>${updatedModel.property2}</p>`);
             $("#_TaskUsersContainer").html(data);
-            //$("#_TaskContainer").html(data);
+        })
+    }
+
+    function RemoveUserFromList(UserName) {
+        alert("Hello! I am an alert box!!");
+        console.log("RemoveUserFromList Started");
+        var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
+
+        $.get("/tasks/RefreshRemoveUser", { json: jsonString, AttachedUserName: UserName }, function (data) {
+            $("#_TaskUsersContainer").html(data);
         })
     }
 </script>
@@ -85,7 +87,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <hr />
+                                    <hr />  
                                 </center>
                             </div>
                         </div>
@@ -209,7 +211,6 @@
                 </div>
                 <div class="modal-body">
                     <p>Wybierz użytkownika.</p>
-                    <!--<input asp-for="CreatorStatus" readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">-->
                     <div class="input-group col-md-3">
                         <input readonly="True" id="ChoosenUser" class="form-control" value="Wybierz użytkownika">
                         <div class="dropdown m-1 mt-0 mb-0">
@@ -226,24 +227,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
                     <button type="button" id="BtnAddUserrr" class="btn btn-outline-primary" data-dismiss="modal" onclick="AddUserToList(document.getElementById('ChoosenUser').value)">Dodaj</button>
-                    <!--<a class="btn btn-outline-primary" asp-controller="Tasks" asp-action="AddUserToList(document.getElementById('ChoosenUser').value)" value="" asp-route-id="">Dodaj2</a>-->
-
-
-                    <!--<form action="Delete" method="post">
-                        <input type="hidden" asp-for="Id" />
-                        <input type="submit" value="Potwierdzam" class="btn btn-outline-danger" />
-                    </form>-->
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" onclick="closeModal(1)">Anuluj</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--<div>===================================================================================================</div>
-
-    <div id="_TaskContainer">
-        Html.Partial("_Task")
-    </div>-->
-
 </form>
