@@ -405,12 +405,14 @@ namespace MVCSimpleCRM.Controllers
 
         [HttpGet]
         [Route("/tasks/RefreshTasks")]
-        public async Task<IActionResult> RefreshTasks(string json, string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo)
+        public async Task<IActionResult> RefreshTasks(string json, string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
         {
             int x;
-            IEnumerable<Tasks> tasks = new List<Tasks>();
+            IEnumerable<Tasks> tasks = await _taskRepository.RefreshTasks(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType);
+            //(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType);
+            //IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
+            //tasks = _taskRepository.
 
-            
             return PartialView("_TasksIndex", tasks);
         }
     }

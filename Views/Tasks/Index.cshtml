@@ -61,6 +61,7 @@
         var SortBy = 0;
         var DateFrom = document.getElementById('DateFrom').value;
         var DateTo = document.getElementById('DateTo').value;
+        var DateType = document.getElementById('DateType').value;
         console.log("Selected date:", DateFrom);
         console.log("Selected date:", DateTo);
 
@@ -102,7 +103,7 @@
         }
         console.log('1');
 
-        $.get("/tasks/RefreshTasks", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo}, function (data) {
+        $.get("/tasks/RefreshTasks", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
             $("#_TasksIndex").html(data);
             console.log('2');
         })
