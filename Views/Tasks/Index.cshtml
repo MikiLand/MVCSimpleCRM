@@ -15,33 +15,6 @@
         }
     });
 
-    $(document).ready(function () {
-        $("#BtnSearch").on('click', function () {
-            $.get("/tasks/MyJson?SearchedTitle='aaaa'", function (data) {
-                const object1 = data;
-                //console.log(object1[1].title);
-                //var i = 0;
-                //while (i < object1.length) {
-                    //$("#DivTasks").html('<div>' + object1[i].title + ' ' + object1[i].description + '</div> ');
-                //    var hangDiv = document.createElement('span')
-                //    hangDiv.innerHTML = '<div>' + object1[i].title + ' ' + object1[i].description + '</div> '
-                //    document.body.appendChild(hangDiv);
-                //    i++;
-                //}
-                //document.querySelector('.content').appendChild(hangDiv)
-
-                var hangDiv = document.createElement("div")
-
-                for (i = 0; i < object1.length; i++) {
-                    var span = document.createElement('span')
-                    span.innerHTML = object1[i].title
-                    console.log(hangDiv.appendChild(span));
-                };
-                document.querySelector('.content').appendChild(hangDiv)
-            })
-        })
-    })
-
     function ColorStatus(Type, Status) {
         if(Type == 1)
             if(Status == 'NZR')
@@ -81,6 +54,59 @@
         var result = new Date(date);
         result.setDate(result.getDate() + days);
         return result;
+    }
+
+    function AddUserToList(SearchedTaskTitle) {
+        var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
+        var SortBy = 0;
+        var DateFrom = document.getElementById('DateFrom').value;
+        var DateTo = document.getElementById('DateTo').value;
+        console.log("Selected date:", DateFrom);
+        console.log("Selected date:", DateTo);
+
+        //if (document.getElementById('DateUpcomingDeadline').checked) {
+
+        //} else if (document.getElementById('DateFarthestDeadline').checked) {
+
+        //} else if (document.getElementById('SearchedTaskName').checked) {
+
+        //} else if (document.getElementById('SearchedTaskName').checked) {
+
+        //} else if (document.getElementById('SearchedTaskName').checked) {
+
+        //} else if (document.getElementById('SearchedTaskName').checked) {
+
+        //}
+
+        console.log('0');
+
+        switch (true) {
+            case document.getElementById('DateUpcomingDeadline').checked:
+                SortBy = 1;
+                break;
+            case document.getElementById('DateFarthestDeadline').checked:
+                SortBy = 2;
+                break;
+            case document.getElementById('DateNewest').checked:
+                SortBy = 3;
+                break;
+            case document.getElementById('SearchedTaskName').checked:
+                SortBy = 4;
+                break;
+            case document.getElementById('DateUpcomingReminder').checked:
+                SortBy = 5;
+                break;
+            case document.getElementById('DateFarthestReminder').checked:
+                SortBy = 6;
+                break;
+        }
+        console.log('1');
+
+        $.get("/tasks/RefreshTasks", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo}, function (data) {
+            $("#_TasksIndex").html(data);
+            console.log('2');
+        })
+        console.log('3');
     }
 </script>
 
@@ -154,47 +180,46 @@
 
                             <label>Sort by:</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioNameAsc" checked runat="server">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="DateUpcomingDeadline" checked runat="server">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Najbliższy termin
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioNameDesc" runat="server">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="DateFarthestDeadline" runat="server">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Najdalszy termin
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioPriceAsc" runat="server">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="DateNewest" runat="server">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Najnowsze
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioPriceDesc" runat="server">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="DateOldest" runat="server">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Najstarsze
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioProductType" runat="server">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="DateUpcomingReminder" runat="server">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Najbliższe przypomnienie
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="RadioProductType" runat="server">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="DateFarthestReminder" runat="server">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     Najdalsze przypomnienie
                                 </label>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -207,17 +232,21 @@
 
                             <div class="input-group col-md-3" style="margin-bottom: 20px">
 
-                                <input type="text" class="form-control" Style="width: 200px;" placeholder="Jakiego zadania szukasz?">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" id="BtnSearch" Style="width: 120px;">Wyszukaj</button>
+                                <input type="text" class="form-control" Style="width: 200px;" id="SearchedTaskName" placeholder="Jakiego zadania szukasz?">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" id="BtnSearch" onclick="AddUserToList(document.getElementById('SearchedTaskName').value)" Style="width: 120px;">Wyszukaj</button>
 
                             </div>
                         </div>
                     </div>
                     <div id="DivTasks">
-                        @foreach (var item in Model)
+                        <div id="_TasksIndexContainer">
+                            @Html.Partial("_TasksIndex")
+                        </div>
+
+                        <!--foreach (var item in Model)
                         {
                             <div class="card mb-4 box-shadow">
-                                @{
+                                {
                                     switch (item.CreatorStatus)
                                     {
                                         case "UTW":
@@ -241,7 +270,7 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        @{
+                                        {
                                             switch (item.Status)
                                             {
                                                 case "NZR":
@@ -258,27 +287,19 @@
                                                     break;
                                             }
                                         }
-                                        <!--<div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:deeppink; border-radius: 0 0 0 3px;">
-                                        </div>-->
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-7">
-                                                    <p class="card-title">@item.Title</p>
-                                                    <p class="card-text"> @item.Description</p>
-                                                    <!--<div class="d-flex justify-content-between align-items-center">
-                                                        <div class="btn-group">
-                                                            <button type="button" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
-                                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edytuj</button>
-                                                        </div>
-                                                    </div>-->
+                                                    <p class="card-title">item.Title</p>
+                                                    <p class="card-text"> item.Description</p>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <p class="card-title">@item.DueDate</p>
+                                                    <p class="card-title">item.DueDate</p>
                                                     <p class="card-title">Aktualizacja:</p>
-                                                    <p class="card-title">@item.CreateDate</p>
+                                                    <p class="card-title">item.CreateDate</p>
                                                 </div>
                                                 <div class="col-md-1" style="">
-                                                    <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Detail" asp-route-id="@item.Id">Podgląd</a>
+                                                    <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Detail" asp-route-id="item.Id">Podgląd</a>
                                                     <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px;">Kopiuj</button>
                                                 </div>
                                             </div>
@@ -286,7 +307,7 @@
                                     </div>
                                 </div>
                             </div>
-                        }
+                        }-->
                     </div>
                 </div>
             </div>

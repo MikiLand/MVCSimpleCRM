@@ -37,6 +37,7 @@ namespace MVCSimpleCRM.Controllers
         {
             //List<Users> users = _context.users.ToList();
             IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
+            HttpContext.Session.SetString("ActualTasksModel", JsonConvert.SerializeObject(tasks));
             return View(tasks);
         }
 
@@ -400,6 +401,17 @@ namespace MVCSimpleCRM.Controllers
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openModal();", true)
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Route("/tasks/RefreshTasks")]
+        public async Task<IActionResult> RefreshTasks(string json, string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo)
+        {
+            int x;
+            IEnumerable<Tasks> tasks = new List<Tasks>();
+
+            
+            return PartialView("_TasksIndex", tasks);
         }
     }
 }
