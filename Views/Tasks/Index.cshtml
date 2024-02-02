@@ -62,24 +62,6 @@
         var DateFrom = document.getElementById('DateFrom').value;
         var DateTo = document.getElementById('DateTo').value;
         var DateType = document.getElementById('DateType').value;
-        console.log("Selected date:", DateFrom);
-        console.log("Selected date:", DateTo);
-
-        //if (document.getElementById('DateUpcomingDeadline').checked) {
-
-        //} else if (document.getElementById('DateFarthestDeadline').checked) {
-
-        //} else if (document.getElementById('SearchedTaskName').checked) {
-
-        //} else if (document.getElementById('SearchedTaskName').checked) {
-
-        //} else if (document.getElementById('SearchedTaskName').checked) {
-
-        //} else if (document.getElementById('SearchedTaskName').checked) {
-
-        //}
-
-        console.log('0');
 
         switch (true) {
             case document.getElementById('DateUpcomingDeadline').checked:
@@ -101,13 +83,16 @@
                 SortBy = 6;
                 break;
         }
-        console.log('1');
 
         $.get("/tasks/RefreshTasks", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
             $("#_TasksIndexContainer").html(data);
-            console.log('2');
         })
-        console.log('3');
+    }
+
+    function SearchUsers(SearchedUser) {
+        $.get("/account/RefreshSearchedUsers", { SearchedUsers: SearchedUsers }, function (data) {
+            $("#_SearchedUsers").html(data);
+        })
     }
 </script>
 
@@ -130,7 +115,11 @@
 
                             <br />
                             <div class="form-group" style="margin-bottom: 20px">
-                                <input type="text" class="form-control" ID="TBSearch" placeholder="Wyszukaj pracownika">
+                                <input type="text" class="form-control" ID="TBSearch" placeholder="Wyszukaj pracownika" onchange="SearchUsers(document.getElementById('TBSearch').value)">
+                            </div>
+
+                            <div id="_TasksIndexContainer">
+                                @Html.Partial("_SearchedUsers")
                             </div>
 
                             <ul class="list-group">
@@ -239,77 +228,9 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div id="DivTasks">-->
-                        <div id="_TasksIndexContainer">
-                            @Html.Partial("_TasksIndex")
-                        </div>
-
-                        <!--foreach (var item in Model)
-                        {
-                            <div class="card mb-4 box-shadow">
-                                {
-                                    switch (item.CreatorStatus)
-                                    {
-                                        case "UTW":
-                                                                    <div style="height: 10px; background-color: rebeccapurple; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                    </div>
-                                            break;
-                                        case "PRZ":
-                                                                    <div style="height: 10px; background-color: deepskyblue; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                    </div>
-                                            break;
-                                        case "WRZ":
-                                                                    <div style="height: 10px; background-color:darkorange; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                    </div>
-                                            break;
-                                        case "ZAK":
-                                                                    <div style="height: 10px; background-color:green; border-radius: 3px 3px 0 0;" id="CreatorStatusColor">
-                                                                    </div>
-                                            break;
-                                    }
-                                }
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        {
-                                            switch (item.Status)
-                                            {
-                                                case "NZR":
-                                                                            <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:red; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                                            </div>
-                                                    break;
-                                                case "WRZ":
-                                                                            <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:darkorange; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                                            </div>
-                                                    break;
-                                                case "ZAK":
-                                                                            <div class="col-md-1" style="width: 10px; float: left; display: flex; height: 100%; align-items:center; justify-content:center; background-color:green; border-radius: 0 0 0 3px;" id="StatusColor">
-                                                                            </div>
-                                                    break;
-                                            }
-                                        }
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-7">
-                                                    <p class="card-title">item.Title</p>
-                                                    <p class="card-text"> item.Description</p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <p class="card-title">item.DueDate</p>
-                                                    <p class="card-title">Aktualizacja:</p>
-                                                    <p class="card-title">item.CreateDate</p>
-                                                </div>
-                                                <div class="col-md-1" style="">
-                                                    <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Detail" asp-route-id="item.Id">Podgląd</a>
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 100px;">Kopiuj</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }-->
-                    <!--</div>-->
+                    <div id="_TasksIndexContainer">
+                        @Html.Partial("_TasksIndex")
+                    </div>
                 </div>
             </div>
         </div>

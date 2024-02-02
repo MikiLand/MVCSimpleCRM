@@ -204,5 +204,14 @@ namespace MVCSimpleCRM.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        [Route("/tasks/RefreshTasks")]
+        public async Task<IActionResult> RefreshSearchedUsers(string SearchedUser)
+        {
+            IEnumerable<AspNetUsers> users = await _accountRepository.GetSearchedUsers(SearchedUser);
+
+            return PartialView("_SearchedUsers", users);
+        }
     }
 }

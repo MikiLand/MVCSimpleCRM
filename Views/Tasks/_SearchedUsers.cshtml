@@ -1,0 +1,11 @@
+﻿@model IEnumerable<AspNetUsers>
+
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">
+            <input class="form-check-input me-1" type="checkbox" value="">
+            <span>&#64;</span>@item.UserName @item.Name @item.Surname
+        </li>
+    }
+</ul>

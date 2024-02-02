@@ -4,6 +4,7 @@ using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.ViewModels;
+using System.Linq;
 using System.Security.Claims;
 
 namespace MVCSimpleCRM.Repository
@@ -58,28 +59,20 @@ namespace MVCSimpleCRM.Repository
         public async Task<AspNetUsers> GetByIdAsyncNoTracking(int id)
         {
             return _context.aspNetUsers.FirstOrDefault();
-            //return await _context.accounts.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<AspNetUsers> GetUserByUserName(string username)
         {
-            //return await _context.users.Where(u => u.Login == login).ToListAsync();
-            //return await _context.users.Where(u => u.Login.Contains(login) && u.Login.StartsWith("aaa")).ToListAsync();
-            //return await _context.aspNetUsers.Where(u => u.UserName.Contains(username));
             return await _context.aspNetUsers.FirstOrDefaultAsync(u => u.UserName == username);
         }
 
         public async Task<IEnumerable<AspNetUsers>> GetUserByLogin(string username)
         {
-            //return await _context.users.Where(u => u.Login == login).ToListAsync();
-            //return await _context.users.Where(u => u.Login.Contains(login) && u.Login.StartsWith("aaa")).ToListAsync();
             return await _context.aspNetUsers.Where(u => u.UserName.Contains(username)).ToListAsync();
         }
 
         public async Task<IList<AspNetUsers>> GetUserByLoginList(string username)
         {
-            //return await _context.users.Where(u => u.Login == login).ToListAsync();
-            //return await _context.users.Where(u => u.Login.Contains(login) && u.Login.StartsWith("aaa")).ToListAsync();
             return await _context.aspNetUsers.Where(u => u.UserName.Contains(username)).ToListAsync();
         }
 
@@ -97,6 +90,9 @@ namespace MVCSimpleCRM.Repository
             return userTasks.ToList();
         }
 
-       
+        public async Task<IEnumerable<AspNetUsers>> GetSearchedUsers(string SearchedUser)
+        {
+            return await _context.aspNetUsers.Where(u => u.UserName.Contains(SearchedUser) || u.Name.Contains(SearchedUser) || u.Surname.Contains(SearchedUser)).ToListAsync();
+        }
     }
 }
