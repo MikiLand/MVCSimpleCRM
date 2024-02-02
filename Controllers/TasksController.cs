@@ -35,10 +35,16 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //List<Users> users = _context.users.ToList();
+            var tasksVM = new IndexTaskViewModel
+            {
+                Tasks = await _taskRepository.GetAllList(),
+                Users = await _accountRepository.GetAllList()
+            };
+
             IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
             HttpContext.Session.SetString("ActualTasksModel", JsonConvert.SerializeObject(tasks));
-            return View(tasks);
+            //_accountRepository.GetSearchedUsers("");
+            return View(tasksVM);
         }
 
         public async Task<IActionResult> Detail(int id)
@@ -406,7 +412,12 @@ namespace MVCSimpleCRM.Controllers
         [Route("/tasks/RefreshTasks")]
         public async Task<IActionResult> RefreshTasks(string json, string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
         {
-            IEnumerable<Tasks> tasks = await _taskRepository.RefreshTasks(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType);
+            var tasks = new IndexTaskViewModel
+            {
+                Tasks = await _taskRepository.RefreshTasks(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType)
+            };
+
+            //IEnumerable<Tasks> tasks = await _taskRepository.RefreshTasks(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType);
 
             return PartialView("_TasksIndex", tasks);
         }

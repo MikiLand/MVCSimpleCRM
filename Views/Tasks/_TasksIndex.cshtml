@@ -1,6 +1,7 @@
-﻿@model IEnumerable<Tasks>
+﻿@using MVCSimpleCRM.ViewModels;
+@model IndexTaskViewModel
 
-@foreach (var item in Model)
+@foreach (var item in Model.Tasks)
 {
     <div class="card mb-4 box-shadow">
         @{

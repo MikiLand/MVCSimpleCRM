@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Tasks>
+﻿@using MVCSimpleCRM.ViewModels;
+@model IndexTaskViewModel
 
 <script type="text/javascript">
     document.addEventListener('readystatechange', event => {
@@ -121,16 +122,6 @@
                             <div id="_TasksIndexContainer">
                                 @Html.Partial("_SearchedUsers")
                             </div>
-
-                            <ul class="list-group">
-                                @foreach (var item in Model)
-                                {
-                                    <li class="list-group-item">
-                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="@item.Title">
-                                        Name Surname placeholder
-                                    </li>    
-                                }
-                            </ul>
 
                             <div class="row">
                                 <div class="col">

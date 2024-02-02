@@ -1,7 +1,8 @@
-﻿@model IEnumerable<AspNetUsers>
+﻿@using MVCSimpleCRM.ViewModels;
+@model IndexTaskViewModel
 
 <ul class="list-group">
-    @foreach (var item in Model)
+    @foreach (var item in Model.Users)
     {
         <li class="list-group-item">
             <input class="form-check-input me-1" type="checkbox" value="">

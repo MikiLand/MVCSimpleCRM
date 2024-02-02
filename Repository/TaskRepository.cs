@@ -31,6 +31,11 @@ namespace MVCSimpleCRM.Repository
             return await _context.tasks.ToListAsync();
         }
 
+        public async Task<List<Tasks>> GetAllList()
+        {
+            return await _context.tasks.ToListAsync();
+        }
+
         public async Task<IEnumerable<Tasks>> GetByTitleLike(string TitleLike)
         {
             return await _context.tasks.Where(x => x.Title.Contains("Title")).ToListAsync();
@@ -65,7 +70,7 @@ namespace MVCSimpleCRM.Repository
             return Save();
         }
 
-        public async Task<IEnumerable<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
+        public async Task<List<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
         {
             if(SearchedTaskTitle is null)
                 SearchedTaskTitle = string.Empty;

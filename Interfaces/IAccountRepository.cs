@@ -7,7 +7,6 @@ namespace MVCSimpleCRM.Interfaces
     {
         Task<IEnumerable<AspNetUsers>> GetAll();
         Task<List<AspNetUsers>> GetAllList();
-
         Task<List<Tasks>> GetAllUserCreatedTasks();
 
         Task<AspNetUsers> GetByIdAsync(string id);
