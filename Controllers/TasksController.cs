@@ -417,8 +417,6 @@ namespace MVCSimpleCRM.Controllers
                 Tasks = await _taskRepository.RefreshTasks(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType)
             };
 
-            //IEnumerable<Tasks> tasks = await _taskRepository.RefreshTasks(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType);
-
             return PartialView("_TasksIndex", tasks);
         }
     }

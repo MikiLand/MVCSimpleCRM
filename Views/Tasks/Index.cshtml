@@ -91,8 +91,8 @@
     }
 
     function SearchUsers(SearchedUser) {
-        $.get("/account/RefreshSearchedUsers", { SearchedUsers: SearchedUsers }, function (data) {
-            $("#_SearchedUsers").html(data);
+        $.get("/account/RefreshSearchedUsers", { SearchedUser: SearchedUser }, function (data) {
+            $("#_SearchedUsersContainer").html(data);
         })
     }
 </script>
@@ -119,7 +119,7 @@
                                 <input type="text" class="form-control" ID="TBSearch" placeholder="Wyszukaj pracownika" onchange="SearchUsers(document.getElementById('TBSearch').value)">
                             </div>
 
-                            <div id="_TasksIndexContainer">
+                            <div id="_SearchedUsersContainer">
                                 @Html.Partial("_SearchedUsers")
                             </div>
 

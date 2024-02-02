@@ -13,7 +13,7 @@ namespace MVCSimpleCRM.Interfaces
         Task<AspNetUsers> GetUserByUserName(string username);
         Task<IEnumerable<AspNetUsers>> GetUserByLogin(string username);
         Task<IList<AspNetUsers>> GetUserByLoginList(string username);
-        Task<IEnumerable<AspNetUsers>> GetSearchedUsers(string SearchedUser);
+        Task<List<AspNetUsers>> GetSearchedUsers(string SearchedUser);
 
         //bool Add(AspNetUsers account);
         bool Update(AspNetUsers account);

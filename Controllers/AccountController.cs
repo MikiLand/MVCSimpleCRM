@@ -5,7 +5,10 @@ using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
+using System.Globalization;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MVCSimpleCRM.Controllers
 {
@@ -206,12 +209,16 @@ namespace MVCSimpleCRM.Controllers
         }
 
         [HttpGet]
-        [Route("/tasks/RefreshTasks")]
+        [Route("/account/RefreshSearchedUsers")]
         public async Task<IActionResult> RefreshSearchedUsers(string SearchedUser)
         {
-            IEnumerable<AspNetUsers> users = await _accountRepository.GetSearchedUsers(SearchedUser);
+            //IEnumerable<AspNetUsers> users = await _accountRepository.GetSearchedUsers(SearchedUser);
+            var tasks = new IndexTaskViewModel
+            {
+                Users = await _accountRepository.GetSearchedUsers(SearchedUser)
+            };
 
-            return PartialView("_SearchedUsers", users);
+            return PartialView("_SearchedUsers", tasks);
         }
     }
 }
