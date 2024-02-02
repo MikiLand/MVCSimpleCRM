@@ -67,6 +67,9 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<IEnumerable<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
         {
+            if(SearchedTaskTitle is null)
+                SearchedTaskTitle = string.Empty;
+
             switch (DateType)
             {
                 case "Utworzenia":

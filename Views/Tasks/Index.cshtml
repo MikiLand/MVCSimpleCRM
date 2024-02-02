@@ -104,7 +104,7 @@
         console.log('1');
 
         $.get("/tasks/RefreshTasks", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
-            $("#_TasksIndex").html(data);
+            $("#_TasksIndexContainer").html(data);
             console.log('2');
         })
         console.log('3');
@@ -239,7 +239,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="DivTasks">
+                    <!--<div id="DivTasks">-->
                         <div id="_TasksIndexContainer">
                             @Html.Partial("_TasksIndex")
                         </div>
@@ -309,7 +309,7 @@
                                 </div>
                             </div>
                         }-->
-                    </div>
+                    <!--</div>-->
                 </div>
             </div>
         </div>
