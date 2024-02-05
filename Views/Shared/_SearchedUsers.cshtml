@@ -5,7 +5,7 @@
     @foreach (var item in Model.Users)
     {
         <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="">
+            <input class="form-check-input me-1" type="checkbox" value="@item.IsChecked">
             <span>&#64;</span>@item.UserName @item.Name @item.Surname
         </li>
     }

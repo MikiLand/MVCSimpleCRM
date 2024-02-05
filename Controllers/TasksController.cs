@@ -35,11 +35,31 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> Index()
         {
+            List<AspNetUsers> UsersList = await _accountRepository.GetAllList();
+
             var tasksVM = new IndexTaskViewModel
             {
                 Tasks = await _taskRepository.GetAllList(),
-                Users = await _accountRepository.GetAllList()
+                Users = new List<AspNetUsersIndexViewModel> { },
             };
+
+            foreach (var User in UsersList)
+            {
+                var UserIndexVM = new AspNetUsersIndexViewModel
+                {
+                    Id = User.Id,
+                    UserName = User.UserName,
+                    Name = User.Name,
+                    Surname = User.Surname,
+                    Email = User.Email,
+                    PasswordHash = User.PasswordHash,
+                    CreateDate = User.CreateDate,
+                    IsChecked = false
+                };
+
+                tasksVM.Users.Add(UserIndexVM);
+            }
+
 
             IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
             HttpContext.Session.SetString("ActualTasksModel", JsonConvert.SerializeObject(tasks));

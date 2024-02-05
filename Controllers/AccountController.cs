@@ -212,11 +212,30 @@ namespace MVCSimpleCRM.Controllers
         [Route("/account/RefreshSearchedUsers")]
         public async Task<IActionResult> RefreshSearchedUsers(string SearchedUser)
         {
-            //IEnumerable<AspNetUsers> users = await _accountRepository.GetSearchedUsers(SearchedUser);
+            List<AspNetUsers> UsersList = await _accountRepository.GetAllList();
+
             var tasks = new IndexTaskViewModel
             {
-                Users = await _accountRepository.GetSearchedUsers(SearchedUser)
+                //Users = await _accountRepository.GetSearchedUsers(SearchedUser)
             };
+
+            foreach (var User in UsersList)
+            {
+                var UserIndexVM = new AspNetUsersIndexViewModel
+                {
+                    Id = User.Id,
+                    UserName = User.UserName,
+                    Name = User.Name,
+                    Surname = User.Surname,
+                    Email = User.Email,
+                    PasswordHash = User.PasswordHash,
+                    CreateDate = User.CreateDate,
+                    IsChecked = false
+                };
+
+                tasks.Users.Add(UserIndexVM);
+            }
+
 
             return PartialView("_SearchedUsers", tasks);
         }

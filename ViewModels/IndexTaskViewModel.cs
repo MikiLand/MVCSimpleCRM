@@ -6,6 +6,6 @@ namespace MVCSimpleCRM.ViewModels
     public class IndexTaskViewModel
     {
         public List<Tasks> Tasks { get; set; }
-        public List<AspNetUsers> Users { get; set; }
+        public List<AspNetUsersIndexViewModel> Users { get; set; }
     }
 }
