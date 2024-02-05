@@ -1,11 +1,19 @@
 ﻿@using MVCSimpleCRM.ViewModels;
 @model IndexTaskViewModel
 
+<script>
+    function SetChecked(UserID) {
+        $.get("/account/RefreshSearchedUsers", { UserID: UserID }, function (data) {
+            $("#_SearchedUsersContainer").html(data);
+        })
+    }
+</script>
+
 <ul class="list-group">
     @foreach (var item in Model.Users)
     {
         <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="@item.IsChecked">
+            <input class="form-check-input me-1" type="checkbox" value="@item.IsChecked" onchange="SetChecked(@item.Id)">
             <span>&#64;</span>@item.UserName @item.Name @item.Surname
         </li>
     }

@@ -5,6 +5,7 @@ using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
+using Newtonsoft.Json;
 using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -212,11 +213,11 @@ namespace MVCSimpleCRM.Controllers
         [Route("/account/RefreshSearchedUsers")]
         public async Task<IActionResult> RefreshSearchedUsers(string SearchedUser)
         {
-            List<AspNetUsers> UsersList = await _accountRepository.GetAllList();
+            List<AspNetUsers> UsersList = await _accountRepository.GetSearchedUsers(SearchedUser);
 
             var tasks = new IndexTaskViewModel
             {
-                //Users = await _accountRepository.GetSearchedUsers(SearchedUser)
+                Users = new List<AspNetUsersIndexViewModel> { }
             };
 
             foreach (var User in UsersList)
@@ -235,7 +236,7 @@ namespace MVCSimpleCRM.Controllers
 
                 tasks.Users.Add(UserIndexVM);
             }
-
+            HttpContext.Session.SetString("ActualSearchedUsersModel", JsonConvert.SerializeObject(tasks));
 
             return PartialView("_SearchedUsers", tasks);
         }

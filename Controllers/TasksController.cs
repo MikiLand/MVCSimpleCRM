@@ -432,6 +432,8 @@ namespace MVCSimpleCRM.Controllers
         [Route("/tasks/RefreshTasks")]
         public async Task<IActionResult> RefreshTasks(string json, string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
         {
+            var ActualModel = HttpContext.Session.GetString("ActualModel");
+
             var tasks = new IndexTaskViewModel
             {
                 Tasks = await _taskRepository.RefreshTasks(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType)
