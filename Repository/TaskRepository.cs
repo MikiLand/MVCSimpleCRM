@@ -3,6 +3,7 @@ using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
 using MVCSimpleCRM.ViewModels;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVCSimpleCRM.Repository
@@ -68,6 +69,115 @@ namespace MVCSimpleCRM.Repository
         {
             _context.Update(task);
             return Save();
+        }
+        public async Task<List<Tasks>> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
+        {
+            List<String> UsersIDList = new List<String>();
+
+            if (SearchedTaskTitle is null)
+                SearchedTaskTitle = string.Empty;
+
+            if(UsersList is not null)
+            {
+                foreach (var user in UsersList)
+                {
+                    UsersIDList.Add(user.Id);
+                }
+            }
+
+            switch (DateType)
+            {
+                case "Utworzenia":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).ToListAsync();
+                        case 2:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.DueDate).ToListAsync();
+                        case 3:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.CreateDate).ToListAsync();
+                        case 4:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).ToListAsync();
+                        case 5:
+                            return await _context.tasks.ToListAsync();
+                        case 6:
+                            return await _context.tasks.ToListAsync();
+                        default:
+                            return await _context.tasks.ToListAsync();
+                    }
+                case "Przypomnienia":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.ToListAsync();
+                        case 2:
+                            return await _context.tasks.ToListAsync();
+                        case 3:
+                            return await _context.tasks.ToListAsync();
+                        case 4:
+                            return await _context.tasks.ToListAsync();
+                        case 5:
+                            return await _context.tasks.ToListAsync();
+                        case 6:
+                            return await _context.tasks.ToListAsync();
+                        default:
+                            return await _context.tasks.ToListAsync();
+                    }
+                case "Aktualizacji":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.ToListAsync();
+                        case 2:
+                            return await _context.tasks.ToListAsync();
+                        case 3:
+                            return await _context.tasks.ToListAsync();
+                        case 4:
+                            return await _context.tasks.ToListAsync();
+                        case 5:
+                            return await _context.tasks.ToListAsync();
+                        case 6:
+                            return await _context.tasks.ToListAsync();
+                        default:
+                            return await _context.tasks.ToListAsync();
+                    }
+                case "Zakończenia":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.Where(x => x.DueDate >= DateFrom && x.DueDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).ToListAsync();
+                        case 2:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.DueDate).ToListAsync();
+                        case 3:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.DueDate).ToListAsync();
+                        case 4:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.DueDate).ToListAsync();
+                        case 5:
+                            return await _context.tasks.ToListAsync();
+                        case 6:
+                            return await _context.tasks.ToListAsync();
+                        default:
+                            return await _context.tasks.ToListAsync();
+                    }
+            }
+
+            switch (SortBy)
+            {
+                case 1:
+                    return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).ToListAsync();
+                case 2:
+                    return await _context.tasks.ToListAsync();
+                case 3:
+                    return await _context.tasks.ToListAsync();
+                case 4:
+                    return await _context.tasks.ToListAsync();
+                case 5:
+                    return await _context.tasks.ToListAsync();
+                case 6:
+                    return await _context.tasks.ToListAsync();
+                default:
+                    return await _context.tasks.ToListAsync();
+            }
         }
 
         public async Task<List<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)

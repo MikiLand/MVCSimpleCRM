@@ -11,6 +11,7 @@ namespace MVCSimpleCRM.Interfaces
         Task<IEnumerable<Tasks>> GetByTitleLike(string TitleLike);
         Task<Tasks> GetByIdAsync(int id);
         Task<List<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType);
+        Task<List<Tasks>> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList);
         //Task<IEnumerable<UsersTasks> GetUserByLogin(string login);
 
         //bool Add(EditTaskViewModel task);

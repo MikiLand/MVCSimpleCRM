@@ -441,5 +441,17 @@ namespace MVCSimpleCRM.Controllers
 
             return PartialView("_TasksIndex", tasks);
         }
+
+        public async Task<IActionResult> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
+        {
+            var ActualModel = HttpContext.Session.GetString("ActualModel");
+
+            var tasks = new IndexTaskViewModel
+            {
+                Tasks = await _taskRepository.RefreshTasks2(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList)
+            };
+
+            return PartialView("_TasksIndex", tasks);
+        }
     }
 }

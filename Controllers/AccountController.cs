@@ -6,6 +6,7 @@ using MVCSimpleCRM.Models;
 using MVCSimpleCRM.Repository;
 using MVCSimpleCRM.ViewModels;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -237,6 +238,37 @@ namespace MVCSimpleCRM.Controllers
                 tasks.Users.Add(UserIndexVM);
             }
             HttpContext.Session.SetString("ActualSearchedUsersModel", JsonConvert.SerializeObject(tasks));
+
+            return PartialView("_SearchedUsers", tasks);
+        }
+
+        public async Task<IActionResult> SetChecked(string UserID, string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
+        {
+            var ActualSearchedUsersModel = HttpContext.Session.GetString("ActualSearchedUsersModel");
+            List<AspNetUsersIndexViewModel> ActualUsersVM = JsonConvert.DeserializeObject<List<AspNetUsersIndexViewModel>>(ActualSearchedUsersModel);
+
+            foreach (var User in ActualUsersVM)
+            {
+                if(User.Id == UserID)
+                {
+                    if(User.IsChecked == false)
+                    {
+                        User.IsChecked = true;
+                    }
+                    else
+                    {
+                        User.IsChecked = false;
+                    }
+                }
+            }
+            var tasks = new IndexTaskViewModel
+            {
+                Users = ActualUsersVM
+            };
+
+            HttpContext.Session.SetString("ActualSearchedUsersModel", JsonConvert.SerializeObject(tasks));
+
+            await _taskRepository.RefreshTasks2(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, ActualUsersVM);
 
             return PartialView("_SearchedUsers", tasks);
         }
