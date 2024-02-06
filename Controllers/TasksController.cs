@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
@@ -63,6 +64,9 @@ namespace MVCSimpleCRM.Controllers
 
             IEnumerable<Tasks> tasks = await _taskRepository.GetAll();
             HttpContext.Session.SetString("ActualTasksModel", JsonConvert.SerializeObject(tasks));
+
+            HttpContext.Session.SetString("ActualSearchedUsersModel", JsonConvert.SerializeObject(tasksVM));
+
             //_accountRepository.GetSearchedUsers("");
             return View(tasksVM);
         }
@@ -444,11 +448,23 @@ namespace MVCSimpleCRM.Controllers
 
         public async Task<IActionResult> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
         {
-            var ActualModel = HttpContext.Session.GetString("ActualModel");
+            var ActualSearchedUsersModel = HttpContext.Session.GetString("ActualSearchedUsersModel");
+
+            IndexTaskViewModel ActualUsersVM = JsonConvert.DeserializeObject<IndexTaskViewModel>(ActualSearchedUsersModel);
+
+            List<AspNetUsersIndexViewModel> SearchForUsers = new List<AspNetUsersIndexViewModel>();
+
+            foreach (var User in ActualUsersVM.Users)
+            {
+                if (User.IsChecked == true)
+                {
+                    SearchForUsers.Add(User);
+                }
+            }
 
             var tasks = new IndexTaskViewModel
             {
-                Tasks = await _taskRepository.RefreshTasks2(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList)
+                Tasks = await _taskRepository.RefreshTasks2(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, SearchForUsers)
             };
 
             return PartialView("_TasksIndex", tasks);

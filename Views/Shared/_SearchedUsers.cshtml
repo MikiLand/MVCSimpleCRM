@@ -3,7 +3,34 @@
 
 <script>
     function SetChecked(UserID) {
-        $.get("/account/SetChecked", { UserID: UserID }, function (data) {
+        var SortBy = 0;
+        var DateFrom = document.getElementById('DateFrom').value;
+        var DateTo = document.getElementById('DateTo').value;
+        var DateType = document.getElementById('DateType').value;
+        var SearchedTaskTitle = document.getElementById('TBSearch').value;
+
+        switch (true) {
+            case document.getElementById('DateUpcomingDeadline').checked:
+                SortBy = 1;
+                break;
+            case document.getElementById('DateFarthestDeadline').checked:
+                SortBy = 2;
+                break;
+            case document.getElementById('DateNewest').checked:
+                SortBy = 3;
+                break;
+            case document.getElementById('SearchedTaskName').checked:
+                SortBy = 4;
+                break;
+            case document.getElementById('DateUpcomingReminder').checked:
+                SortBy = 5;
+                break;
+            case document.getElementById('DateFarthestReminder').checked:
+                SortBy = 6;
+                break;
+        }
+
+        $.get("/account/SetChecked", { UserID: UserID, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType }, function (data) {
             $("#_SearchedUsersContainer").html(data);
         })
     }
@@ -13,7 +40,7 @@
     @foreach (var item in Model.Users)
     {
         <li class="list-group-item">
-            <input class="form-check-input me-1" type="checkbox" value="@item.IsChecked" onchange="SetChecked('@item.Id')">
+            <input class="form-check-input me-1" type="checkbox" checked="@item.IsChecked" onchange="SetChecked('@item.Id')">
             <span>&#64;</span>@item.UserName @item.Name @item.Surname
         </li>
     }

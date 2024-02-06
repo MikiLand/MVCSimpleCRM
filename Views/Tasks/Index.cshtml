@@ -57,7 +57,7 @@
         return result;
     }
 
-    function AddUserToList(SearchedTaskTitle) {
+    function SearchTasks(SearchedTaskTitle) {
         var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
         var SortBy = 0;
         var DateFrom = document.getElementById('DateFrom').value;
@@ -85,7 +85,7 @@
                 break;
         }
 
-        $.get("/tasks/RefreshTasks", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
+        $.get("/tasks/RefreshTasks2", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
             $("#_TasksIndexContainer").html(data);
         })
     }
@@ -214,7 +214,7 @@
                             <div class="input-group col-md-3" style="margin-bottom: 20px">
 
                                 <input type="text" class="form-control" Style="width: 200px;" id="SearchedTaskName" placeholder="Jakiego zadania szukasz?">
-                                <button type="button" class="btn btn-sm btn-outline-secondary" id="BtnSearch" onclick="AddUserToList(document.getElementById('SearchedTaskName').value)" Style="width: 120px;">Wyszukaj</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" id="BtnSearch" onclick="SearchTasks(document.getElementById('SearchedTaskName').value)" Style="width: 120px;">Wyszukaj</button>
 
                             </div>
                         </div>
