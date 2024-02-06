@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCSimpleCRM.Data;
@@ -457,6 +458,14 @@ namespace MVCSimpleCRM.Controllers
             foreach (var User in ActualUsersVM.Users)
             {
                 if (User.IsChecked == true)
+                {
+                    SearchForUsers.Add(User);
+                }
+            }
+
+            if (SearchForUsers.Count == 0)
+            {
+                foreach (var User in ActualUsersVM.Users)
                 {
                     SearchForUsers.Add(User);
                 }
