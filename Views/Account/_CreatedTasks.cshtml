@@ -3,8 +3,8 @@
 
 <script>
     function GetMoreTasksCreatedByUser(UserId) {
-        $.get("/account/RefreshSearchedUsers", { SearchedUser: SearchedUser }, function (data) {
-            $("#_SearchedUsersContainer").html(data);
+        $.get("/account/GetMoreTasksCreatedByUser", { UserId: UserId }, function (data) {
+            $("#_CreatedTasks").html(data);
         })
     }
 </script>
@@ -36,6 +36,6 @@
 </div>
 @if (Model.CreatedTasks.Any())
 {
-    <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
-    <button type="button" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" id="BtnLoadMoreCreatedTasks" onclick="GetMoreTasksCreatedByUser('@Model.Id')" Style="width: 120px;">Wyszukaj</button>
+    <!--<a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>-->
+    <button type="button" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" id="BtnLoadMoreCreatedTasks" onclick="GetMoreTasksCreatedByUser('@Model.Id')">Wyswietl więcej</button>
 }
