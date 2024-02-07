@@ -1,0 +1,32 @@
+﻿@using MVCSimpleCRM.ViewModels;
+@model DetailAccountViewModel
+
+<div class="row">
+    @if (!Model.CreatedTasks.Any())
+    {
+        <div class="card mb-12 box-shadow">
+            <center>
+                <p class="card-title">Brak danych do wyświetlenia</p>
+            </center>
+        </div>
+    }
+
+    @foreach (var item in Model.CreatedTasks)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3 box-shadow">
+                <!--<img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">-->
+                <div class="card-body">
+                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
+                    <p class="card-title">@item.Title</p>
+                    <p class="card-text">@item.Description</p>
+                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Detail" asp-route-id="@item.Id">Podgląd</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (Model.CreatedTasks.Any())
+{
+    <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
+}

@@ -38,6 +38,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/DEV Git/C\#/MVCSimpleCRM/MVCSimpleCRM/Views/Account/_CreatedTasks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxfQ3JlYXRlZFRhc2tzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/DEV Git/C\#/MVCSimpleCRM/MVCSimpleCRM/Views/Account/_UsersTasks.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxfVXNlcnNUYXNrcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/DEV Git/C\#/MVCSimpleCRM/MVCSimpleCRM/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
