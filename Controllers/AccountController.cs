@@ -76,9 +76,11 @@ namespace MVCSimpleCRM.Controllers
                 Email = account.Email,
                 PasswordHash = account.PasswordHash,
                 Tasks = await _taskRepository.GetAllTasksCreatedByUser(account.Id),
-                CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(account.Id, 3),
-                UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, 3)
+                CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(account.Id, 1),
+                UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, 1)
             };
+
+            HttpContext.Session.SetString("UserCreatedTasksAmount", "1");
             return View(accountVM);
         }
 
@@ -278,6 +280,22 @@ namespace MVCSimpleCRM.Controllers
             HttpContext.Session.SetString("ActualSearchedUsersModel", JsonConvert.SerializeObject(ActualUsersVM));
 
             return PartialView("_SearchedUsers", ActualUsersVM);
+        }
+
+        [HttpGet]
+        [Route("/account/GetMoreTasksCreatedByUser")]
+        public async Task<IActionResult> GetMoreTasksCreatedByUser(string UserId)
+        {
+            int UserCreatedTasksAmount = int.Parse(HttpContext.Session.GetString("UserCreatedTasksAmount"));
+            UserCreatedTasksAmount++;
+
+            DetailAccountViewModel TasksVM = new DetailAccountViewModel
+            {
+                CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(UserId, UserCreatedTasksAmount),
+            };
+
+            HttpContext.Session.SetString("UserCreatedTasksAmount", UserCreatedTasksAmount.ToString());
+            return PartialView("_CreatedTasks", TasksVM);
         }
     }
 }
