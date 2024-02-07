@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MVCSimpleCRM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c10cc28fe21d43ebb4bb827d3b117788f07e2840")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+17877f747ce4b76193abf79f9219a511499b7f3c")]
 [assembly: System.Reflection.AssemblyProductAttribute("MVCSimpleCRM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MVCSimpleCRM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -81,6 +81,7 @@ namespace MVCSimpleCRM.Controllers
             };
 
             HttpContext.Session.SetString("UserCreatedTasksAmount", "1");
+            HttpContext.Session.SetString("UserTasksAmount", "1");
             return View(accountVM);
         }
 
@@ -295,6 +296,23 @@ namespace MVCSimpleCRM.Controllers
             };
 
             HttpContext.Session.SetString("UserCreatedTasksAmount", UserCreatedTasksAmount.ToString());
+            return PartialView("_CreatedTasks", TasksVM);
+        }
+
+        [HttpGet]
+        [Route("/account/GetMoreUserTasks")]
+        public async Task<IActionResult> GetMoreUserTasks(string UserId)
+        {
+            int UserTasksAmount = int.Parse(HttpContext.Session.GetString("UserTasksAmount"));
+            UserTasksAmount++;
+            List<int> tasksIDList = await _taskUserRepository.GetTopUserAttachedTasks(UserId);
+
+            DetailAccountViewModel TasksVM = new DetailAccountViewModel
+            {
+                CreatedTasks = await _taskRepository.GetTopUserTasks(tasksIDList, UserTasksAmount),
+            };
+
+            HttpContext.Session.SetString("UserTasksAmount", UserTasksAmount.ToString());
             return PartialView("_CreatedTasks", TasksVM);
         }
     }

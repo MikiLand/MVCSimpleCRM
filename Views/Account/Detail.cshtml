@@ -30,8 +30,13 @@
 
     function GetMoreTasksCreatedByUser(UserId) {
         $.get("/account/GetMoreTasksCreatedByUser", { UserId: UserId }, function (data) {
-            //alert("EEEEE");
             $("#_CreatedTasksContainer").html(data);
+        })
+    }
+
+    function GetMoreUserTasks(UserId) {
+        $.get("/account/GetMoreTasksCreatedByUser", { UserId: UserId }, function (data) {
+            $("#_UsersTasksContainer").html(data);
         })
     }
 
@@ -89,36 +94,6 @@
                                 {
                                     <button type="button" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" id="BtnLoadMoreCreatedTasks" onclick="GetMoreTasksCreatedByUser('@Model.Id')">Wyswietl więcej</button>
                                 }
-
-                                <!--<div class="row">
-                                    if(!Model.Tasks.Any())
-                                    {
-                                        <div class="card mb-12 box-shadow">
-                                            <center>
-                                                <p class="card-title">Brak danych do wyświetlenia</p>
-                                            </center>
-                                        </div>
-                                    }
-
-                                    foreach (var item in Model.Tasks)
-                                    {
-                                        <div class="col-md-4">
-                                            <div class="card mb-3 box-shadow">
-                                                <img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">
-                                                <div class="card-body">
-                                                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
-                                                    <p class="card-title">item.Title</p>
-                                                    <p class="card-text">item.Description</p>
-                                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Tasks" asp-action="Detail" asp-route-id="item.Id">Podgląd</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    if (Model.Tasks.Any())
-                                    {
-                                        <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>
-                                    }
-                                </div>-->
                             </div>
                         </div>
     
@@ -126,26 +101,14 @@
                             <div class="container">
                                 <h2><center>Moje zadania</center></h2>
 
-                                <div id="_TasksIndexContainer">
+                                <div id="_UsersTasksContainer">
                                     @Html.Partial("_UsersTasks")
                                 </div>
 
-                                <!--<div class="row">
-                                    for (var i = 0; i < 3; i++)
-                                    {
-                                        <div class="col-md-4">
-                                            <div class="card mb-3 box-shadow">
-                                                <div class="card-body">
-                                                    <img class="card-img-top" src="https://placehold.co/200x100" alt="UserImage" width="200" heighe="100">
-                                                    <p class="card-title">TASK TITLE PLACEHOLDER</p>
-                                                    <p class="card-text">TASK DESCRIPTION PLACEHOLDER</p>
-                                                    <a type="btn" style="float: right; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Podgląd</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <a type="btn" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" asp-controller="Users" asp-action="Detail" asp-route-id="">Wyswietl więcej</a>-->
+                                @if (Model.UserTasks.Any())
+                                {
+                                    <button type="button" style="float: right; margin-right: 10px; padding-right: 10px; padding-left:10px;" class="btn btn-sm btn-outline-secondary" id="BtnLoadMoreCreatedTasks" onclick="GetMoreUserTasks('@Model.Id')">Wyswietl więcej</button>
+                                }
                             </div>
                         </div>
                     </div>
