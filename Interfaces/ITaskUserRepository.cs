@@ -12,6 +12,7 @@ namespace MVCSimpleCRM.Interfaces
 
         Task<TaskUsers> GetTaskUserByID(string IDUser, int IDTask);
         Task<List<TaskUsers>> GetAllTaskUsersAttachedToTask(int TaskID);
+        Task<List<int>> GetTopUserAttachedTasks(string userId);
         //Task<IEnumerable<AspNetUsers>> GetAllUsersAttachedToTask(string UserID);
     }
 }

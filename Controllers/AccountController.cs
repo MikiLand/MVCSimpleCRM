@@ -21,6 +21,7 @@ namespace MVCSimpleCRM.Controllers
 
         private readonly IAccountRepository _accountRepository;
         private readonly ITaskRepository _taskRepository;
+        private readonly ITaskUserRepository _taskUserRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ApplicationDbContext _context;
@@ -31,13 +32,15 @@ namespace MVCSimpleCRM.Controllers
             SignInManager<AppUser> signInManager,
             ApplicationDbContext context,
             IAccountRepository accountRepository,
-            ITaskRepository taskRepository)
+            ITaskRepository taskRepository,
+            ITaskUserRepository taskUserRepository)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
             this._accountRepository = accountRepository;
             this._taskRepository = taskRepository;
+            this._taskUserRepository = taskUserRepository;
         }
 
         /*public AccountController(IAccountRepository accountRepository) 
@@ -61,6 +64,9 @@ namespace MVCSimpleCRM.Controllers
 
             var account = await _accountRepository.GetByIdAsync(id);
             if (account == null) return View("Error");
+
+            List<int> tasksIDList = await _taskUserRepository.GetTopUserAttachedTasks(account.Id);
+
             var accountVM = new DetailAccountViewModel
             {
                 Id = account.Id,
@@ -69,7 +75,9 @@ namespace MVCSimpleCRM.Controllers
                 Surname = account.Surname,
                 Email = account.Email,
                 PasswordHash = account.PasswordHash,
-                Tasks = await _taskRepository.GetAllTasksCreatedByUser(account.Id)
+                Tasks = await _taskRepository.GetAllTasksCreatedByUser(account.Id),
+                CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(account.Id, 3),
+                UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, 3)
             };
             return View(accountVM);
         }

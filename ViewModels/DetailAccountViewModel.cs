@@ -13,5 +13,7 @@ namespace MVCSimpleCRM.ViewModels
         public string PasswordHash { get; set; }
         public DateTime CreateDate { get; set; }
         public IEnumerable<Tasks> Tasks { get; set; }
+        public List<Tasks> CreatedTasks { get; set; }
+        public List<Tasks> UserTasks { get; set; }
     }
 }
