@@ -193,9 +193,14 @@ namespace MVCSimpleCRM.Controllers
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.PasswordHash);
 
             if (newUserResponse.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-
-            return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Account");
+            }
+            else
+            {
+                return View(registerViewModel);
+            }
         }
 
         [HttpGet]
