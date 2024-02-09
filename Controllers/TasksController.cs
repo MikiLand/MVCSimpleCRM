@@ -167,7 +167,7 @@ namespace MVCSimpleCRM.Controllers
                         {
                             TaskUsers NewTaskUser = new TaskUsers
                             {
-                                IdTask = ActualTaskVM.Id,
+                                IdTask = task.Id,
                                 IdUser = NewUser.Id
                             };
                             _taskUserRepository.Add(NewTaskUser);
@@ -428,6 +428,15 @@ namespace MVCSimpleCRM.Controllers
                 return View("Error");
             }
             _taskRepository.Delete(taskDetails);
+
+            List<TaskUsers> tasks = await _taskUserRepository.GetAllTaskUsersAttachedToTask(id);
+
+            foreach (var task in tasks)
+            {
+                _taskUserRepository.Delete(task);
+            }
+
+
             TempData["Result"] = "OK";
 
             return RedirectToAction("Index");
