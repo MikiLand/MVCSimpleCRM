@@ -1,5 +1,6 @@
 ﻿﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using MVCSimpleCRM.Data;
 using MVCSimpleCRM.Interfaces;
 using MVCSimpleCRM.Models;
@@ -81,6 +82,7 @@ namespace MVCSimpleCRM.Controllers
             };
 
             HttpContext.Session.SetString("UserCreatedTasksAmount", "0");
+            HttpContext.Session.SetString("UserCreatedTasks", JsonConvert.SerializeObject(accountVM.CreatedTasks));
             HttpContext.Session.SetString("UserTasksAmount", "1");
             return View(accountVM);
         }
@@ -292,15 +294,26 @@ namespace MVCSimpleCRM.Controllers
         [Route("/account/GetMoreTasksCreatedByUser")]
         public async Task<IActionResult> GetMoreTasksCreatedByUser(string UserId)
         {
+            var UserCreatedTasks = HttpContext.Session.GetString("UserCreatedTasks");
+            List<Tasks> UserCreatedTasksVM = JsonConvert.DeserializeObject<List<Tasks>>(UserCreatedTasks);
+
             int UserCreatedTasksAmount = int.Parse(HttpContext.Session.GetString("UserCreatedTasksAmount"));
             UserCreatedTasksAmount++;
 
+            List<Tasks> UserCreatedTasksToAdd = await _taskRepository.GetTopTasksCreatedByUser(UserId, UserCreatedTasksAmount);
+
+            foreach (Tasks task in UserCreatedTasksToAdd)
+            {
+                UserCreatedTasksVM.Add(task);
+            }
+
             DetailAccountViewModel TasksVM = new DetailAccountViewModel
             {
-                CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(UserId, UserCreatedTasksAmount),
+                CreatedTasks = UserCreatedTasksVM
             };
 
             HttpContext.Session.SetString("UserCreatedTasksAmount", UserCreatedTasksAmount.ToString());
+            HttpContext.Session.SetString("UserCreatedTasks", JsonConvert.SerializeObject(TasksVM.CreatedTasks));
             return PartialView("_CreatedTasks", TasksVM);
         }
 
@@ -314,11 +327,11 @@ namespace MVCSimpleCRM.Controllers
 
             DetailAccountViewModel TasksVM = new DetailAccountViewModel
             {
-                CreatedTasks = await _taskRepository.GetTopUserTasks(tasksIDList, UserTasksAmount),
+                UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, UserTasksAmount),
             };
 
             HttpContext.Session.SetString("UserTasksAmount", UserTasksAmount.ToString());
-            return PartialView("_CreatedTasks", TasksVM);
+            return PartialView("_UserTasks", TasksVM);
         }
     }
 }
