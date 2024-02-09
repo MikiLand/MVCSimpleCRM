@@ -289,7 +289,8 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<List<Tasks>> GetTopUserTasks(List<int> tasksIDList, int TasksAmount)
         {
-            return await _context.tasks.Where(x => tasksIDList.Contains(x.Id)).OrderByDescending(x => x.CreateDate).Take(TasksAmount*3).ToListAsync();
+            return await _context.tasks.Where(x => tasksIDList.Contains(x.Id)).OrderByDescending(x => x.CreateDate).Skip(TasksAmount * 3).Take(3).ToListAsync();
+            //return await _context.tasks.Where(x => tasksIDList.Contains(x.Id)).OrderByDescending(x => x.CreateDate).Take(TasksAmount*3).ToListAsync();
         }
     }
 }

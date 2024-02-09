@@ -78,12 +78,13 @@ namespace MVCSimpleCRM.Controllers
                 PasswordHash = account.PasswordHash,
                 Tasks = await _taskRepository.GetAllTasksCreatedByUser(account.Id),
                 CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(account.Id, 0),//Switch for 1 to bring back semi pagign
-                UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, 1)
+                UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, 0)
             };
 
             HttpContext.Session.SetString("UserCreatedTasksAmount", "0");
             HttpContext.Session.SetString("UserCreatedTasks", JsonConvert.SerializeObject(accountVM.CreatedTasks));
-            HttpContext.Session.SetString("UserTasksAmount", "1");
+            HttpContext.Session.SetString("UserTasksAmount", "0");
+            HttpContext.Session.SetString("UserTasks", JsonConvert.SerializeObject(accountVM.UserTasks));
             return View(accountVM);
         }
 
@@ -295,11 +296,10 @@ namespace MVCSimpleCRM.Controllers
         public async Task<IActionResult> GetMoreTasksCreatedByUser(string UserId)
         {
             var UserCreatedTasks = HttpContext.Session.GetString("UserCreatedTasks");
-            List<Tasks> UserCreatedTasksVM = JsonConvert.DeserializeObject<List<Tasks>>(UserCreatedTasks);
-
             int UserCreatedTasksAmount = int.Parse(HttpContext.Session.GetString("UserCreatedTasksAmount"));
             UserCreatedTasksAmount++;
 
+            List<Tasks> UserCreatedTasksVM = JsonConvert.DeserializeObject<List<Tasks>>(UserCreatedTasks);
             List<Tasks> UserCreatedTasksToAdd = await _taskRepository.GetTopTasksCreatedByUser(UserId, UserCreatedTasksAmount);
 
             foreach (Tasks task in UserCreatedTasksToAdd)
@@ -321,17 +321,27 @@ namespace MVCSimpleCRM.Controllers
         [Route("/account/GetMoreUserTasks")]
         public async Task<IActionResult> GetMoreUserTasks(string UserId)
         {
+            var UserTasks = HttpContext.Session.GetString("UserTasks");
             int UserTasksAmount = int.Parse(HttpContext.Session.GetString("UserTasksAmount"));
             UserTasksAmount++;
             List<int> tasksIDList = await _taskUserRepository.GetTopUserAttachedTasks(UserId);
 
+            List<Tasks> UserTasksVM = JsonConvert.DeserializeObject<List<Tasks>>(UserTasks);
+            List<Tasks> UserTasksToAdd = await _taskRepository.GetTopUserTasks(tasksIDList, UserTasksAmount);
+
+            foreach (Tasks task in UserTasksToAdd)
+            {
+                UserTasksVM.Add(task);
+            }
+
             DetailAccountViewModel TasksVM = new DetailAccountViewModel
             {
-                UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, UserTasksAmount),
+                UserTasks = UserTasksVM
             };
 
             HttpContext.Session.SetString("UserTasksAmount", UserTasksAmount.ToString());
-            return PartialView("_UserTasks", TasksVM);
+            HttpContext.Session.SetString("UserTasks", JsonConvert.SerializeObject(TasksVM.UserTasks));
+            return PartialView("_UsersTasks", TasksVM);
         }
     }
 }
