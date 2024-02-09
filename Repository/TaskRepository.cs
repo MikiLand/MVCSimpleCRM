@@ -181,7 +181,7 @@ namespace MVCSimpleCRM.Repository
             }
         }
 
-        public async Task<List<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
+        /*public async Task<List<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
         {
             if(SearchedTaskTitle is null)
                 SearchedTaskTitle = string.Empty;
@@ -279,11 +279,12 @@ namespace MVCSimpleCRM.Repository
                 default:
                     return await _context.tasks.ToListAsync();
             }
-        }
+        }*/
 
         public async Task<List<Tasks>> GetTopTasksCreatedByUser(string userId, int TasksAmount)
         {
-            return await _context.tasks.Where(r => r.IDUserCreate == userId).OrderByDescending(x => x.CreateDate).Take(TasksAmount*3).ToListAsync();
+            return await _context.tasks.Where(r => r.IDUserCreate == userId).OrderByDescending(x => x.CreateDate).Skip(TasksAmount*3).Take(3).ToListAsync();
+            //return await _context.tasks.Where(r => r.IDUserCreate == userId).OrderByDescending(x => x.CreateDate).Take(TasksAmount * 3).ToListAsync();
         }
 
         public async Task<List<Tasks>> GetTopUserTasks(List<int> tasksIDList, int TasksAmount)

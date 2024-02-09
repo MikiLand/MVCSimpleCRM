@@ -433,7 +433,7 @@ namespace MVCSimpleCRM.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("/tasks/RefreshTasks")]
         public async Task<IActionResult> RefreshTasks(string json, string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
         {
@@ -445,7 +445,7 @@ namespace MVCSimpleCRM.Controllers
             };
 
             return PartialView("_TasksIndex", tasks);
-        }
+        }*/
 
         public async Task<IActionResult> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
         {

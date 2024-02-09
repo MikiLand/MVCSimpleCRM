@@ -76,11 +76,11 @@ namespace MVCSimpleCRM.Controllers
                 Email = account.Email,
                 PasswordHash = account.PasswordHash,
                 Tasks = await _taskRepository.GetAllTasksCreatedByUser(account.Id),
-                CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(account.Id, 1),
+                CreatedTasks = await _taskRepository.GetTopTasksCreatedByUser(account.Id, 0),//Switch for 1 to bring back semi pagign
                 UserTasks = await _taskRepository.GetTopUserTasks(tasksIDList, 1)
             };
 
-            HttpContext.Session.SetString("UserCreatedTasksAmount", "1");
+            HttpContext.Session.SetString("UserCreatedTasksAmount", "0");
             HttpContext.Session.SetString("UserTasksAmount", "1");
             return View(accountVM);
         }
