@@ -85,7 +85,8 @@
                 break;
         }
 
-        $.get("/tasks/RefreshTasks2", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
+        //$.get("/tasks/RefreshTasks2", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
+        $.get("/tasks/RefreshTasks2", {SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType }, function (data) {
             $("#_TasksIndexContainer").html(data);
         })
     }

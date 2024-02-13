@@ -349,8 +349,6 @@ namespace MVCSimpleCRM.Controllers
                 IDUserCreate = taskVM.IDUserCreate
             };
 
-            
-
             _taskRepository.Update(task);
 
             List<TaskUsers> TaskPositionUsersOld = await _taskUserRepository.GetAllTaskUsersAttachedToTask(task.Id);

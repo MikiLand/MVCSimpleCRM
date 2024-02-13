@@ -38,12 +38,12 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<IEnumerable<AspNetUsers>> GetAll()
         {
-            return await _context.aspNetUsers.ToListAsync();
+            return await _context.aspNetUsers.OrderBy(x => x.UserName).ToListAsync();
         }
 
         public async Task<List<AspNetUsers>> GetAllList()
         {
-            return await _context.aspNetUsers.ToListAsync();
+            return await _context.aspNetUsers.OrderBy(x => x.UserName).ToListAsync();
         }
 
         public async Task<AspNetUsers> GetByIdAsync(string Id)
@@ -93,6 +93,8 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<List<AspNetUsers>> GetSearchedUsers(string SearchedUser)
         {
+            if (SearchedUser is null)
+                return await _context.aspNetUsers.ToListAsync();
             return await _context.aspNetUsers.Where(u => u.UserName.Contains(SearchedUser) || u.Name.Contains(SearchedUser) || u.Surname.Contains(SearchedUser)).ToListAsync();
         }
     }
