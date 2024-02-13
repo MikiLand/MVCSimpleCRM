@@ -515,6 +515,9 @@ namespace MVCSimpleCRM.Controllers
                 Tasks = await _taskRepository.RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, SearchForUsers, Page)
             };
 
+            int PageAmount = (tasks.Tasks.Count/5) + 1;
+            HttpContext.Session.SetString("PageAmount", PageAmount.ToString());
+
             return PartialView("_TasksIndex", tasks);
         }
 
