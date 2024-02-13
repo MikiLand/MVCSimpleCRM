@@ -520,10 +520,10 @@ namespace MVCSimpleCRM.Controllers
 
         [HttpGet]
         [Route("/tasks/PreviousPage")]
-        public async Task<IActionResult> PreviousPage(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int CurrentPage) => await RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList, CurrentPage--);
+        public async Task<IActionResult> PreviousPage(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int CurrentPage) => await RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList, (CurrentPage-1));
 
         [HttpGet]
         [Route("/tasks/NextPage")]
-        public async Task<IActionResult> NextPage(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int CurrentPage) => await RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList, CurrentPage++);
+        public async Task<IActionResult> NextPage(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int CurrentPage) => await RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList, (CurrentPage+1));
     }
 }

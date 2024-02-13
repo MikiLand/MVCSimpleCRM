@@ -12,7 +12,7 @@ namespace MVCSimpleCRM.Interfaces
         Task<Tasks> GetByIdAsync(int id);
         //Task<List<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType);
         Task<List<Tasks>> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList);
-        Task<List<Tasks>> RefreshTasks3(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int Page)
+        Task<List<Tasks>> RefreshTasks3(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int Page);
         Task<List<Tasks>> GetTopTasksCreatedByUser(string userId, int TasksAmount);
         Task<List<Tasks>> GetTopUserTasks(List<int> tasksIDList, int TasksAmount);
         //Task<IEnumerable<UsersTasks> GetUserByLogin(string login);
