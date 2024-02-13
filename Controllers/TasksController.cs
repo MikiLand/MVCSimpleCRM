@@ -41,7 +41,7 @@ namespace MVCSimpleCRM.Controllers
 
             var tasksVM = new IndexTaskViewModel
             {
-                Tasks = await _taskRepository.GetAllList(),
+                Tasks = await _taskRepository.GetAllListEmpty(),
                 Users = new List<AspNetUsersIndexViewModel> { },
             };
 
@@ -454,7 +454,7 @@ namespace MVCSimpleCRM.Controllers
             return PartialView("_TasksIndex", tasks);
         }*/
 
-        public async Task<IActionResult> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
+        /*public async Task<IActionResult> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
         {
             var ActualSearchedUsersModel = HttpContext.Session.GetString("ActualSearchedUsersModel");
 
@@ -484,7 +484,7 @@ namespace MVCSimpleCRM.Controllers
             };
 
             return PartialView("_TasksIndex", tasks);
-        }
+        }*/
 
         public async Task<IActionResult> RefreshTasks3(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int Page)
         {

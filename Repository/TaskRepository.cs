@@ -38,6 +38,11 @@ namespace MVCSimpleCRM.Repository
             return await _context.tasks.ToListAsync();
         }
 
+        public async Task<List<Tasks>> GetAllListEmpty()
+        {
+            return await _context.tasks.Take(0).ToListAsync();
+        }
+
         public async Task<IEnumerable<Tasks>> GetByTitleLike(string TitleLike)
         {
             return await _context.tasks.Where(x => x.Title.Contains("Title")).ToListAsync();
@@ -71,7 +76,7 @@ namespace MVCSimpleCRM.Repository
             _context.Update(task);
             return Save();
         }
-        public async Task<List<Tasks>> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
+        /*public async Task<List<Tasks>> RefreshTasks2(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
         {
             List<String> UsersIDList = new List<String>();
 
@@ -179,7 +184,7 @@ namespace MVCSimpleCRM.Repository
                 default:
                     return await _context.tasks.ToListAsync();
             }
-        }
+        }*/
 
         public async Task<List<Tasks>> RefreshTasks3(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int Page)
         {
@@ -204,90 +209,90 @@ namespace MVCSimpleCRM.Repository
                         case 1:
                             return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 2:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.DueDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 3:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.CreateDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.CreateDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 4:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 5:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 6:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         default:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                     }
                 case "Przypomnienia":
                     switch (SortBy)
                     {
                         case 1:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 2:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 3:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 4:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 5:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 6:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         default:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                     }
                 case "Aktualizacji":
                     switch (SortBy)
                     {
                         case 1:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 2:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 3:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 4:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 5:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 6:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         default:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                     }
                 case "Zakończenia":
                     switch (SortBy)
                     {
                         case 1:
-                            return await _context.tasks.Where(x => x.DueDate >= DateFrom && x.DueDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.DueDate >= DateFrom && x.DueDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 2:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 3:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 4:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 5:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 6:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                         default:
-                            return await _context.tasks.ToListAsync();
+                            return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                     }
             }
 
             switch (SortBy)
             {
                 case 1:
-                    return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).ToListAsync();
+                    return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                 case 2:
-                    return await _context.tasks.ToListAsync();
+                    return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                 case 3:
-                    return await _context.tasks.ToListAsync();
+                    return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                 case 4:
-                    return await _context.tasks.ToListAsync();
+                    return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                 case 5:
-                    return await _context.tasks.ToListAsync();
+                    return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                 case 6:
-                    return await _context.tasks.ToListAsync();
+                    return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
                 default:
-                    return await _context.tasks.ToListAsync();
+                    return await _context.tasks.Skip((Page - 1) * 5).Take(5).ToListAsync();
             }
         }
 
