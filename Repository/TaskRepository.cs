@@ -181,10 +181,20 @@ namespace MVCSimpleCRM.Repository
             }
         }
 
-        /*public async Task<List<Tasks>> RefreshTasks(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType)
+        public async Task<List<Tasks>> RefreshTasks3(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int Page)
         {
-            if(SearchedTaskTitle is null)
+            List<String> UsersIDList = new List<String>();
+
+            if (SearchedTaskTitle is null)
                 SearchedTaskTitle = string.Empty;
+
+            if (UsersList is not null)
+            {
+                foreach (var user in UsersList)
+                {
+                    UsersIDList.Add(user.Id);
+                }
+            }
 
             switch (DateType)
             {
@@ -192,13 +202,13 @@ namespace MVCSimpleCRM.Repository
                     switch (SortBy)
                     {
                         case 1:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).Skip((Page - 1) * 5).Take(5).ToListAsync();
                         case 2:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.DueDate).ToListAsync();
                         case 3:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.CreateDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.CreateDate).ToListAsync();
                         case 4:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).ToListAsync();
                         case 5:
                             return await _context.tasks.ToListAsync();
                         case 6:
@@ -246,13 +256,13 @@ namespace MVCSimpleCRM.Repository
                     switch (SortBy)
                     {
                         case 1:
-                            return await _context.tasks.Where(x => x.DueDate >= DateFrom && x.DueDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.DueDate >= DateFrom && x.DueDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).ToListAsync();
                         case 2:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).ToListAsync();
                         case 3:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).ToListAsync();
                         case 4:
-                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderByDescending(x => x.DueDate).ToListAsync();
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).ToListAsync();
                         case 5:
                             return await _context.tasks.ToListAsync();
                         case 6:
@@ -279,7 +289,7 @@ namespace MVCSimpleCRM.Repository
                 default:
                     return await _context.tasks.ToListAsync();
             }
-        }*/
+        }
 
         public async Task<List<Tasks>> GetTopTasksCreatedByUser(string userId, int TasksAmount)
         {

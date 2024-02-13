@@ -145,37 +145,37 @@ namespace MVCSimpleCRM.Controllers
             //if (ModelState.IsValid)
             //{
             var task = new Tasks
-                {
-                    Title = taskVM.Title,
-                    Description = taskVM.Description,
-                    Status = taskVM.Status,
-                    CreatorStatus = taskVM.CreatorStatus,
-                    CreateDate = taskVM.CreateDate,
-                    DueDate = taskVM.DueDate,
-                    IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier)
-                };
-                _taskRepository.Add(task);
+            {
+                Title = taskVM.Title,
+                Description = taskVM.Description,
+                Status = taskVM.Status,
+                CreatorStatus = taskVM.CreatorStatus,
+                CreateDate = taskVM.CreateDate,
+                DueDate = taskVM.DueDate,
+                IDUserCreate = User.FindFirstValue(ClaimTypes.NameIdentifier)
+            };
+            _taskRepository.Add(task);
 
-                if (ActualModel is not null)
-                {
-                    EditTaskViewModel2 ActualTaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
+            if (ActualModel is not null)
+            {
+                EditTaskViewModel2 ActualTaskVM = JsonConvert.DeserializeObject<EditTaskViewModel2>(ActualModel);
 
-                    foreach (var NewUserList in ActualTaskVM.TaskPositionUsers)
+                foreach (var NewUserList in ActualTaskVM.TaskPositionUsers)
+                {
+                    AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);
+                    if (NewUser != null)
                     {
-                        AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);
-                        if (NewUser != null)
+                        TaskUsers NewTaskUser = new TaskUsers
                         {
-                            TaskUsers NewTaskUser = new TaskUsers
-                            {
-                                IdTask = task.Id,
-                                IdUser = NewUser.Id
-                            };
-                            _taskUserRepository.Add(NewTaskUser);
-                        }
+                            IdTask = task.Id,
+                            IdUser = NewUser.Id
+                        };
+                        _taskUserRepository.Add(NewTaskUser);
                     }
                 }
+            }
 
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
             //}
             //else
             //{
@@ -314,7 +314,7 @@ namespace MVCSimpleCRM.Controllers
                 }
             }
 
-            if(RemovedTUVM is not null)
+            if (RemovedTUVM is not null)
             {
                 TaskVM.TaskPositionUsers.Remove(RemovedTUVM);
             }
@@ -328,7 +328,7 @@ namespace MVCSimpleCRM.Controllers
         {
             var ActualModel = HttpContext.Session.GetString("ActualModel");
 
-            
+
 
             //Code need to be eliminated as returned model isn't. Another method of model veryfication need to be implemented
             /*if (!ModelState.IsValid)
@@ -361,22 +361,22 @@ namespace MVCSimpleCRM.Controllers
                 foreach (var OldUserList in TaskPositionUsersOld)
                 {
                     AspNetUsers OldUser = await _accountRepository.GetByIdAsync(OldUserList.IdUser);
-                    if (OldUser != null) 
+                    if (OldUser != null)
                     {
                         bool NotDelete = false;
-                        foreach (var NewUserList in ActualTaskVM.TaskPositionUsers) 
+                        foreach (var NewUserList in ActualTaskVM.TaskPositionUsers)
                         {
-                            
+
                             AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);
                             if (NewUser != null)
                             {
-                                if(OldUser == NewUser)
+                                if (OldUser == NewUser)
                                 {
                                     NotDelete = true;
                                 }
                             }
                         }
-                        if(NotDelete == false) 
+                        if (NotDelete == false)
                         {
                             _taskUserRepository.Delete(await _taskUserRepository.GetTaskUserByID(OldUser.Id, ActualTaskVM.Id));
                         }
@@ -384,24 +384,24 @@ namespace MVCSimpleCRM.Controllers
                 }
 
                 //Adding user
-                foreach(var NewUserList in ActualTaskVM.TaskPositionUsers)
+                foreach (var NewUserList in ActualTaskVM.TaskPositionUsers)
                 {
                     AspNetUsers NewUser = await _accountRepository.GetByIdAsync(NewUserList.IdUser);
                     if (NewUser != null)
                     {
                         bool NotAdd = false;
-                        foreach(var OldUserList in TaskPositionUsersOld)
+                        foreach (var OldUserList in TaskPositionUsersOld)
                         {
                             AspNetUsers OldUser = await _accountRepository.GetByIdAsync(OldUserList.IdUser);
-                            if(OldUser != null)
+                            if (OldUser != null)
                             {
-                                if(NewUser == OldUser)
+                                if (NewUser == OldUser)
                                 {
                                     NotAdd = true;
                                 }
                             }
                         }
-                        if(NotAdd == false)
+                        if (NotAdd == false)
                         {
                             TaskUsers NewTaskUser = new TaskUsers
                             {
@@ -485,5 +485,45 @@ namespace MVCSimpleCRM.Controllers
 
             return PartialView("_TasksIndex", tasks);
         }
+
+        public async Task<IActionResult> RefreshTasks3(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int Page)
+        {
+            var ActualSearchedUsersModel = HttpContext.Session.GetString("ActualSearchedUsersModel");
+
+            IndexTaskViewModel ActualUsersVM = JsonConvert.DeserializeObject<IndexTaskViewModel>(ActualSearchedUsersModel);
+
+            List<AspNetUsersIndexViewModel> SearchForUsers = new List<AspNetUsersIndexViewModel>();
+
+            foreach (var User in ActualUsersVM.Users)
+            {
+                if (User.IsChecked == true)
+                {
+                    SearchForUsers.Add(User);
+                }
+            }
+
+            if (SearchForUsers.Count == 0)
+            {
+                foreach (var User in ActualUsersVM.Users)
+                {
+                    SearchForUsers.Add(User);
+                }
+            }
+
+            var tasks = new IndexTaskViewModel
+            {
+                Tasks = await _taskRepository.RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, SearchForUsers, Page)
+            };
+
+            return PartialView("_TasksIndex", tasks);
+        }
+
+        [HttpGet]
+        [Route("/tasks/PreviousPage")]
+        public async Task<IActionResult> PreviousPage(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int CurrentPage) => await RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList, CurrentPage--);
+
+        [HttpGet]
+        [Route("/tasks/NextPage")]
+        public async Task<IActionResult> NextPage(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int CurrentPage) => await RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList, CurrentPage++);
     }
 }

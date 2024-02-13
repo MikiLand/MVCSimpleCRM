@@ -58,7 +58,7 @@
     }
 
     function SearchTasks(SearchedTaskTitle) {
-        var jsonString = JSON.stringify(@Html.Raw(Json.Serialize(Model)));
+        //var jsonString = JSON.stringify(Html.Raw(Json.Serialize(Model)));
         var SortBy = 0;
         var DateFrom = document.getElementById('DateFrom').value;
         var DateTo = document.getElementById('DateTo').value;
@@ -88,14 +88,31 @@
         //$.get("/tasks/RefreshTasks2", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
         $.get("/tasks/RefreshTasks2", {SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType }, function (data) {
             $("#_TasksIndexContainer").html(data);
-        })
+        }
     }
 
     function SearchUsers(SearchedUser) {
         $.get("/account/RefreshSearchedUsers", { SearchedUser: SearchedUser }, function (data) {
             $("#_SearchedUsersContainer").html(data);
-        })
+        }
     }
+
+    function PreviousPage(CurrentPage) {
+        if (CurrentPage <> 1){
+            //var jsonString = JSON.stringify(Html.Raw(Json.Serialize(Model)));
+            var SortBy = 0;
+            var DateFrom = document.getElementById('DateFrom').value;
+            var DateTo = document.getElementById('DateTo').value;
+            var DateType = document.getElementById('DateType').value;
+            var SearchedTaskTitle = document.getElementById('TBSearch').value;
+
+            $.get("/tasks/PreviousPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
+                $("#_TasksIndexContainer").html(data);
+                document.getElementById('DateFarthestDeadline').value = CurrentPage++;
+            }
+        }
+    }
+    
 </script>
 
 <section class="jumbotron text-center">
@@ -222,6 +239,13 @@
                     </div>
                     <div id="_TasksIndexContainer">
                         @Html.Partial("_TasksIndex")
+                    </div>
+                    <div id="Pagination">
+                    <center>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPage" onclick="PreviousPage(document.getElementById('CurrentPage').value)"><</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="CurrentPage" onclick="">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="NextPage" onclick="NextPage(document.getElementById('CurrentPage').value)">></button>
+                    </center>
                     </div>
                 </div>
             </div>
