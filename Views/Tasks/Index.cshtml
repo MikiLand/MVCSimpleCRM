@@ -147,44 +147,47 @@
     }
 
     function NextPage() {
-        if (CurrentPage != 9999) {
-            //var jsonString = JSON.stringify(Html.Raw(Json.Serialize(Model)));
-            var LastPage = HttpContext.Session.GetString("PageAmount");
-            var SortBy = 0;
-            var DateFrom = document.getElementById('DateFrom').value;
-            var DateTo = document.getElementById('DateTo').value;
-            var DateType = document.getElementById('DateType').value;
-            var SearchedTaskTitle = document.getElementById('TBSearch').value;
+
+        var Key = "PageAmount";
+
+        $.get("/tasks/RetriveSessionData", { Key: Key }, function (data) {
+            var LastPage = data;
             var CurrentPage = document.getElementById('CurrentPage').innerHTML;
 
-            Alert(LastPage);
+            if (CurrentPage != LastPage) {
+                var SortBy = 0;
+                var DateFrom = document.getElementById('DateFrom').value;
+                var DateTo = document.getElementById('DateTo').value;
+                var DateType = document.getElementById('DateType').value;
+                var SearchedTaskTitle = document.getElementById('TBSearch').value;
 
-            switch (true) {
-                case document.getElementById('DateUpcomingDeadline').checked:
-                    SortBy = 1;
-                    break;
-                case document.getElementById('DateFarthestDeadline').checked:
-                    SortBy = 2;
-                    break;
-                case document.getElementById('DateNewest').checked:
-                    SortBy = 3;
-                    break;
-                case document.getElementById('SearchedTaskName').checked:
-                    SortBy = 4;
-                    break;
-                case document.getElementById('DateUpcomingReminder').checked:
-                    SortBy = 5;
-                    break;
-                case document.getElementById('DateFarthestReminder').checked:
-                    SortBy = 6;
-                    break;
+                switch (true) {
+                    case document.getElementById('DateUpcomingDeadline').checked:
+                        SortBy = 1;
+                        break;
+                    case document.getElementById('DateFarthestDeadline').checked:
+                        SortBy = 2;
+                        break;
+                    case document.getElementById('DateNewest').checked:
+                        SortBy = 3;
+                        break;
+                    case document.getElementById('SearchedTaskName').checked:
+                        SortBy = 4;
+                        break;
+                    case document.getElementById('DateUpcomingReminder').checked:
+                        SortBy = 5;
+                        break;
+                    case document.getElementById('DateFarthestReminder').checked:
+                        SortBy = 6;
+                        break;
+                }
+
+                $.get("/tasks/NextPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
+                    $("#_TasksIndexContainer").html(data);
+                })
+                document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) + 1);
             }
-
-            $.get("/tasks/NextPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
-                $("#_TasksIndexContainer").html(data);
-            })
-            document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) + 1);
-        }
+        })
     }
     
 </script>

@@ -515,11 +515,13 @@ namespace MVCSimpleCRM.Controllers
                 Tasks = await _taskRepository.RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, SearchForUsers, Page)
             };
 
-            int PageAmount = (tasks.Tasks.Count/5) + 1;
+            int PageAmount = (await _taskRepository.RefreshTasks3Count(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, SearchForUsers)/5) + 1;
             HttpContext.Session.SetString("PageAmount", PageAmount.ToString());
 
             return PartialView("_TasksIndex", tasks);
         }
+
+
 
         [HttpGet]
         [Route("/tasks/PreviousPage")]
@@ -528,5 +530,13 @@ namespace MVCSimpleCRM.Controllers
         [HttpGet]
         [Route("/tasks/NextPage")]
         public async Task<IActionResult> NextPage(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int CurrentPage) => await RefreshTasks3(SearchedTaskTitle, SortBy, DateFrom, DateTo, DateType, UsersList, (CurrentPage+1));
+
+        [HttpGet]
+        [Route("/tasks/RetriveSessionData")]
+        public async Task<string> RetriveSessionData(string Key)
+        {
+            var Value = HttpContext.Session.GetString(Key);
+            return Value;
+        }
     }
 }

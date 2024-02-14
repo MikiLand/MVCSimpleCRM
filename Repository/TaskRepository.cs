@@ -296,6 +296,116 @@ namespace MVCSimpleCRM.Repository
             }
         }
 
+        public async Task<int> RefreshTasks3Count(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList)
+        {
+            List<String> UsersIDList = new List<String>();
+
+            if (SearchedTaskTitle is null)
+                SearchedTaskTitle = string.Empty;
+
+            if (UsersList is not null)
+            {
+                foreach (var user in UsersList)
+                {
+                    UsersIDList.Add(user.Id);
+                }
+            }
+
+            switch (DateType)
+            {
+                case "Utworzenia":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).CountAsync();
+                        case 2:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.DueDate).CountAsync();
+                        case 3:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.CreateDate).CountAsync();
+                        case 4:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).CountAsync();
+                        case 5:
+                            return await _context.tasks.CountAsync();
+                        case 6:
+                            return await _context.tasks.CountAsync();
+                        default:
+                            return await _context.tasks.CountAsync();
+                    }
+                case "Przypomnienia":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.CountAsync();
+                        case 2:
+                            return await _context.tasks.CountAsync();
+                        case 3:
+                            return await _context.tasks.CountAsync();
+                        case 4:
+                            return await _context.tasks.CountAsync();
+                        case 5:
+                            return await _context.tasks.CountAsync();
+                        case 6:
+                            return await _context.tasks.CountAsync();
+                        default:
+                            return await _context.tasks.CountAsync();
+                    }
+                case "Aktualizacji":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.CountAsync();
+                        case 2:
+                            return await _context.tasks.CountAsync();
+                        case 3:
+                            return await _context.tasks.CountAsync();
+                        case 4:
+                            return await _context.tasks.CountAsync();
+                        case 5:
+                            return await _context.tasks.CountAsync();
+                        case 6:
+                            return await _context.tasks.CountAsync();
+                        default:
+                            return await _context.tasks.CountAsync();
+                    }
+                case "Zakończenia":
+                    switch (SortBy)
+                    {
+                        case 1:
+                            return await _context.tasks.Where(x => x.DueDate >= DateFrom && x.DueDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderBy(x => x.CreateDate).CountAsync();
+                        case 2:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).CountAsync();
+                        case 3:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).CountAsync();
+                        case 4:
+                            return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle) && UsersIDList.Contains(x.IDUserCreate)).OrderByDescending(x => x.DueDate).CountAsync();
+                        case 5:
+                            return await _context.tasks.CountAsync();
+                        case 6:
+                            return await _context.tasks.CountAsync();
+                        default:
+                            return await _context.tasks.CountAsync();
+                    }
+            }
+
+            switch (SortBy)
+            {
+                case 1:
+                    return await _context.tasks.Where(x => x.CreateDate >= DateFrom && x.CreateDate <= DateTo && x.Title.Contains(SearchedTaskTitle)).OrderBy(x => x.CreateDate).CountAsync();
+                case 2:
+                    return await _context.tasks.CountAsync();
+                case 3:
+                    return await _context.tasks.CountAsync();
+                case 4:
+                    return await _context.tasks.CountAsync();
+                case 5:
+                    return await _context.tasks.CountAsync();
+                case 6:
+                    return await _context.tasks.CountAsync();
+                default:
+                    return await _context.tasks.CountAsync();
+            }
+        }
+
         public async Task<List<Tasks>> GetTopTasksCreatedByUser(string userId, int TasksAmount)
         {
             return await _context.tasks.Where(r => r.IDUserCreate == userId).OrderByDescending(x => x.CreateDate).Skip(TasksAmount*3).Take(3).ToListAsync();
