@@ -41,12 +41,12 @@
     }
 
     function formatDate(dateToFormat) {
-        var result = dateToFormat.getFullYear() + "-"; //+ (dateToFormat.getMonth() + 1) + "-";//+ dateToFormat.getDate();
-        if (dateToFormat.getMonth() < 10) {
-            result = result + "0" + dateToFormat.getMonth() + "-";
+        var result = dateToFormat.getFullYear() + "-";
+        if ((dateToFormat.getMonth() + 1) < 10) {
+            result = result + "0" + (dateToFormat.getMonth() + 1) + "-";
         }
         else {
-            result = result + dateToFormat.getMonth() + "-";
+            result = result + (dateToFormat.getMonth() + 1) + "-";
         }
 
         if (dateToFormat.getDate() < 10) {
