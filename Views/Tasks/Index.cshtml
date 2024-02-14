@@ -2,16 +2,18 @@
 @model IndexTaskViewModel
 
 <script type="text/javascript">
-    document.addEventListener('readystatechange', event => {
+    document.addEventListener('readystatechange', async event => {
         switch (document.readyState) {
             case "complete":
-                const date = new Date();
+                async function setDates() {
+                    const date = new Date();
+                    const dateFrom = document.getElementById("DateFrom");
+                    const dateTo = document.getElementById("DateTo");
+                    dateFrom.value = formatDate(date);
+                    dateTo.value = formatDate(addDays(date, 7));
+                }
 
-                const dateFrom = document.getElementById("DateFrom");
-                const dateTo = document.getElementById("DateTo");
-
-                dateFrom.value = formatDate(date);
-                dateTo.value = formatDate(addDays(date, 7));
+                await setDates();
 
                 var SortBy = 0;
                 var DateFrom = document.getElementById('DateFrom').value;
@@ -19,13 +21,44 @@
                 var DateType = document.getElementById('DateType').value;
                 var SearchedTaskTitle = document.getElementById('TBSearch').value;
 
+                switch (true) {
+                    case document.getElementById('DateUpcomingDeadline').checked:
+                        SortBy = 1;
+                        break;
+                    case document.getElementById('DateFarthestDeadline').checked:
+                        SortBy = 2;
+                        break;
+                    case document.getElementById('DateNewest').checked:
+                        SortBy = 3;
+                        break;
+                    case document.getElementById('SearchedTaskName').checked:
+                        SortBy = 4;
+                        break;
+                    case document.getElementById('DateUpcomingReminder').checked:
+                        SortBy = 5;
+                        break;
+                    case document.getElementById('DateFarthestReminder').checked:
+                        SortBy = 6;
+                        break;
+                }
+
                 $.get("/tasks/RefreshTasks3", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, Page: 1 }, function (data) {
                     $("#_TasksIndexContainer").html(data);
                     RefreshPageNumbers();
-                })
+                });
                 break;
         }
     });
+
+    async function setDates() {
+        const date = new Date();
+
+        const dateFrom = document.getElementById("DateFrom");
+        const dateTo = document.getElementById("DateTo");
+
+        dateFrom.value = formatDate(date);
+        dateTo.value = formatDate(addDays(date, 7));
+    }
 
     function ColorStatus(Type, Status) {
         if(Type == 1)
@@ -46,11 +79,11 @@
 
     function formatDate(dateToFormat) {
         var result = dateToFormat.getFullYear() + "-"; //+ (dateToFormat.getMonth() + 1) + "-";//+ dateToFormat.getDate();
-        if (dateToFormat.getMonth() < 10) {
-            result = result + "0" + dateToFormat.getMonth() + "-";
+        if ((dateToFormat.getMonth()+1) < 10) {
+            result = result + "0" + (dateToFormat.getMonth()+1) + "-";
         }
         else {
-            result = result + dateToFormat.getMonth() + "-";
+            result = result + (dateToFormat.getMonth()+1) + "-";
         }
 
         if (dateToFormat.getDate() < 10) {
@@ -69,7 +102,6 @@
     }
 
     function SearchTasks(SearchedTaskTitle) {
-        //var jsonString = JSON.stringify(Html.Raw(Json.Serialize(Model)));
         var SortBy = 0;
         var DateFrom = document.getElementById('DateFrom').value;
         var DateTo = document.getElementById('DateTo').value;
@@ -97,7 +129,6 @@
                 break;
         }
 
-        //$.get("/tasks/RefreshTasks2", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
         $.get("/tasks/RefreshTasks3", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, Page: 1}, function (data) {
             $("#_TasksIndexContainer").html(data);
             RefreshPageNumbers();
@@ -161,7 +192,6 @@
                 document.getElementById('LastPage').style.display = 'inline-block';
                 document.getElementById('LastPage').innerHTML = (parseInt(data));
             }
-            
 
             if (parseInt(CurrentPage) == parseInt(data)) {
                 var button = document.getElementById('LastPage');
@@ -185,7 +215,6 @@
     function PreviousPage() {
         var CurrentPage = document.getElementById('CurrentPage').innerHTML;
         if (CurrentPage != 1){
-            //var jsonString = JSON.stringify(Html.Raw(Json.Serialize(Model)));
             var SortBy = 0;
             var DateFrom = document.getElementById('DateFrom').value;
             var DateTo = document.getElementById('DateTo').value;
