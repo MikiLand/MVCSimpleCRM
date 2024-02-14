@@ -486,6 +486,8 @@ namespace MVCSimpleCRM.Controllers
             return PartialView("_TasksIndex", tasks);
         }*/
 
+        [HttpGet]
+        [Route("/tasks/RefreshTasks3")]
         public async Task<IActionResult> RefreshTasks3(string SearchedTaskTitle, int SortBy, DateTime DateFrom, DateTime DateTo, string DateType, List<AspNetUsersIndexViewModel> UsersList, int Page)
         {
             var ActualSearchedUsersModel = HttpContext.Session.GetString("ActualSearchedUsersModel");
@@ -520,8 +522,6 @@ namespace MVCSimpleCRM.Controllers
 
             return PartialView("_TasksIndex", tasks);
         }
-
-
 
         [HttpGet]
         [Route("/tasks/PreviousPage")]

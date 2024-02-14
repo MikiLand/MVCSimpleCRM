@@ -154,7 +154,14 @@
                 document.getElementById('NextPageNumber').innerHTML = (parseInt(CurrentPage) + 1);
             }
             
-            document.getElementById('LastPage').innerHTML = (parseInt(data));
+            if (LastPage == 1) {
+                document.getElementById('LastPage').style.display = 'none';
+            } 
+            else {
+                document.getElementById('LastPage').style.display = 'inline-block';
+                document.getElementById('LastPage').innerHTML = (parseInt(data));
+            }
+            
 
             if (parseInt(CurrentPage) == parseInt(data)) {
                 var button = document.getElementById('LastPage');
@@ -255,6 +262,41 @@
                     RefreshPageNumbers();
                 })
             }
+        })
+    }
+
+    function MoveToPage(Page) {
+        var SortBy = 0;
+        var DateFrom = document.getElementById('DateFrom').value;
+        var DateTo = document.getElementById('DateTo').value;
+        var DateType = document.getElementById('DateType').value;
+        var SearchedTaskTitle = document.getElementById('TBSearch').value;
+
+        switch (true) {
+            case document.getElementById('DateUpcomingDeadline').checked:
+                SortBy = 1;
+                break;
+            case document.getElementById('DateFarthestDeadline').checked:
+                SortBy = 2;
+                break;
+            case document.getElementById('DateNewest').checked:
+                SortBy = 3;
+                break;
+            case document.getElementById('SearchedTaskName').checked:
+                SortBy = 4;
+                break;
+            case document.getElementById('DateUpcomingReminder').checked:
+                SortBy = 5;
+                break;
+            case document.getElementById('DateFarthestReminder').checked:
+                SortBy = 6;
+                break;
+        }
+
+        $.get("/tasks/RefreshTasks3", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, Page: Page}, function (data) {
+            $("#_TasksIndexContainer").html(data);
+            document.getElementById('CurrentPage').innerHTML = (parseInt(Page));
+            RefreshPageNumbers();
         })
     }
     
@@ -388,11 +430,11 @@
                     <div id="Pagination">
                         <center>
                             <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPage" onclick="PreviousPage()"><</button>
-                            <button type="button" class="btn btn-sm btn-outline-primary" id="FirstPage" onclick="MoveToFirstPage()">1</button>
-                            <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPageNumber" onclick="MoveToPreviousPageNumber">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="FirstPage" onclick="MoveToPage('1')">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPageNumber" onclick="MoveToPage(PreviousPageNumber.innerHTML)">1</button>
                             <button type="button" class="btn btn-sm btn-outline-primary" id="CurrentPage" onclick="">1</button>
-                            <button type="button" class="btn btn-sm btn-outline-primary" id="NextPageNumber" onclick="MoveToNextPageNumber">1</button>
-                            <button type="button" class="btn btn-sm btn-outline-primary" id="LastPage" onclick="MoveToLastPage()">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="NextPageNumber" onclick="MoveToPage(NextPageNumber.innerHTML)">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="LastPage" onclick="MoveToPage(LastPage.innerHTML)">1</button>
                             <button type="button" class="btn btn-sm btn-outline-primary" id="NextPage" onclick="NextPage()">></button>
                         </center>
                     </div>
