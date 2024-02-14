@@ -1,7 +1,20 @@
 ﻿@model IEnumerable<AspNetUsers>
 
 <script type="text/javascript">
-    var Result = "@TempData["Result"]";
+    document.addEventListener('readystatechange', event => {
+        var SearchedAccount = document.getElementById('TBSearch').value;
+
+        switch (document.readyState) {
+            case "complete":
+                $.get("/account/RefreshAccounts", { SearchedAccount: SearchedAccount, Page: 1 }, function (data) {
+                    $("#_AccountsIndex").html(data);
+                    RefreshPageNumbers();
+                });
+                break;
+        }
+    });
+
+    var Result = "@TempData["Result"]";  //Need to change to that way of retriving data in Tasks instead of calling backend
     function openModal(ModalType) {
 
         if (ModalType == 1) {
@@ -35,6 +48,123 @@
     else if (Result === "ERROR") {
         openModal(2);
     }
+
+    function RefreshPageNumbers() {
+        var CurrentPage = document.getElementById('CurrentPage').innerHTML;
+        var Key = "PageAmount";
+        var LastPage = "@TempData["PageAmount"]";
+        document.getElementById('FirstPage').innerHTML = ('1');
+
+        if (parseInt(CurrentPage) == 1) {
+            var button = document.getElementById('FirstPage');
+            button.classList.remove('btn-outline-primary');
+            button.classList.add('btn-outline-danger');
+        } else {
+            var button = document.getElementById('FirstPage');
+            button.classList.remove('btn-outline-danger');
+            button.classList.add('btn-outline-primary');
+        }
+
+        if (parseInt(CurrentPage) == 1 || parseInt(CurrentPage) == 2) {
+            document.getElementById('PreviousPageNumber').style.display = 'none';
+        }
+        else {
+            document.getElementById('PreviousPageNumber').style.display = 'inline-block';
+            document.getElementById('PreviousPageNumber').innerHTML = (parseInt(CurrentPage) - 1);
+        }
+
+        if (parseInt(CurrentPage) == 1 || parseInt(CurrentPage) == LastPage) {
+            document.getElementById('CurrentPage').style.display = 'none';
+        }
+        else {
+            document.getElementById('CurrentPage').style.display = 'inline-block';
+        }
+
+        if (parseInt(CurrentPage) != 1 && parseInt(CurrentPage) != parseInt(LastPage)) {
+            var button = document.getElementById('CurrentPage');
+            button.classList.remove('btn-outline-primary');
+            button.classList.add('btn-outline-danger');
+        } else {
+            var button = document.getElementById('CurrentPage');
+            button.classList.remove('btn-outline-danger');
+            button.classList.add('btn-outline-primary');
+        }
+
+        if (parseInt(CurrentPage) == LastPage || parseInt(CurrentPage) == (LastPage - 1)) {
+            document.getElementById('NextPageNumber').style.display = 'none';
+        }
+        else {
+            document.getElementById('NextPageNumber').style.display = 'inline-block';
+            document.getElementById('NextPageNumber').innerHTML = (parseInt(CurrentPage) + 1);
+        }
+
+        if (LastPage == 1) {
+            document.getElementById('LastPage').style.display = 'none';
+        }
+        else {
+            document.getElementById('LastPage').style.display = 'inline-block';
+            document.getElementById('LastPage').innerHTML = (parseInt(LastPage));
+        }
+
+        if (parseInt(CurrentPage) == parseInt(LastPage)) {
+            var button = document.getElementById('LastPage');
+            button.classList.remove('btn-outline-primary');
+            button.classList.add('btn-outline-danger');
+        } else {
+            var button = document.getElementById('LastPage');
+            button.classList.remove('btn-outline-danger');
+            button.classList.add('btn-outline-primary');
+        }
+    }
+
+    function SearchUsers(SearchedUser) {
+        $.get("/account/RefreshSearchedAccounts", { SearchedUser: SearchedUser }, function (data) {
+            $("#_SearchedUsersContainer").html(data);
+            RefreshPageNumbers();
+        })
+    }
+
+    function PreviousPage() {
+        var CurrentPage = document.getElementById('CurrentPage').innerHTML;
+        if (CurrentPage != 1) {
+            var SearchedTaskTitle = document.getElementById('TBSearch').value;
+
+            $.get("/account/PreviousPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
+                $("#_TasksIndexContainer").html(data);
+                document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) - 1);
+                RefreshPageNumbers();
+            })
+        }
+    }
+
+    function NextPage() {
+        var Key = "PageAmount";
+
+        $.get("/account/RetriveSessionData", { Key: Key }, function (data) {
+            var LastPage = data;
+            var CurrentPage = document.getElementById('CurrentPage').innerHTML;
+
+            if (CurrentPage != LastPage) {
+                var SearchedTaskTitle = document.getElementById('TBSearch').value;
+
+                $.get("/account/NextPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
+                    $("#_TasksIndexContainer").html(data);
+                    document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) + 1);
+                    RefreshPageNumbers();
+                })
+            }
+        })
+    }
+
+    function MoveToPage(Page) {
+        var SearchedTaskTitle = document.getElementById('TBSearch').value;
+
+        $.get("/account/RefreshAccounts", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, Page: Page }, function (data) {
+            $("#_TasksIndexContainer").html(data);
+            document.getElementById('CurrentPage').innerHTML = (parseInt(Page));
+            RefreshPageNumbers();
+        })
+    }
 </script>
 
 <section class="jumbotron text-center">
@@ -62,33 +192,48 @@
                     }
                     <div class="col-md-4">
                         <div class="input-group col-md-12" style="margin-bottom: 20px">
-                            <input type="text" class="form-control" Style="width: 200px;" placeholder="Kogo szukasz?">
+                            <input type="text" id="TBSearch" class="form-control" Style="width: 200px;" placeholder="Kogo szukasz?">
                             <button type="button" class="btn btn-sm btn-outline-secondary" Style="width: 120px;">Wyszukaj</button>
                         </div>
                     </div>
                 </div>
 
-                @foreach (var item in Model)
+                <!--foreach (var item in Model)
                 {
                     <div class="col-md-3">
                         <div class="card mb-4 box-shadow">
-                            <!--<img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">-->
+                            <img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">
                             <div class="card-body">
                                 <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
-                                <p class="card-title" style="font-size:larger;">@item.Name @item.Surname</p>
-                                <p class="card-text"><span>&#64;</span>@item.UserName</p>
+                                <p class="card-title" style="font-size:larger;">item.Name item.Surname</p>
+                                <p class="card-text"><span>&#64;</span>item.UserName</p>
                                 <div class="d-flex" style="float: right;">
                                     <div class="btn-group">
                                         <button type="button" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
-                                        <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Account" asp-action="Detail" asp-route-id="@item.Id">Podgląd</a>
+                                        <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Account" asp-action="Detail" asp-route-id="item.Id">Podgląd</a>
                                     </div>
-                                    <!--<small class="text-muted">9 mins</small>-->
+                                    <small class="text-muted">9 mins</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
+                }-->
+
+                <div id="_AccountsIndexContainer">
+                    @Html.Partial("_AccountsIndex")
+                </div>
             </div>
+        </div>
+        <div id="Pagination">
+            <center>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPage" onclick="PreviousPage()"><</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="FirstPage" onclick="MoveToPage('1')">1</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPageNumber" onclick="MoveToPage(PreviousPageNumber.innerHTML)">1</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="CurrentPage" onclick="">1</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="NextPageNumber" onclick="MoveToPage(NextPageNumber.innerHTML)">1</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="LastPage" onclick="MoveToPage(LastPage.innerHTML)">1</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" id="NextPage" onclick="NextPage()">></button>
+            </center>
         </div>
     </div>
 

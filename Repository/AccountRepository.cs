@@ -6,6 +6,7 @@ using MVCSimpleCRM.Models;
 using MVCSimpleCRM.ViewModels;
 using System.Linq;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MVCSimpleCRM.Repository
 {
@@ -75,6 +76,16 @@ namespace MVCSimpleCRM.Repository
         public async Task<IList<AspNetUsers>> GetUserByLoginList(string username)
         {
             return await _context.aspNetUsers.Where(u => u.UserName.Contains(username)).ToListAsync();
+        }
+
+        public async Task<List<AspNetUsers>> RefreshAccounts(string SearchedAccount, int Page)
+        {
+            return await _context.aspNetUsers.Where(x => x.UserName.Contains(SearchedAccount) || x.Name.Contains(SearchedAccount) || x.Surname.Contains(SearchedAccount)).Skip((Page - 1) * 8).Take(8).ToListAsync();
+        }
+
+        public async Task<int> RefreshAccountsCount(string SearchedAccount, int Page)
+        {
+            return await _context.aspNetUsers.Where(x => x.UserName.Contains(SearchedAccount) || x.Name.Contains(SearchedAccount) || x.Surname.Contains(SearchedAccount)).Skip((Page - 1) * 8).Take(8).CountAsync();
         }
 
         public bool Save()

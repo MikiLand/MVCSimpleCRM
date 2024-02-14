@@ -343,5 +343,20 @@ namespace MVCSimpleCRM.Controllers
             HttpContext.Session.SetString("UserTasks", JsonConvert.SerializeObject(TasksVM.UserTasks));
             return PartialView("_UsersTasks", TasksVM);
         }
+
+        [HttpGet]
+        [Route("/account/RefreshAccounts")]
+        public async Task<IActionResult> RefreshAccounts(string SearchedAccount, int Page)
+        {
+            if (SearchedAccount is null)
+                SearchedAccount = "";
+
+            List<AspNetUsers> accounts = await _accountRepository.RefreshAccounts(SearchedAccount, Page);
+
+            int PageAmount = (await _accountRepository.RefreshAccountsCount(SearchedAccount, Page) / 8) + 1;
+            HttpContext.Session.SetString("PageAmount", PageAmount.ToString());
+
+            return PartialView("_AccountsIndex", accounts);
+        }
     }
 }

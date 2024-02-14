@@ -1,0 +1,24 @@
+﻿@using MVCSimpleCRM.ViewModels;
+@model List<AspNetUsers>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
+                    <p class="card-title" style="font-size:larger;">@item.Name @item.Surname</p>
+                    <p class="card-text"><span>&#64;</span>@item.UserName</p>
+                    <div class="d-flex" style="float: right;">
+                        <div class="btn-group">
+                            <button type="button" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
+                            <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Account" asp-action="Detail" asp-route-id="@item.Id">Podgląd</a>
+                        </div>
+                        <!--<small class="text-muted">9 mins</small>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
