@@ -21,6 +21,7 @@
 
                 $.get("/tasks/RefreshTasks3", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, Page: 1 }, function (data) {
                     $("#_TasksIndexContainer").html(data);
+                    RefreshPageNumbers();
                 })
                 break;
         }
@@ -99,6 +100,35 @@
         //$.get("/tasks/RefreshTasks2", { json: jsonString, SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType}, function (data) {
         $.get("/tasks/RefreshTasks3", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, Page: 1}, function (data) {
             $("#_TasksIndexContainer").html(data);
+            RefreshPageNumbers();
+        })
+    }
+
+    function RefreshPageNumbers() {
+        var CurrentPage = document.getElementById('CurrentPage').innerHTML;
+        var Key = "PageAmount";
+        $.get("/tasks/RetriveSessionData", { Key: Key }, function (data) {
+            var LastPage = data;
+            document.getElementById('FirstPage').innerHTML = ('1');
+
+            if (parseInt(CurrentPage) != 1) {
+                document.getElementById('PreviousPageNumber').style.display = 'inline-block';
+                document.getElementById('PreviousPageNumber').innerHTML = (parseInt(CurrentPage) - 1);
+            }
+            else {
+                document.getElementById('PreviousPageNumber').style.display = 'none';
+            }
+            
+            if (parseInt(CurrentPage) != LastPage) {
+
+                document.getElementById('NextPageNumber').style.display = 'inline-block';
+                document.getElementById('NextPageNumber').innerHTML = (parseInt(CurrentPage) + 1);
+            }
+            else{
+                document.getElementById('NextPageNumber').style.display = 'none';
+            }
+            
+            document.getElementById('LastPage').innerHTML = (parseInt(data));
         })
     }
 
@@ -141,13 +171,13 @@
 
             $.get("/tasks/PreviousPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage}, function (data) {
                 $("#_TasksIndexContainer").html(data);
+                document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) - 1);
+                RefreshPageNumbers();
             })
-            document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) - 1);
         }
     }
 
     function NextPage() {
-
         var Key = "PageAmount";
 
         $.get("/tasks/RetriveSessionData", { Key: Key }, function (data) {
@@ -184,8 +214,9 @@
 
                 $.get("/tasks/NextPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
                     $("#_TasksIndexContainer").html(data);
+                    document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) + 1);
+                    RefreshPageNumbers();
                 })
-                document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) + 1);
             }
         })
     }
@@ -304,25 +335,29 @@
                         <div class="col-md-7" style="margin-bottom: 20px">
                             <a type="btn" style="padding-right: 10px; height: 100%; display: flex; align-items:center; justify-content:center;" class="btn btn-sm btn-outline-primary" asp-controller="Tasks" asp-action="Create">Utwórz</a>
                         </div>
+
                         <div class="col-md-5">
-
                             <div class="input-group col-md-3" style="margin-bottom: 20px">
-
                                 <input type="text" class="form-control" Style="width: 200px;" id="SearchedTaskName" placeholder="Jakiego zadania szukasz?">
                                 <button type="button" class="btn btn-sm btn-outline-secondary" id="BtnSearch" onclick="SearchTasks(document.getElementById('SearchedTaskName').value)" Style="width: 120px;">Wyszukaj</button>
-
                             </div>
                         </div>
                     </div>
+
                     <div id="_TasksIndexContainer">
                         @Html.Partial("_TasksIndex")
                     </div>
+
                     <div id="Pagination">
-                    <center>
+                        <center>
                             <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPage" onclick="PreviousPage()"><</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="FirstPage" onclick="MoveToFirstPage()">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="PreviousPageNumber" onclick="MoveToPreviousPageNumber">1</button>
                             <button type="button" class="btn btn-sm btn-outline-primary" id="CurrentPage" onclick="">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="NextPageNumber" onclick="MoveToNextPageNumber">1</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="LastPage" onclick="MoveToLastPage()">1</button>
                             <button type="button" class="btn btn-sm btn-outline-primary" id="NextPage" onclick="NextPage()">></button>
-                    </center>
+                        </center>
                     </div>
                 </div>
             </div>
