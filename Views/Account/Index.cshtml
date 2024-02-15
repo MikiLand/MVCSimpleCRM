@@ -7,7 +7,7 @@
         switch (document.readyState) {
             case "complete":
                 $.get("/account/RefreshAccounts", { SearchedAccount: SearchedAccount, Page: 1 }, function (data) {
-                    $("#_AccountsIndex").html(data);
+                    $("#_AccountsIndexContainer").html(data);
                     RefreshPageNumbers();
                 });
                 break;
@@ -52,74 +52,77 @@
     function RefreshPageNumbers() {
         var CurrentPage = document.getElementById('CurrentPage').innerHTML;
         var Key = "PageAmount";
-        var LastPage = "@TempData["PageAmount"]";
-        document.getElementById('FirstPage').innerHTML = ('1');
+        $.get("/account/RetriveSessionData", { Key: Key }, function (data) {
+            var LastPage = data;
+            document.getElementById('FirstPage').innerHTML = ('1');
 
-        if (parseInt(CurrentPage) == 1) {
-            var button = document.getElementById('FirstPage');
-            button.classList.remove('btn-outline-primary');
-            button.classList.add('btn-outline-danger');
-        } else {
-            var button = document.getElementById('FirstPage');
-            button.classList.remove('btn-outline-danger');
-            button.classList.add('btn-outline-primary');
-        }
+            if (parseInt(CurrentPage) == 1) {
+                var button = document.getElementById('FirstPage');
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-outline-danger');
+            } else {
+                var button = document.getElementById('FirstPage');
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-outline-primary');
+            }
 
-        if (parseInt(CurrentPage) == 1 || parseInt(CurrentPage) == 2) {
-            document.getElementById('PreviousPageNumber').style.display = 'none';
-        }
-        else {
-            document.getElementById('PreviousPageNumber').style.display = 'inline-block';
-            document.getElementById('PreviousPageNumber').innerHTML = (parseInt(CurrentPage) - 1);
-        }
+            if (parseInt(CurrentPage) == 1 || parseInt(CurrentPage) == 2) {
+                document.getElementById('PreviousPageNumber').style.display = 'none';
+            }
+            else {
+                document.getElementById('PreviousPageNumber').style.display = 'inline-block';
+                document.getElementById('PreviousPageNumber').innerHTML = (parseInt(CurrentPage) - 1);
+            }
 
-        if (parseInt(CurrentPage) == 1 || parseInt(CurrentPage) == LastPage) {
-            document.getElementById('CurrentPage').style.display = 'none';
-        }
-        else {
-            document.getElementById('CurrentPage').style.display = 'inline-block';
-        }
+            if (parseInt(CurrentPage) == 1 || parseInt(CurrentPage) == LastPage) {
+                document.getElementById('CurrentPage').style.display = 'none';
+            }
+            else {
+                document.getElementById('CurrentPage').style.display = 'inline-block';
+            }
 
-        if (parseInt(CurrentPage) != 1 && parseInt(CurrentPage) != parseInt(LastPage)) {
-            var button = document.getElementById('CurrentPage');
-            button.classList.remove('btn-outline-primary');
-            button.classList.add('btn-outline-danger');
-        } else {
-            var button = document.getElementById('CurrentPage');
-            button.classList.remove('btn-outline-danger');
-            button.classList.add('btn-outline-primary');
-        }
+            if (parseInt(CurrentPage) != 1 && parseInt(CurrentPage) != parseInt(data)) {
+                var button = document.getElementById('CurrentPage');
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-outline-danger');
+            } else {
+                var button = document.getElementById('CurrentPage');
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-outline-primary');
+            }
 
-        if (parseInt(CurrentPage) == LastPage || parseInt(CurrentPage) == (LastPage - 1)) {
-            document.getElementById('NextPageNumber').style.display = 'none';
-        }
-        else {
-            document.getElementById('NextPageNumber').style.display = 'inline-block';
-            document.getElementById('NextPageNumber').innerHTML = (parseInt(CurrentPage) + 1);
-        }
+            if (parseInt(CurrentPage) == LastPage || parseInt(CurrentPage) == (LastPage - 1)) {
+                document.getElementById('NextPageNumber').style.display = 'none';
+            }
+            else {
+                document.getElementById('NextPageNumber').style.display = 'inline-block';
+                document.getElementById('NextPageNumber').innerHTML = (parseInt(CurrentPage) + 1);
+            }
 
-        if (LastPage == 1) {
-            document.getElementById('LastPage').style.display = 'none';
-        }
-        else {
-            document.getElementById('LastPage').style.display = 'inline-block';
-            document.getElementById('LastPage').innerHTML = (parseInt(LastPage));
-        }
+            if (LastPage == 1) {
+                document.getElementById('LastPage').style.display = 'none';
+            }
+            else {
+                document.getElementById('LastPage').style.display = 'inline-block';
+                document.getElementById('LastPage').innerHTML = (parseInt(data));
+            }
 
-        if (parseInt(CurrentPage) == parseInt(LastPage)) {
-            var button = document.getElementById('LastPage');
-            button.classList.remove('btn-outline-primary');
-            button.classList.add('btn-outline-danger');
-        } else {
-            var button = document.getElementById('LastPage');
-            button.classList.remove('btn-outline-danger');
-            button.classList.add('btn-outline-primary');
-        }
+            if (parseInt(CurrentPage) == parseInt(data)) {
+                var button = document.getElementById('LastPage');
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-outline-danger');
+            } else {
+                var button = document.getElementById('LastPage');
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-outline-primary');
+            }
+
+        })
     }
 
     function SearchUsers(SearchedUser) {
-        $.get("/account/RefreshSearchedAccounts", { SearchedUser: SearchedUser }, function (data) {
-            $("#_SearchedUsersContainer").html(data);
+        $.get("/account/RefreshSearchedAccounts", { SearchedAccount: SearchedAccount }, function (data) {
+            $("#_AccountsIndexContainer").html(data);
             RefreshPageNumbers();
         })
     }
@@ -127,10 +130,10 @@
     function PreviousPage() {
         var CurrentPage = document.getElementById('CurrentPage').innerHTML;
         if (CurrentPage != 1) {
-            var SearchedTaskTitle = document.getElementById('TBSearch').value;
+            var SearchedAccount = document.getElementById('TBSearch').value;
 
-            $.get("/account/PreviousPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
-                $("#_TasksIndexContainer").html(data);
+            $.get("/account/PreviousPage", { SearchedAccount: SearchedAccount, CurrentPage: CurrentPage }, function (data) {
+                $("#_AccountsIndexContainer").html(data);
                 document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) - 1);
                 RefreshPageNumbers();
             })
@@ -145,10 +148,10 @@
             var CurrentPage = document.getElementById('CurrentPage').innerHTML;
 
             if (CurrentPage != LastPage) {
-                var SearchedTaskTitle = document.getElementById('TBSearch').value;
+                var SearchedAccount = document.getElementById('TBSearch').value;
 
-                $.get("/account/NextPage", { SearchedTaskTitle: SearchedTaskTitle, SortBy: SortBy, DateFrom: DateFrom, DateTo: DateTo, DateType: DateType, CurrentPage: CurrentPage }, function (data) {
-                    $("#_TasksIndexContainer").html(data);
+                $.get("/account/NextPage", { SearchedAccount: SearchedAccount, CurrentPage: CurrentPage }, function (data) {
+                    $("#_AccountsIndexContainer").html(data);
                     document.getElementById('CurrentPage').innerHTML = (parseInt(CurrentPage) + 1);
                     RefreshPageNumbers();
                 })

@@ -358,5 +358,21 @@ namespace MVCSimpleCRM.Controllers
 
             return PartialView("_AccountsIndex", accounts);
         }
+
+        [HttpGet]
+        [Route("/account/RetriveSessionData")]
+        public async Task<string> RetriveSessionData(string Key)
+        {
+            var Value = HttpContext.Session.GetString(Key);
+            return Value;
+        }
+
+        [HttpGet]
+        [Route("/account/PreviousPage")]
+        public async Task<IActionResult> PreviousPage(string SearchedAccount, int CurrentPage) => await RefreshAccounts(SearchedAccount, (CurrentPage - 1));
+
+        [HttpGet]
+        [Route("/account/NextPage")]
+        public async Task<IActionResult> NextPage(string SearchedAccount, int CurrentPage) => await RefreshAccounts(SearchedAccount, (CurrentPage + 1));
     }
 }

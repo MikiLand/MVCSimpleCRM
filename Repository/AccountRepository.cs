@@ -85,7 +85,7 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<int> RefreshAccountsCount(string SearchedAccount, int Page)
         {
-            return await _context.aspNetUsers.Where(x => x.UserName.Contains(SearchedAccount) || x.Name.Contains(SearchedAccount) || x.Surname.Contains(SearchedAccount)).Skip((Page - 1) * 8).Take(8).CountAsync();
+            return await _context.aspNetUsers.Where(x => x.UserName.Contains(SearchedAccount) || x.Name.Contains(SearchedAccount) || x.Surname.Contains(SearchedAccount)).CountAsync();
         }
 
         public bool Save()
