@@ -353,7 +353,18 @@ namespace MVCSimpleCRM.Controllers
 
             List<AspNetUsers> accounts = await _accountRepository.RefreshAccounts(SearchedAccount, Page);
 
-            int PageAmount = (await _accountRepository.RefreshAccountsCount(SearchedAccount, Page) / 8) + 1;
+            float PageAmoutCount = (await _accountRepository.RefreshAccountsCount(SearchedAccount, Page));
+
+            int PageAmount = 1;
+            if (PageAmoutCount % 8 != 0)
+            {
+                PageAmount = (await _accountRepository.RefreshAccountsCount(SearchedAccount, Page) / 8) + 1;
+            }
+            else
+            {
+                PageAmount = (await _accountRepository.RefreshAccountsCount(SearchedAccount, Page) / 8);
+            }
+
             HttpContext.Session.SetString("PageAmount", PageAmount.ToString());
 
             return PartialView("_AccountsIndex", accounts);
