@@ -80,7 +80,7 @@ namespace MVCSimpleCRM.Repository
 
         public async Task<List<AspNetUsers>> RefreshAccounts(string SearchedAccount, int Page)
         {
-            return await _context.aspNetUsers.Where(x => x.UserName.Contains(SearchedAccount) || x.Name.Contains(SearchedAccount) || x.Surname.Contains(SearchedAccount)).Skip((Page - 1) * 8).Take(8).ToListAsync();
+            return await _context.aspNetUsers.Where(x => x.UserName.Contains(SearchedAccount) || x.Name.Contains(SearchedAccount) || x.Surname.Contains(SearchedAccount)).OrderBy(x => x.UserName).Skip((Page - 1) * 8).Take(8).ToListAsync();
         }
 
         public async Task<int> RefreshAccountsCount(string SearchedAccount, int Page)

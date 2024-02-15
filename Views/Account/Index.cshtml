@@ -120,11 +120,11 @@
         })
     }
 
-    function SearchUsers(SearchedUser) {
-        $.get("/account/RefreshSearchedAccounts", { SearchedAccount: SearchedAccount }, function (data) {
+    function SearchedAccounts(SearchedAccount) {
+        $.get("/account/RefreshAccounts", { SearchedAccount: SearchedAccount, Page: 1 }, function (data) {
             $("#_AccountsIndexContainer").html(data);
             RefreshPageNumbers();
-        })
+        });
     }
 
     function PreviousPage() {
@@ -196,31 +196,10 @@
                     <div class="col-md-4">
                         <div class="input-group col-md-12" style="margin-bottom: 20px">
                             <input type="text" id="TBSearch" class="form-control" Style="width: 200px;" placeholder="Kogo szukasz?">
-                            <button type="button" class="btn btn-sm btn-outline-secondary" Style="width: 120px;">Wyszukaj</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="SearchedAccounts(document.getElementById('TBSearch').value)" Style="width: 120px;">Wyszukaj</button>
                         </div>
                     </div>
                 </div>
-
-                <!--foreach (var item in Model)
-                {
-                    <div class="col-md-3">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" src="" alt="UserImage" width="100%" heighe="200">
-                            <div class="card-body">
-                                <img class="card-img-top" src="https://placehold.co/200x200" alt="UserImage" width="200" heighe="200">
-                                <p class="card-title" style="font-size:larger;">item.Name item.Surname</p>
-                                <p class="card-text"><span>&#64;</span>item.UserName</p>
-                                <div class="d-flex" style="float: right;">
-                                    <div class="btn-group">
-                                        <button type="button" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary">Wyświetl zadania</button>
-                                        <a type="btn" style="padding-right: 10px; padding-left:10px" class="btn btn-sm btn-outline-secondary" asp-controller="Account" asp-action="Detail" asp-route-id="item.Id">Podgląd</a>
-                                    </div>
-                                    <small class="text-muted">9 mins</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }-->
 
                 <div id="_AccountsIndexContainer">
                     @Html.Partial("_AccountsIndex")
